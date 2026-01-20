@@ -1,0 +1,19 @@
+#screen{
+    background-color: #CAF0F8;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+}
+nav ul li a img {
+    width: 40px;
+    height: 40px;
+}
+nav {
+    left: 0;
+    
+}
