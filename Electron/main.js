@@ -3,14 +3,14 @@ const { app, BrowserWindow } = electron;
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 900,
-        height: 730,
+        width: 1200,
+        height: 1000,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
         }
     });
-    win.loadFile('index.html');
+    win.loadFile('screens/home.html');
     win.webContents.openDevTools();
     win.setMenu(null);
 }
