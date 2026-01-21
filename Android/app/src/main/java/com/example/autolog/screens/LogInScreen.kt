@@ -46,12 +46,12 @@ fun LoginScreen(
     onClick: (String, String) -> Unit
 ) {
     val mechanicBlue = Color(0xFF1E3A5F)
-    val lightGray = Color(0xFFE8E8E8)
+    val lightBlue = Color(0xFFCAF0F8)
 
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(lightGray),
+            .background(lightBlue),
         contentAlignment = Alignment.Center
     ) {
         Card(
