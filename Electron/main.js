@@ -3,8 +3,7 @@ const { app, BrowserWindow } = electron;
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 1200,
-        height: 1000,
+        fullscreen: true,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
