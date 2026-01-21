@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informes</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
     <div id="content">
         <div id="backButton">
@@ -13,8 +15,89 @@
                 <img src="../icons/close.png" alt="Back">
             </a>
         </div>
-        <h1>Informes de Vehículos</h1>
-        <p>Aquí se mostrarán los informes de los vehículos.</p>
+        <div class="header">
+            <h1>Informe de Reparación</h1>
+            <p>AutoLog</p>
+        </div>
+        <div class="form-content">
+            <form id="formularioTaller">
+                <div class="form-section">
+                    <h2 class="section-title">Datos del Cliente</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombreCliente">Nombre del Cliente</label>
+                            <input type="text" id="nombreCliente" name="nombreCliente" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="text" id="telefono" name="telefono">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">Datos del Vehículo</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="marca">Marca</label>
+                            <input type="text" id="marca" name="marca" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modelo">Modelo</label>
+                            <input type="text" id="modelo" name="modelo" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="matricula">Matrícula</label>
+                            <input type="text" id="matricula" name="matricula">
+                        </div>
+                        <div class="form-group">
+                            <label for="kilometraje">Kilometraje</label>
+                            <input type="number" id="kilometraje" name="kilometraje">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">Detalles de la Reparación</h2>
+                    <div class="form-group">
+                        <label for="fecha">Fecha de Reparación</label>
+                        <input type="date" id="fecha" name="fecha" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="trabajosRealizados">Trabajos Realizados</label>
+                        <textarea id="trabajosRealizados" name="trabajosRealizados" required
+                            placeholder="Describe los trabajos realizados en el vehículo..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="observaciones">Observaciones</label>
+                        <textarea id="observaciones" name="observaciones"
+                            placeholder="Notas adicionales"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="precio">Precio de Reparación (€)</label>
+                            <input type="number" id="precio" name="precio" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="estadoPago">Estado del Pago</label>
+                            <select id="estadoPago" name="estadoPago">
+                                <option value="pendiente">Pendiente</option>
+                                <option value="pagado">Pagado</option>
+                                <option value="parcial">Pago Parcial</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn-submit">Generar Informe</button>
+                    <button type="reset" class="btn-reset">Limpiar Formulario</button>
+                </div>
+            </form>
+
+        </div>
     </div>
 </body>
 </html>
