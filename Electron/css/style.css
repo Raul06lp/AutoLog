@@ -248,6 +248,7 @@ button {
     transition: all 0.3s;
 }
 
+<<<<<<< HEAD
 .btn-submit {
     background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
     color: white;
@@ -302,3 +303,66 @@ button {
     min-height: 300px;
 }
         
+=======
+        .resultado-item strong {
+            color: #333;
+            display: inline-block;
+            min-width: 180px;
+        }
+
+.wrapper {
+    position: fixed;
+    top: 100px;
+    left: 120px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 20px;
+    background-color: #e8f4f8;
+    overflow-y: auto;
+    width: 84%;
+    height: 80%;
+    margin: 0 auto;
+    border-radius: 25px;
+}
+
+/* Estilos para las tarjetas */
+.car-card {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 3px solid #5bc0de;
+    overflow: hidden;
+    height: 60%;
+}
+
+.car-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.car-card p {
+    margin: 0;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.4;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.car-card p:last-child {
+    border-bottom: none;
+}
+
+.car-card strong {
+    color: #000;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.3px;
+    display: inline-block;
+    min-width: 65px;
+}
+>>>>>>> 5573eba82c530b9da6c1121ef8e609f8cf987203
