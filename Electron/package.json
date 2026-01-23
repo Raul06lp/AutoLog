@@ -1,15 +1,24 @@
 {
-  "name": "electron",
+  "name": "autolog",
   "version": "1.0.0",
-  "description": "",
+  "description": "Web para el control de vehículo tanto por parte de mecánicos como usuarios",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":" electron ."
+    "start": " electron ."
   },
-  "author": "",
+  "author": "Raúl Lavara, Brandon Quispe, Carla Fernández",
   "license": "ISC",
   "dependencies": {
-    "electron": "^40.0.0"
-  }
+    "electron": "^40.0.0",
+    "firebase": "^12.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Raul06lp/AutoLog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Raul06lp/AutoLog/issues"
+  },
+  "homepage": "https://github.com/Raul06lp/AutoLog#readme"
 }
