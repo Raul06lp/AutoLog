@@ -365,4 +365,19 @@ button {
     display: inline-block;
     min-width: 65px;
 }
->>>>>>> 5573eba82c530b9da6c1121ef8e609f8cf987203
+
+/* Centrar formulario de login */
+#content form {
+    text-align: center;
+}
+
+#content form input[type="text"],
+#content form input[type="password"],
+#content form button {
+    margin: 0 auto;
+    display: block;
+}
+
+#content p {
+    text-align: center;
+}
