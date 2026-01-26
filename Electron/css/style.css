@@ -95,7 +95,7 @@ body{
 }
 
 #content {
-    width: 80%;
+    width: 70%;
     height: 90%;
     background-color: #F2FDFF;
     border-radius: 25px;
@@ -195,6 +195,8 @@ label {
     color: #03045E;
     font-weight: 500;
     font-size: 25px;
+    text-align: left;
+    margin-left: 20%;
 }
 
 input[type="text"],
@@ -235,6 +237,7 @@ textarea {
     display: flex;
     gap: 15px;
     margin-top: 30px;
+    margin-bottom: 50px;
 }
 
 button {
@@ -246,17 +249,8 @@ button {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
-}
-
-<<<<<<< HEAD
-.btn-submit {
-    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+    background-color: #0077B6;
     color: white;
-}
-
-.btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
 }
 
 .btn-reset {
@@ -266,6 +260,12 @@ button {
 
 .btn-reset:hover {
     background: #e0e0e0;
+}
+
+.link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
 }
 
 .resultado {
@@ -303,12 +303,11 @@ button {
     min-height: 300px;
 }
         
-=======
-        .resultado-item strong {
-            color: #333;
-            display: inline-block;
-            min-width: 180px;
-        }
+.resultado-item strong {
+    color: #333;
+    display: inline-block;
+    min-width: 180px;
+}
 
 .wrapper {
     position: fixed;
