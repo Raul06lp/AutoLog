@@ -95,7 +95,7 @@ body{
 }
 
 #content {
-    width: 80%;
+    width: 70%;
     height: 90%;
     background-color: #F2FDFF;
     border-radius: 25px;
@@ -195,6 +195,8 @@ label {
     color: #03045E;
     font-weight: 500;
     font-size: 25px;
+    text-align: left;
+    margin-left: 20%;
 }
 
 input[type="text"],
@@ -235,6 +237,7 @@ textarea {
     display: flex;
     gap: 15px;
     margin-top: 30px;
+    margin-bottom: 50px;
 }
 
 button {
@@ -246,17 +249,8 @@ button {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
-}
-
-
-.btn-submit {
-    background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+    background-color: #0077B6;
     color: white;
-}
-
-.btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
 }
 
 .btn-reset {
@@ -266,6 +260,12 @@ button {
 
 .btn-reset:hover {
     background: #e0e0e0;
+}
+
+.link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
 }
 
 .resultado {
@@ -302,12 +302,12 @@ button {
     height: auto;
     min-height: 300px;
 }
-
-        .resultado-item strong {
-            color: #333;
-            display: inline-block;
-            min-width: 180px;
-        }
+        
+.resultado-item strong {
+    color: #333;
+    display: inline-block;
+    min-width: 180px;
+}
 
 .wrapper {
     position: fixed;
@@ -326,87 +326,6 @@ button {
 }
 
 /* Estilos para las tarjetas */
- .car-card {
-            background: white;
-            border-radius: 12px;
-            padding: 15px;
-            padding-bottom: 50px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border: 3px solid #5bc0de;
-            overflow: visible;
-            position: relative;
-            min-height: 180px;
-            width: 400px;
-            height: 500px;
-        }
-        .car-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-        .car-card p {
-            margin: 0;
-            padding: 8px 12px;
-            font-size: 13px;
-            color: #333;
-            line-height: 1.4;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .car-card p:last-of-type {
-            border-bottom: none;
-        }
-        .car-card strong {
-            color: #000;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 0.3px;
-            display: inline-block;
-            min-width: 65px;
-        }
-        .btn-edit {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background-color: #D9D9D9;
-            color: black;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-        }
-        .buttons-bottom {
-            position: absolute;
-            bottom: 8px;
-            left: 8px;
-            right: 8px;
-            display: flex;
-            justify-content: space-between;
-            
-        }
-        .btn-details {
-            background-color: #D9D9D9;
-            color: black;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-            height: 30px;
-            width: 60px;
-        }
-        .btn-remove {
-            background-color: #D9D9D9;
-            color: black;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-            height: 30px;
-            width: 60px;
-        }
 .car-card {
     background: white;
     border-radius: 12px;
@@ -446,42 +365,18 @@ button {
     min-width: 65px;
 }
 
-     
-        .btn-edit {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background-color: #D9D9D9;
-            color: black;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-        }
-        .buttons-bottom {
-            position: absolute;
-            bottom: 8px;
-            left: 8px;
-            right: 8px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .btn-details {
-            background-color: #D9D9D9;
-            color: black;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-        }
-        .btn-remove {
-            background-color: #D9D9D9;
-            color: black;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-        }
+/* Centrar formulario de login */
+#content form {
+    text-align: center;
+}
+
+#content form input[type="text"],
+#content form input[type="password"],
+#content form button {
+    margin: 0 auto;
+    display: block;
+}
+
+#content p {
+    text-align: center;
+}
