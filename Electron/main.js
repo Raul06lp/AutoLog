@@ -9,7 +9,7 @@ function createWindow() {
             contextIsolation: false
         }
     });
-    win.loadFile('screens/home.html');
+    win.loadFile('screensMecanico/home.html');
     win.webContents.openDevTools();
     win.setMenu(null);
 }
