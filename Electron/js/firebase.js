@@ -1,5 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js';
 import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js';
+import { getAuth } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js';
 
 // CONEXIÓN A FIREBASE
 const firebaseConfig = {
@@ -19,19 +20,24 @@ console.log("Firebase inicializado correctamente.");
 const db = getFirestore(app);
 console.log("Firestore inicializado correctamente.");
 
-// Función para agregar un documento de ejemplo
-async function addExampleDoc() {
-  try {
-    const docRef = await addDoc(collection(db, "usuario"), {
-      contrasena: "67",
-      correo: "brandon@email.com",
-      nombre: "brandon",
-      tipo: "mecanico"
-    });
-    console.log("Documento escrito con ID: ", docRef.id);
-  } catch (e) {
-    console.error("Error al agregar documento: ", e);
-  }
-}
+const auth = getAuth(app);
+console.log("Auth inicializado correctamente.");
 
-addExampleDoc();
+export { app, db, auth };
+
+// Función para agregar un documento de ejemplo
+// async function addExampleDoc() {
+//   try {
+//     const docRef = await addDoc(collection(db, "usuario"), {
+//       contrasena: "67",
+//       correo: "brandon@email.com",
+//       nombre: "brandon",
+//       tipo: "mecanico"
+//     });
+//     console.log("Documento escrito con ID: ", docRef.id);
+//   } catch (e) {
+//     console.error("Error al agregar documento: ", e);
+//   }
+// }
+
+// addExampleDoc();
