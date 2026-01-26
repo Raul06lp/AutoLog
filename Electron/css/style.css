@@ -31,7 +31,8 @@ body {
     color: var(--text-light);
     line-height: 1.6;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
     padding-left: 90px;
@@ -174,13 +175,13 @@ nav ul li a img {
     min-height: 80vh;
     background: linear-gradient(135deg, #ffffff 0%, var(--bg-card) 100%);
     border-radius: 30px;
-    padding: 60px 40px 40px;
+    padding: 20px 40px 40px;
     box-shadow: var(--shadow-lg);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.5);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     position: relative;
 }
 
@@ -206,6 +207,7 @@ header h1 {
     color: var(--accent);
     font-size: 80px;
     font-weight: 700;
+    margin-top: 20px;
 }
 
 .header p {
@@ -321,6 +323,10 @@ select {
     font-family: inherit;
     background: #ffffff;
     color: var(--text-dark);
+}
+
+.inputlogin {
+    width: 60% !important;
 }
 
 input:focus,
@@ -582,4 +588,66 @@ button {
 
 #content p {
     text-align: center;
+}
+
+/* SWITCH TOGGLE */
+.switch-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    margin: 20px 0;
+    margin-left: 20% !important;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.switch-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    transition: var(--transition);
 }
