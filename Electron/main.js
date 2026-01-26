@@ -3,16 +3,25 @@ const { app, BrowserWindow } = electron;
 
 function createWindow() {
     const win = new BrowserWindow({
-        fullscreen: true,
+        show: false,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
         }
     });
-    win.loadFile('screensMecanico/home.html');
-    win.webContents.openDevTools();
+
+    win.loadFile('index.html');
     win.setMenu(null);
+
+    // Pantalla Completa
+    win.maximize(); 
+    
+    // Mostramos la ventana cuando esté lista
+    win.once('ready-to-show', () => {
+        win.show();
+    });
 }
+
 app.on('ready', createWindow);
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();    
