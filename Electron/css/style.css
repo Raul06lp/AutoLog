@@ -311,10 +311,7 @@ input[type="password"],
 input[type="number"],
 input[type="date"],
 input[type="email"],
-<<<<<<< HEAD
-=======
 input[type="tel"],
->>>>>>> estructura-html
 textarea,
 select {
     width: 100%;
