@@ -10,12 +10,13 @@ let mostrarentradas = () => {
     entries.forEach((entry, index) => {
         wrapper.innerHTML += `
                     <div class="car-card">
-                        <button class="btn-edit"><a href="screens/"><img src="../icons/edit.png"></a></button>
+                        <button class="btn-edit" onclick="location.href='./edit.html'"><img src="../icons/edit.png"></button>
+                        <p>${entry.img}</p>
                         <p><strong>Cliente:</strong> ${entry.cliente}</p>
                         <p><strong>Marca:</strong> ${entry.marca}</p>
                         <p><strong>Modelo:</strong> ${entry.modelo}</p>
                         <div class="buttons-bottom">
-                            <button class="btn-details"><a href="details.html"><img src="../icons/add.png"></a></button>
+                            <button class="btn-details" onclick="location.href='./details.html'"><img src="../icons/add.png"></button>
                             <button class="btn-remove"><img src="../icons/check.png"></button>
                         </div>
                     </div>

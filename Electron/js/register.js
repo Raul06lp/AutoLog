@@ -7,7 +7,20 @@ const username = document.getElementById('username');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const confirmPassword = document.getElementById('confirm_password');
+<<<<<<< HEAD
 
+=======
+const tipoCheckbox = document.getElementById('tipo');
+const switchLabel = document.getElementById('switch-label');
+
+// Actualizar etiqueta del switch
+tipoCheckbox.addEventListener('change', () => {
+    switchLabel.textContent = tipoCheckbox.checked ? 'Cliente' : 'Mecánico';
+});
+
+// Inicializar etiqueta
+switchLabel.textContent = tipoCheckbox.checked ? 'Cliente' : 'Mecánico';
+>>>>>>> estructura-html
 form.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -33,10 +46,17 @@ form.addEventListener('submit', (e) => {
         const user = userCredential.user;
 
         // Guardar datos adicionales en Firestore
+<<<<<<< HEAD
         await setDoc(doc(db, "usuario", user.uid), {
             email: user.email,
             username: username.value,
             password: password.value,
+=======
+        await setDoc(doc(db, "users", user.uid), {
+            email: user.email,
+            username: username.value,
+            tipo: tipoCheckbox.checked ? 'mecanico' : 'cliente',
+>>>>>>> estructura-html
             createdAt: new Date()
         });
 

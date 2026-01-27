@@ -16,16 +16,24 @@
         <h2 class="form_title">Registro</h2>
         <form action="register" method="post">
             <label for="email" class="log_label">Correo electronico:</label>
-            <input type="text" id="email" name="email" required>
+            <input class="inputlogin" type="text" id="email" name="email" required>
             <br><br>
             <label for="username" class="log_label">Usuario:</label>
-            <input type="text" id="username" name="username" required>
+            <input class="inputlogin" type="text" id="username" name="username" required>
             <br><br>
             <label for="password" class="log_label">Contraseña:</label>
-            <input type="password" id="password" name="password" required>
+            <input class="inputlogin" type="password" id="password" name="password" required>
             <br><br>
             <label for="confirm_password" class="log_label">Confirmar Contraseña:</label>
-            <input type="password" id="confirm_password" name="confirm_password" required>
+            <input class="inputlogin" type="password" id="confirm_password" name="confirm_password" required>
+            <br><br>
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" id="tipo">
+                    <span class="slider"></span>
+                </label>
+                <span class="switch-label" id="switch-label">Mecánico</span>
+            </div>
             <br><br>
             <button type="submit">Registrarse</button>
         </form>

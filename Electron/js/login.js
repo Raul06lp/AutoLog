@@ -11,6 +11,8 @@ form.addEventListener('submit', (e) => {
     signInWithEmailAndPassword(auth, email.value, password.value)
     .then((userCredential) => {
         const user = userCredential.user;
+
+        user.
         window.location.href = './screens/home.html';
     })
     .catch((error) => {
