@@ -16,9 +16,11 @@ function createWindow() {
     // Pantalla Completa
     win.maximize(); 
     
+
     // Mostramos la ventana cuando esté lista
     win.once('ready-to-show', () => {
         win.show();
+        win.webContents.openDevTools();
     });
 }
 

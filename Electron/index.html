@@ -15,15 +15,19 @@
     <div id="content">
         <h2 class="form_title">Login</h2>
         <form action="login" method="post">
-            <label for="username" class="log_label">Usuario:</label>
-            <input class="inputlogin" type="text" id="username" name="username" required>
+            <label for="email" class="log_label">Correo electrónico:</label>
+            <input class="inputlogin" type="email" id="email" name="email" required>
             <br><br>
             <label for="password" class="log_label">Contraseña:</label>
             <input class="inputlogin" type="password" id="password" name="password" required>
             <br><br>
+            <p id="error-message" style="color: red; display: none;"></p>
             <button type="submit">Iniciar Sesión</button>
         </form>
         <p class="link">No tienes cuenta? <a href="screensMecanico/register.html">Regístrate aquí</a></p>
     </div>
+
+    <script type="module" src="js/firebase.js"></script>
+    <script type="module" src="js/login.js"></script>
 </body>
 </html>

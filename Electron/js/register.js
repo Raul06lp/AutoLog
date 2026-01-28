@@ -12,27 +12,34 @@ const switchLabel = document.getElementById('switch-label');
 
 // Actualizar etiqueta del switch
 tipoCheckbox.addEventListener('change', () => {
-    switchLabel.textContent = tipoCheckbox.checked ? 'Cliente' : 'Mecánico';
+    switchLabel.textContent = tipoCheckbox.checked ? 'Mecánico' : 'Cliente';
 });
 
 // Inicializar etiqueta
-switchLabel.textContent = tipoCheckbox.checked ? 'Cliente' : 'Mecánico';
+switchLabel.textContent = tipoCheckbox.checked ? 'Mecánico' : 'Cliente';
 form.addEventListener('submit', (e) => {
     e.preventDefault();
 
+    // Limpiar mensaje de error anterior
+    document.getElementById('error-message').style.display = 'none';
+
     // VALIDACIONES
+    const errorElement = document.getElementById('error-message');
     if (!email.value || !username.value || !password.value || !confirmPassword.value) {
-        alert('Por favor, completa todos los campos.');
+        errorElement.textContent = 'Por favor, completa todos los campos.';
+        errorElement.style.display = 'block';
         return;
     }
 
     if (password.value !== confirmPassword.value) {
-        alert('Las contraseñas no coinciden.');
+        errorElement.textContent = 'Las contraseñas no coinciden.';
+        errorElement.style.display = 'block';
         return;
     }
 
     if (password.value.length < 6) {
-        alert('La contraseña debe tener al menos 6 caracteres.');
+        errorElement.textContent = 'La contraseña debe tener al menos 6 caracteres.';
+        errorElement.style.display = 'block';
         return;
     }
 
@@ -42,27 +49,34 @@ form.addEventListener('submit', (e) => {
         const user = userCredential.user;
 
         // Guardar datos adicionales en Firestore
-        await setDoc(doc(db, "users", user.uid), {
+        const tipo = tipoCheckbox.checked ? 'mecanico' : 'cliente';
+        await setDoc(doc(db, "usuario", user.uid), {
             email: user.email,
             username: username.value,
-            tipo: tipoCheckbox.checked ? 'mecanico' : 'cliente',
+            tipo: tipo,
             createdAt: new Date()
         });
 
-        alert('Usuario registrado exitosamente. Bienvenido, ' + user.email + '!');
-        window.location.href = './../screens/home.html';
+        // Redirigir según el tipo de usuario
+        if (tipo === 'cliente') {
+            window.location.href = '../screensCliente/home.html';
+        } else {
+            window.location.href = '../screensMecanico/home.html';
+        }
     })
     .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error('Error en registro:', errorCode, errorMessage);
+        const errorElement = document.getElementById('error-message');
         // Mostrar mensaje de error al usuario
         if (errorCode === 'auth/email-already-in-use') {
-            alert('El correo electrónico ya está registrado.');
+            errorElement.textContent = 'El correo electrónico ya está registrado.';
         } else if (errorCode === 'auth/weak-password') {
-            alert('La contraseña es demasiado débil.');
+            errorElement.textContent = 'La contraseña es demasiado débil.';
         } else {
-            alert('Error en el registro: ' + errorMessage);
+            errorElement.textContent = 'Error en el registro: ' + errorMessage;
         }
+        errorElement.style.display = 'block';
     });
 });
