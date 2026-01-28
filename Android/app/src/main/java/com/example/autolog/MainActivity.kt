@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     LoginScreen(
                         modifier = Modifier.padding(innerPadding),
-                        onClick = { _, _ -> }
+                        onLoginClick = { _, _ -> }
                     )
                 }
             }
