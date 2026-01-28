@@ -55,7 +55,7 @@ import com.example.autolog.ui.theme.AutoLogTheme
 fun CarAddScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
-    onAddClick: (String, String, String, String, String, String, String, String, String, Uri?) -> Unit = { _, _, _, _, _, _, _, _, _, _ -> }
+    onAddClick: (String, String, String, String, String, String, String, String, Uri?) -> Unit = { _, _, _, _, _, _, _, _, _ -> }
 ) {
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var cliente by remember { mutableStateOf("") }
@@ -65,7 +65,6 @@ fun CarAddScreen(
     var año by remember { mutableStateOf("") }
     var kilometros by remember { mutableStateOf("") }
     var color by remember { mutableStateOf("") }
-    var motor by remember { mutableStateOf("") }
     var observaciones by remember { mutableStateOf("") }
 
     val imagePickerLauncher = rememberLauncherForActivityResult(
@@ -222,14 +221,6 @@ fun CarAddScreen(
                 singleLine = true
             )
 
-            OutlinedTextField(
-                value = motor,
-                onValueChange = { motor = it },
-                label = { Text("Motor") },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true
-            )
-
             // Campo de observaciones
             Text(
                 text = "Observaciones",
@@ -258,7 +249,6 @@ fun CarAddScreen(
                         año,
                         kilometros,
                         color,
-                        motor,
                         observaciones,
                         imageUri
                     )

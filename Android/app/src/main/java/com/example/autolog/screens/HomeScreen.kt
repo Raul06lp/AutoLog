@@ -28,32 +28,23 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.autolog.cars.presentation.components.CarCard
+import com.example.autolog.data.Usuario
+import com.example.autolog.data.Vehiculo
 import com.example.autolog.ui.theme.AutoLogTheme
 import kotlinx.coroutines.launch
 
-data class Usuario(
-    val nombre: String,
-    val esMecanico: Boolean
-)
-
-data class Coche(
-    val id: String,
-    val imageUrl: String,
-    val cliente: String,
-    val marca: String,
-    val modelo: String
-)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     usuario: Usuario,
-    coches: List<Coche>,
+    vehiculos: List<Vehiculo>,
     onCarDetailsClick: (String) -> Unit = {},
     onCarCompleteClick: (String) -> Unit = {}
 ) {
@@ -121,7 +112,7 @@ fun HomeScreen(
                             fontWeight = FontWeight.Bold,
                             fontSize = 24.sp,
                             modifier = Modifier.fillMaxWidth(),
-                            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                            textAlign = TextAlign.Center
                         )
                     },
                     navigationIcon = {
@@ -151,15 +142,15 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(coches) { coche ->
+                items(vehiculos) { vehiculo ->
                     CarCard(
-                        imageUrl = coche.imageUrl,
-                        cliente = coche.cliente,
-                        marca = coche.marca,
-                        modelo = coche.modelo,
-                        onDetailsClick = { onCarDetailsClick(coche.id) },
+                        imageUrl = vehiculo.imageUrl,
+                        cliente = vehiculo.cliente.name,
+                        marca = vehiculo.marca,
+                        modelo = vehiculo.modelo,
+                        onDetailsClick = { onCarDetailsClick(vehiculo.id) },
                         onCompleteClick = if (usuario.esMecanico) {
-                            { onCarCompleteClick(coche.id) }
+                            { onCarCompleteClick(vehiculo.id) }
                         } else null
                     )
                 }
@@ -172,45 +163,71 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     AutoLogTheme {
-        val usuarioMecanico = Usuario(
-            nombre = "Juan Pérez",
-            esMecanico = false
+        val usuario = Usuario(
+            email = "",
+            name = "Carla Fernández",
+            esMecanico = true,
+            vehiculos = null
         )
 
         val cochesDemo = listOf(
-            Coche(
+            Vehiculo(
                 id = "1",
                 imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
-                cliente = "Carla Fernandez",
+                cliente = usuario,
                 marca = "Mazda",
-                modelo = "Miata MX5"
+                modelo = "Miata MX5",
+                matricula = "",
+                year = 2000,
+                kilometros = "",
+                color = "",
+                observaciones = "",
+                medidas = ""
             ),
-            Coche(
+            Vehiculo(
                 id = "2",
                 imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
-                cliente = "Pedro García",
+                cliente = usuario,
                 marca = "Toyota",
-                modelo = "Supra"
+                modelo = "Supra",
+                matricula = "",
+                year = 2000,
+                kilometros = "",
+                color = "",
+                observaciones = "",
+                medidas = ""
             ),
-            Coche(
+            Vehiculo(
                 id = "3",
                 imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
-                cliente = "Ana López",
+                cliente = usuario,
                 marca = "Honda",
-                modelo = "Civic Type R"
+                modelo = "Civic Type R",
+                matricula = "",
+                year = 2000,
+                kilometros = "",
+                color = "",
+                observaciones = "",
+                medidas = ""
             ),
-            Coche(
+            Vehiculo(
                 id = "4",
                 imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
-                cliente = "Luis Martínez",
+                cliente = usuario,
                 marca = "Nissan",
-                modelo = "GT-R R35"
+                modelo = "GT-R R35",
+                matricula = "",
+                year = 2000,
+                kilometros = "",
+                color = "",
+                observaciones = "",
+                medidas = ""
             )
         )
 
         HomeScreen(
-            usuario = usuarioMecanico,
-            coches = cochesDemo
+            usuario = usuario,
+            vehiculos = cochesDemo
         )
     }
 }

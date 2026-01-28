@@ -33,28 +33,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.autolog.data.Usuario
+import com.example.autolog.data.Vehiculo
 import com.example.autolog.ui.theme.AutoLogTheme
-
-data class CocheDetalle(
-    val id: String,
-    val imageUrl: String,
-    val cliente: String,
-    val marca: String,
-    val modelo: String,
-    val matricula: String,
-    val year: Int,
-    val kilometros: String,
-    val color: String,
-    val motor: String,
-    val observaciones: String,
-    val medidas: String = ""
-)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CarDetailScreen(
     modifier: Modifier = Modifier,
-    coche: CocheDetalle,
+    vehiculo: Vehiculo,
     onBackClick: () -> Unit = {}
 ) {
     Scaffold(
@@ -93,7 +80,7 @@ fun CarDetailScreen(
         ) {
             // Imagen del coche
             AsyncImage(
-                model = coche.imageUrl,
+                model = vehiculo.imageUrl,
                 contentDescription = "Imagen del coche",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -104,25 +91,24 @@ fun CarDetailScreen(
 
             // Tarjeta de información general
             InfoCard(title = "Información General") {
-                InfoRow(label = "CLIENTE", value = coche.cliente)
-                InfoRow(label = "MARCA", value = coche.marca)
-                InfoRow(label = "MODELO", value = coche.modelo)
-                InfoRow(label = "MATRÍCULA", value = coche.matricula)
+                InfoRow(label = "CLIENTE", value = vehiculo.cliente.name)
+                InfoRow(label = "MARCA", value = vehiculo.marca)
+                InfoRow(label = "MODELO", value = vehiculo.modelo)
+                InfoRow(label = "MATRÍCULA", value = vehiculo.matricula)
             }
 
             // Tarjeta de especificaciones
             InfoCard(title = "Especificaciones") {
-                InfoRow(label = "AÑO", value = coche.year.toString())
-                InfoRow(label = "KILÓMETROS", value = coche.kilometros)
-                InfoRow(label = "COLOR", value = coche.color)
-                InfoRow(label = "MOTOR", value = coche.motor)
+                InfoRow(label = "AÑO", value = vehiculo.year.toString())
+                InfoRow(label = "KILÓMETROS", value = vehiculo.kilometros)
+                InfoRow(label = "COLOR", value = vehiculo.color)
             }
 
             // Tarjeta de observaciones
-            if (coche.observaciones.isNotEmpty()) {
+            if (vehiculo.observaciones.isNotEmpty()) {
                 InfoCard(title = "Observaciones") {
                     Text(
-                        text = coche.observaciones,
+                        text = vehiculo.observaciones,
                         fontSize = 14.sp,
                         color = Color.Black,
                         lineHeight = 20.sp
@@ -194,20 +180,24 @@ fun InfoRow(
 @Composable
 fun CarDetailScreenPreview() {
     AutoLogTheme {
-        val cocheDemo = CocheDetalle(
+        val cocheDemo = Vehiculo(
             id = "1",
             imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
-            cliente = "Carla Fernandez",
+            cliente = Usuario(
+                email = "",
+                name = "Carla Fernández",
+                esMecanico = false,
+                vehiculos = null
+            ),
             marca = "Mazda",
             modelo = "Miata MX5",
             matricula = "1234 ABC",
             year = 1999,
             kilometros = "120.000 km",
             color = "Rojo",
-            motor = "1.8L 4 cilindros",
             observaciones = "Vehículo en excelente estado. Requiere cambio de aceite y revisión de frenos. El propietario menciona un ruido extraño al acelerar en segunda marcha."
         )
 
-        CarDetailScreen(coche = cocheDemo)
+        CarDetailScreen(vehiculo = cocheDemo)
     }
 }

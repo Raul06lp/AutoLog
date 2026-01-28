@@ -36,26 +36,27 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.autolog.data.Usuario
+import com.example.autolog.data.Vehiculo
 import com.example.autolog.ui.theme.AutoLogTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CarEditScreen(
     modifier: Modifier = Modifier,
-    coche: CocheDetalle,
+    vehiculo: Vehiculo,
     onBackClick: () -> Unit = {},
-    onSaveClick: (CocheDetalle) -> Unit = {}
+    onSaveClick: (Vehiculo) -> Unit = {}
 ) {
-    var cliente by remember { mutableStateOf(coche.cliente) }
-    var marca by remember { mutableStateOf(coche.marca) }
-    var modelo by remember { mutableStateOf(coche.modelo) }
-    var matricula by remember { mutableStateOf(coche.matricula) }
-    var year by remember { mutableStateOf(coche.year.toString()) }
-    var kilometros by remember { mutableStateOf(coche.kilometros) }
-    var color by remember { mutableStateOf(coche.color) }
-    var motor by remember { mutableStateOf(coche.motor) }
-    var observaciones by remember { mutableStateOf(coche.observaciones) }
-    var medidas by remember { mutableStateOf(coche.medidas) }
+    var cliente by remember { mutableStateOf(vehiculo.cliente.name) }
+    var marca by remember { mutableStateOf(vehiculo.marca) }
+    var modelo by remember { mutableStateOf(vehiculo.modelo) }
+    var matricula by remember { mutableStateOf(vehiculo.matricula) }
+    var year by remember { mutableStateOf(vehiculo.year.toString()) }
+    var kilometros by remember { mutableStateOf(vehiculo.kilometros) }
+    var color by remember { mutableStateOf(vehiculo.color) }
+    var observaciones by remember { mutableStateOf(vehiculo.observaciones) }
+    var medidas by remember { mutableStateOf(vehiculo.medidas) }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -93,7 +94,7 @@ fun CarEditScreen(
         ) {
             // Imagen del coche
             AsyncImage(
-                model = coche.imageUrl,
+                model = vehiculo.imageUrl,
                 contentDescription = "Imagen del coche",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -172,15 +173,6 @@ fun CarEditScreen(
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
-
-            OutlinedTextField(
-                value = motor,
-                onValueChange = { motor = it },
-                label = { Text("Motor") },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true
-            )
-
             // Campo de observaciones
             Text(
                 text = "Observaciones",
@@ -218,18 +210,7 @@ fun CarEditScreen(
             // Botón de guardar
             Button(
                 onClick = {
-                    val cocheActualizado = coche.copy(
-                        cliente = cliente,
-                        marca = marca,
-                        modelo = modelo,
-                        matricula = matricula,
-                        year = year.toIntOrNull() ?: coche.year,
-                        kilometros = kilometros,
-                        color = color,
-                        motor = motor,
-                        observaciones = observaciones
-                    )
-                    onSaveClick(cocheActualizado)
+                    onSaveClick
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -252,21 +233,25 @@ fun CarEditScreen(
 @Composable
 fun CarEditScreenPreview() {
     AutoLogTheme {
-        val cocheDemo = CocheDetalle(
+        val cocheDemo = Vehiculo(
             id = "1",
             imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
-            cliente = "Carla Fernandez",
+            cliente = Usuario(
+                email = "",
+                name = "Carla Fernández",
+                esMecanico = false,
+                vehiculos = null
+            ),
             marca = "Mazda",
             modelo = "Miata MX5",
             matricula = "1234 ABC",
             year = 1999,
             kilometros = "120.000 km",
             color = "Rojo",
-            motor = "1.8L 4 cilindros",
             observaciones = "Vehículo en excelente estado. Requiere cambio de aceite y revisión de frenos.",
             medidas = "Aceite cambiado. Frenos revisados, están en buen estado pero se recomienda volver en 3 meses para volver a mirarlos."
         )
 
-        CarEditScreen(coche = cocheDemo)
+        CarEditScreen(vehiculo = cocheDemo)
     }
 }
