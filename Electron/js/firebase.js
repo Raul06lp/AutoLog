@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js';
 import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js';
-import { getAuth } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js';
+import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js';
 
 // CONEXIÓN A FIREBASE
 const firebaseConfig = {

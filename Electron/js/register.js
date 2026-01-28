@@ -8,15 +8,9 @@ const email = document.getElementById('email');
 const password = document.getElementById('password');
 const confirmPassword = document.getElementById('confirm_password');
 const tipoCheckbox = document.getElementById('tipo');
-const switchLabel = document.getElementById('switch-label');
+// const switchLabel = document.getElementById('switch-label');
 
-// Actualizar etiqueta del switch
-tipoCheckbox.addEventListener('change', () => {
-    switchLabel.textContent = tipoCheckbox.checked ? 'Mecánico' : 'Cliente';
-});
 
-// Inicializar etiqueta
-switchLabel.textContent = tipoCheckbox.checked ? 'Mecánico' : 'Cliente';
 form.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -49,16 +43,16 @@ form.addEventListener('submit', (e) => {
         const user = userCredential.user;
 
         // Guardar datos adicionales en Firestore
-        const tipo = tipoCheckbox.checked ? 'mecanico' : 'cliente';
+        const tipo = tipoCheckbox.checked;
         await setDoc(doc(db, "usuario", user.uid), {
             email: user.email,
             username: username.value,
-            tipo: tipo,
+            esMecanico: tipo,
             createdAt: new Date()
         });
 
         // Redirigir según el tipo de usuario
-        if (tipo === 'cliente') {
+        if (tipo === false) {
             window.location.href = '../screensCliente/home.html';
         } else {
             window.location.href = '../screensMecanico/home.html';

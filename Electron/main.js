@@ -20,7 +20,7 @@ function createWindow() {
     // Mostramos la ventana cuando esté lista
     win.once('ready-to-show', () => {
         win.show();
-        win.webContents.openDevTools();
+        // win.webContents.openDevTools();
     });
 }
 

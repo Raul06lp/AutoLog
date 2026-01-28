@@ -20,13 +20,13 @@ form.addEventListener('submit', (e) => {
         const userDoc = await getDoc(doc(db, "usuario", user.uid));
         if (userDoc.exists()) {
             const userData = userDoc.data();
-            const tipo = userData.tipo;
+            const tipo = userData.esMecanico;
 
             console.log('Usuario logueado:', user.email);
             console.log('tipo:', tipo);
 
             // Redirigir según el tipo de usuario
-            if (tipo === 'cliente') {
+            if (tipo == false) {
                 window.location.href = 'screensCliente/home.html';
             } else {
                 window.location.href = 'screensMecanico/home.html';
