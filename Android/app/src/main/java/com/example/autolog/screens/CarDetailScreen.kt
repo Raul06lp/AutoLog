@@ -33,15 +33,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.autolog.data.Usuario
-import com.example.autolog.data.Vehiculo
+import com.example.autolog.core.domain.model.User
+import com.example.autolog.feature.vehicle.domain.model.Vehicle
 import com.example.autolog.ui.theme.AutoLogTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CarDetailScreen(
     modifier: Modifier = Modifier,
-    vehiculo: Vehiculo,
+    vehicle: Vehicle,
     onBackClick: () -> Unit = {}
 ) {
     Scaffold(
@@ -80,7 +80,7 @@ fun CarDetailScreen(
         ) {
             // Imagen del coche
             AsyncImage(
-                model = vehiculo.imageUrl,
+                model = vehicle.imageUrl,
                 contentDescription = "Imagen del coche",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -91,24 +91,24 @@ fun CarDetailScreen(
 
             // Tarjeta de información general
             InfoCard(title = "Información General") {
-                InfoRow(label = "CLIENTE", value = vehiculo.cliente.name)
-                InfoRow(label = "MARCA", value = vehiculo.marca)
-                InfoRow(label = "MODELO", value = vehiculo.modelo)
-                InfoRow(label = "MATRÍCULA", value = vehiculo.matricula)
+                InfoRow(label = "CLIENTE", value = vehicle.cliente.name)
+                InfoRow(label = "MARCA", value = vehicle.marca)
+                InfoRow(label = "MODELO", value = vehicle.modelo)
+                InfoRow(label = "MATRÍCULA", value = vehicle.matricula)
             }
 
             // Tarjeta de especificaciones
             InfoCard(title = "Especificaciones") {
-                InfoRow(label = "AÑO", value = vehiculo.year.toString())
-                InfoRow(label = "KILÓMETROS", value = vehiculo.kilometros)
-                InfoRow(label = "COLOR", value = vehiculo.color)
+                InfoRow(label = "AÑO", value = vehicle.year.toString())
+                InfoRow(label = "KILÓMETROS", value = vehicle.kilometros)
+                InfoRow(label = "COLOR", value = vehicle.color)
             }
 
             // Tarjeta de observaciones
-            if (vehiculo.observaciones.isNotEmpty()) {
+            if (vehicle.observaciones.isNotEmpty()) {
                 InfoCard(title = "Observaciones") {
                     Text(
-                        text = vehiculo.observaciones,
+                        text = vehicle.observaciones,
                         fontSize = 14.sp,
                         color = Color.Black,
                         lineHeight = 20.sp
@@ -180,14 +180,14 @@ fun InfoRow(
 @Composable
 fun CarDetailScreenPreview() {
     AutoLogTheme {
-        val cocheDemo = Vehiculo(
+        val cocheDemo = Vehicle(
             id = "1",
             imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
-            cliente = Usuario(
+            cliente = User(
                 email = "",
                 name = "Carla Fernández",
                 esMecanico = false,
-                vehiculos = null
+                vehicles = null
             ),
             marca = "Mazda",
             modelo = "Miata MX5",
@@ -198,6 +198,6 @@ fun CarDetailScreenPreview() {
             observaciones = "Vehículo en excelente estado. Requiere cambio de aceite y revisión de frenos. El propietario menciona un ruido extraño al acelerar en segunda marcha."
         )
 
-        CarDetailScreen(vehiculo = cocheDemo)
+        CarDetailScreen(vehicle = cocheDemo)
     }
 }

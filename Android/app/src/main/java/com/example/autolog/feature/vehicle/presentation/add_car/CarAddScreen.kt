@@ -1,4 +1,4 @@
-package com.example.autolog.screens
+package com.example.autolog.feature.vehicle.presentation.add_car
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -32,10 +32,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,29 +44,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.autolog.core.domain.model.User
+import com.example.autolog.feature.vehicle.domain.model.Vehicle
 import com.example.autolog.ui.theme.AutoLogTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CarAddScreen(
+    uiState: AddCarUiState,
+    onAction : (AddCarAction) -> Unit,
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit = {},
-    onAddClick: (String, String, String, String, String, String, String, String, Uri?) -> Unit = { _, _, _, _, _, _, _, _, _ -> }
 ) {
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
-    var cliente by remember { mutableStateOf("") }
-    var marca by remember { mutableStateOf("") }
-    var modelo by remember { mutableStateOf("") }
-    var matricula by remember { mutableStateOf("") }
-    var año by remember { mutableStateOf("") }
-    var kilometros by remember { mutableStateOf("") }
-    var color by remember { mutableStateOf("") }
-    var observaciones by remember { mutableStateOf("") }
+
 
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        imageUri = uri
+        uiState.imageUri = uri
     }
 
     Scaffold(
@@ -84,7 +74,7 @@ fun CarAddScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBackClick) {
+                    IconButton(onClick ={ onAction(AddCarAction.NavigateBack) }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Volver"
@@ -130,6 +120,7 @@ fun CarAddScreen(
                         contentScale = ContentScale.Crop
                     )
                 } else {
+
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -241,8 +232,13 @@ fun CarAddScreen(
             // Botón de añadir
             Button(
                 onClick = {
-                    onAddClick(
-                        cliente,
+                    onAction(
+                        AddCarAction(
+                            Vehicle(
+                                cliente = User(name = uiState.clientName),
+                            )
+                        )
+                        ,
                         marca,
                         modelo,
                         matricula,

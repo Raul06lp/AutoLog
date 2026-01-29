@@ -1,9 +1,11 @@
-package com.example.autolog.data
+package com.example.autolog.feature.vehicle.domain.model
 
-data class Vehiculo(
+import com.example.autolog.core.domain.model.User
+
+data class Vehicle(
     val id: String,
     val imageUrl: String,
-    val cliente: Usuario,
+    val cliente: User,
     val marca: String,
     val modelo: String,
     val matricula: String,

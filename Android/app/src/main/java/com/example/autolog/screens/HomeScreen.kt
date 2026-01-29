@@ -33,8 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.autolog.cars.presentation.components.CarCard
-import com.example.autolog.data.Usuario
-import com.example.autolog.data.Vehiculo
+import com.example.autolog.core.domain.model.User
+import com.example.autolog.feature.vehicle.domain.model.Vehicle
 import com.example.autolog.ui.theme.AutoLogTheme
 import kotlinx.coroutines.launch
 
@@ -43,8 +43,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    usuario: Usuario,
-    vehiculos: List<Vehiculo>,
+    user: User,
+    vehicles: List<Vehicle>,
     onCarDetailsClick: (String) -> Unit = {},
     onCarCompleteClick: (String) -> Unit = {}
 ) {
@@ -81,7 +81,7 @@ fun HomeScreen(
                         }
                     )
 
-                    if (usuario.esMecanico) {
+                    if (user.esMecanico) {
                         NavigationDrawerItem(
                             label = { Text("Gestión") },
                             selected = false,
@@ -142,14 +142,14 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(vehiculos) { vehiculo ->
+                items(vehicles) { vehiculo ->
                     CarCard(
                         imageUrl = vehiculo.imageUrl,
                         cliente = vehiculo.cliente.name,
                         marca = vehiculo.marca,
                         modelo = vehiculo.modelo,
                         onDetailsClick = { onCarDetailsClick(vehiculo.id) },
-                        onCompleteClick = if (usuario.esMecanico) {
+                        onCompleteClick = if (user.esMecanico) {
                             { onCarCompleteClick(vehiculo.id) }
                         } else null
                     )
@@ -163,18 +163,18 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     AutoLogTheme {
-        val usuario = Usuario(
+        val user = User(
             email = "",
             name = "Carla Fernández",
             esMecanico = true,
-            vehiculos = null
+            vehicles = null
         )
 
         val cochesDemo = listOf(
-            Vehiculo(
+            Vehicle(
                 id = "1",
                 imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
-                cliente = usuario,
+                cliente = user,
                 marca = "Mazda",
                 modelo = "Miata MX5",
                 matricula = "",
@@ -184,10 +184,10 @@ fun HomeScreenPreview() {
                 observaciones = "",
                 medidas = ""
             ),
-            Vehiculo(
+            Vehicle(
                 id = "2",
                 imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
-                cliente = usuario,
+                cliente = user,
                 marca = "Toyota",
                 modelo = "Supra",
                 matricula = "",
@@ -197,10 +197,10 @@ fun HomeScreenPreview() {
                 observaciones = "",
                 medidas = ""
             ),
-            Vehiculo(
+            Vehicle(
                 id = "3",
                 imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
-                cliente = usuario,
+                cliente = user,
                 marca = "Honda",
                 modelo = "Civic Type R",
                 matricula = "",
@@ -210,10 +210,10 @@ fun HomeScreenPreview() {
                 observaciones = "",
                 medidas = ""
             ),
-            Vehiculo(
+            Vehicle(
                 id = "4",
                 imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
-                cliente = usuario,
+                cliente = user,
                 marca = "Nissan",
                 modelo = "GT-R R35",
                 matricula = "",
@@ -226,8 +226,8 @@ fun HomeScreenPreview() {
         )
 
         HomeScreen(
-            usuario = usuario,
-            vehiculos = cochesDemo
+            user = user,
+            vehicles = cochesDemo
         )
     }
 }

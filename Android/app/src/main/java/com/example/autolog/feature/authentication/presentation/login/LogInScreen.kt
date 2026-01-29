@@ -1,4 +1,4 @@
-package com.example.autolog.screens
+package com.example.autolog.feature.authentication.presentation.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,6 +31,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.autolog.R
 import com.example.autolog.cars.presentation.components.AuthTextField
 import com.example.autolog.ui.theme.AutoLogTheme
 
@@ -52,7 +53,7 @@ fun LoginScreen(
     ) {
         Image(
             painter = painterResource(
-                id = com.example.autolog.R.drawable.logo_app
+                id = R.drawable.logo_app
             ),
             contentDescription = "Logo"
         )

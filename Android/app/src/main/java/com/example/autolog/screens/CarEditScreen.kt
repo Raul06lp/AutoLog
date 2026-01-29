@@ -36,27 +36,27 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.autolog.data.Usuario
-import com.example.autolog.data.Vehiculo
+import com.example.autolog.core.domain.model.User
+import com.example.autolog.feature.vehicle.domain.model.Vehicle
 import com.example.autolog.ui.theme.AutoLogTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CarEditScreen(
     modifier: Modifier = Modifier,
-    vehiculo: Vehiculo,
+    vehicle: Vehicle,
     onBackClick: () -> Unit = {},
-    onSaveClick: (Vehiculo) -> Unit = {}
+    onSaveClick: (Vehicle) -> Unit = {}
 ) {
-    var cliente by remember { mutableStateOf(vehiculo.cliente.name) }
-    var marca by remember { mutableStateOf(vehiculo.marca) }
-    var modelo by remember { mutableStateOf(vehiculo.modelo) }
-    var matricula by remember { mutableStateOf(vehiculo.matricula) }
-    var year by remember { mutableStateOf(vehiculo.year.toString()) }
-    var kilometros by remember { mutableStateOf(vehiculo.kilometros) }
-    var color by remember { mutableStateOf(vehiculo.color) }
-    var observaciones by remember { mutableStateOf(vehiculo.observaciones) }
-    var medidas by remember { mutableStateOf(vehiculo.medidas) }
+    var cliente by remember { mutableStateOf(vehicle.cliente.name) }
+    var marca by remember { mutableStateOf(vehicle.marca) }
+    var modelo by remember { mutableStateOf(vehicle.modelo) }
+    var matricula by remember { mutableStateOf(vehicle.matricula) }
+    var year by remember { mutableStateOf(vehicle.year.toString()) }
+    var kilometros by remember { mutableStateOf(vehicle.kilometros) }
+    var color by remember { mutableStateOf(vehicle.color) }
+    var observaciones by remember { mutableStateOf(vehicle.observaciones) }
+    var medidas by remember { mutableStateOf(vehicle.medidas) }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -94,7 +94,7 @@ fun CarEditScreen(
         ) {
             // Imagen del coche
             AsyncImage(
-                model = vehiculo.imageUrl,
+                model = vehicle.imageUrl,
                 contentDescription = "Imagen del coche",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -233,14 +233,14 @@ fun CarEditScreen(
 @Composable
 fun CarEditScreenPreview() {
     AutoLogTheme {
-        val cocheDemo = Vehiculo(
+        val cocheDemo = Vehicle(
             id = "1",
             imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
-            cliente = Usuario(
+            cliente = User(
                 email = "",
                 name = "Carla Fernández",
                 esMecanico = false,
-                vehiculos = null
+                vehicles = null
             ),
             marca = "Mazda",
             modelo = "Miata MX5",
@@ -252,6 +252,6 @@ fun CarEditScreenPreview() {
             medidas = "Aceite cambiado. Frenos revisados, están en buen estado pero se recomienda volver en 3 meses para volver a mirarlos."
         )
 
-        CarEditScreen(vehiculo = cocheDemo)
+        CarEditScreen(vehicle = cocheDemo)
     }
 }
