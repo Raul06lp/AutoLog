@@ -1,9 +1,37 @@
 const electron = require('electron');
-const { app, BrowserWindow } = electron;
+const { app, BrowserWindow, Menu } = electron;
+
+const templateMenu = [
+  {
+    label: 'Opciones',
+    submenu: [
+      {
+        label: 'Abrir DevTools',
+        accelerator: 'Ctrl+Shift+I', // Atajo de teclado
+        click(item, focusedWindow) {
+          focusedWindow.toggleDevTools(); // Abre/Cierra las herramientas
+        }
+      },
+      { type: 'separator' },
+      { label: 'Salir', role: 'quit' }
+    ]
+  },
+  {
+    label: 'Ver',
+    submenu: [
+      { role: 'reload' },
+      { role: 'forceReload' }
+    ]
+  }
+];
+
+const mainMenu = Menu.buildFromTemplate(templateMenu);
+Menu.setApplicationMenu(mainMenu);
 
 function createWindow() {
     const win = new BrowserWindow({
         show: false,
+        icon: './icons/logo.png',
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
@@ -11,7 +39,6 @@ function createWindow() {
     });
 
     win.loadFile('index.html');
-    win.setMenu(null);
 
     // Pantalla Completa
     win.maximize(); 
