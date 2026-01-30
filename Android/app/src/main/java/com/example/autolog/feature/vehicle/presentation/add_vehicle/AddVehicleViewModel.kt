@@ -1,4 +1,4 @@
-package com.example.autolog.feature.vehicle.presentation.add_car
+package com.example.autolog.feature.vehicle.presentation.add_vehicle
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,16 +8,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class AddCarViewModel(
+class AddVehicleViewModel(
     private val addVehiculo: AddVehicleUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(AddCarUiState())
+    private val _uiState = MutableStateFlow(AddVehicleUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun onAction(action: AddCarAction) {
+    fun onAction(action: AddVehicleAction) {
         when(action) {
-            is AddCarAction.AddCar -> onAddCar(action.vehicle)
+            is AddVehicleAction.AddCar -> onAddCar(action.vehicle)
             else -> {}
         }
 

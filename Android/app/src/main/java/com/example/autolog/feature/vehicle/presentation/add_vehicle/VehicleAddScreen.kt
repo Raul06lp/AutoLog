@@ -1,4 +1,4 @@
-package com.example.autolog.feature.vehicle.presentation.add_car
+package com.example.autolog.feature.vehicle.presentation.add_vehicle
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -51,8 +51,8 @@ import com.example.autolog.ui.theme.AutoLogTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CarAddScreen(
-    uiState: AddCarUiState,
-    onAction : (AddCarAction) -> Unit,
+    uiState: AddVehicleUiState,
+    onAction : (AddVehicleAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -74,7 +74,7 @@ fun CarAddScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick ={ onAction(AddCarAction.NavigateBack) }) {
+                    IconButton(onClick ={ onAction(AddVehicleAction.NavigateBack) }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Volver"
@@ -233,7 +233,7 @@ fun CarAddScreen(
             Button(
                 onClick = {
                     onAction(
-                        AddCarAction(
+                        AddVehicleAction(
                             Vehicle(
                                 cliente = User(name = uiState.clientName),
                             )

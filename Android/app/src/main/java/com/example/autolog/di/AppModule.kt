@@ -3,7 +3,7 @@ package com.example.autolog.di
 import com.example.autolog.feature.vehicle.domain.repository.FakeVehicleRepository
 import com.example.autolog.feature.vehicle.domain.repository.VehiculoRepository
 import com.example.autolog.feature.vehicle.domain.usecase.AddVehicleUseCase
-import com.example.autolog.feature.vehicle.presentation.add_car.AddCarViewModel
+import com.example.autolog.feature.vehicle.presentation.add_vehicle.AddVehicleViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -13,6 +13,6 @@ val appModule = module {
 
     factory { AddVehicleUseCase(get()) }
 
-    viewModel { AddCarViewModel(get()) }
+    viewModel { AddVehicleViewModel(get()) }
 
 }

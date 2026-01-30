@@ -55,6 +55,7 @@ fun HomeScreen(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
+                e       
                 Column(
                     modifier = Modifier.padding(16.dp)
                 ) {

@@ -1,24 +1,22 @@
-package com.example.autolog.feature.vehicle.presentation.add_car
+package com.example.autolog.feature.vehicle.presentation.add_vehicle
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.autolog.feature.vehicle.domain.usecase.AddVehicleUseCase
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AddCarRoute(
     onBack: () -> Unit,
-    viewModel: AddCarViewModel = koinViewModel()
+    viewModel: AddVehicleViewModel = koinViewModel()
 ) {
 
     val uiState by viewModel.uiState
         .collectAsStateWithLifecycle()
 
-    val onAction: (AddCarAction) -> Unit = { action ->
+    val onAction: (AddVehicleAction) -> Unit = { action ->
         when (action) {
-            AddCarAction.NavigateBack -> {
+            AddVehicleAction.NavigateBack -> {
                 onBack()
             }
             else -> viewModel.onAction((action))
