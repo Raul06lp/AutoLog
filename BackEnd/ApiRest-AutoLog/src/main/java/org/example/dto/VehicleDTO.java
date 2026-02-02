@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CocheDTO {
+public class VehicleDTO {
 
     private Long id;
     private String uidUsuario;
@@ -20,6 +20,4 @@ public class CocheDTO {
     private Integer kilometraje;
     private String notas;
     private String urlImagen;
-    private LocalDateTime fechaCreacion;
-    private LocalDateTime fechaActualizacion;
 }

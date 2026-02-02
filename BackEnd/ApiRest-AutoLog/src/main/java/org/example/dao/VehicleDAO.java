@@ -1,25 +1,25 @@
 package org.example.dao;
 
-import org.example.entities.Coche;
-import org.example.repository.CocheRepository;
+import org.example.entities.Vehiculo;
+import org.example.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.List;
 @Component
-public class CocheDAO {
+public class VehicleDAO {
 
     @Autowired
-    private CocheRepository cocheRepository;
+    private VehicleRepository cocheRepository;
 
-    public Coche guardar(Coche coche) {
-        return cocheRepository.save(coche);
+    public Vehiculo guardar(Vehiculo vehiculo) {
+        return cocheRepository.save(vehiculo);
     }
 
-    public List<Coche> buscarPorUsuario(String uidUsuario) {
+    public List<Vehiculo> buscarPorUsuario(String uidUsuario) {
         return cocheRepository.findByUidUsuario(uidUsuario);
     }
 
-    public List<Coche> buscarTodos() {
+    public List<Vehiculo> buscarTodos() {
         return cocheRepository.findAll();
     }
 

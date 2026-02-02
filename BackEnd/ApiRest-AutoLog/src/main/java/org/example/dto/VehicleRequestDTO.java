@@ -8,7 +8,7 @@ import jakarta.validation.constraints.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CocheRequestDTO {
+public class VehicleRequestDTO {
 
     @NotBlank(message = "La marca es obligatoria")
     @Size(max = 50, message = "La marca no puede exceder 50 caracteres")
