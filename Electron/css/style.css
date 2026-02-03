@@ -362,13 +362,14 @@ nav ul li a img {
 #content::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 1%;
+    top: -1px;
+    left: 2%;
     right: 2%;
-    width: 98%;
     height: 6px;
     background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 50%, var(--primary) 100%);
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    border-radius: 6px;
+    box-shadow: 0 6px 18px rgba(3, 4, 94, 0.08);
+    z-index: 2;
     background-size: 200% 100%;
     animation: shimmer 3s linear infinite;
 
@@ -802,6 +803,9 @@ button:hover::after {
 .wrapper::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, var(--primary-dark) 0%, var(--primary) 100%);
 }
+#perfil img {
+    border-radius: 50%;
+}
 
 .car-card {
     background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
@@ -820,11 +824,14 @@ button:hover::after {
 .car-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: -1px;
+    left: 2%;
+    right: 2%;
     height: 6px;
     background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 50%, var(--primary) 100%);
+    border-radius: 6px;
+    box-shadow: 0 6px 18px rgba(3, 4, 94, 0.08);
+    z-index: 2;
     background-size: 200% 100%;
     animation: shimmer 3s linear infinite;
 }
@@ -843,7 +850,6 @@ button:hover::after {
 
 .car-card:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 16px 48px rgba(0, 119, 182, 0.25), var(--glow-primary);
     border-color: var(--primary-light);
 }
 
@@ -964,3 +970,68 @@ input:checked + .slider:before {
 .switch:hover .slider {
     box-shadow: 0 0 12px rgba(0, 119, 182, 0.3);
 }
+.page-layout .folders-wrapper {
+    display: grid;
+    /* Tres columnas, con tarjetas más estrechas por defecto */
+    grid-template-columns: repeat(3, minmax(160px, 1fr));
+    gap: var(--spacing-lg);
+    padding: var(--spacing-2xl);
+    width: 100%;
+    align-items: start;
+    /* Empuja el wrapper hacia abajo para no solaparse con #title */
+    margin-top: 120px;
+}
+.page-layout .folders-wrapper > * {
+    width: 100%;
+    
+}
+
+/* Estilos para tarjetas de carpeta y contenido */
+.folder-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(245, 252, 255, 0.9));
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        /* Más compacta por defecto */
+        padding: var(--spacing-sm);
+        min-height: 54px;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        overflow: visible;
+}
+.folder-tab {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--accent);
+        height: 40px;
+}
+.folder-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--spacing-sm);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.32s ease, padding 0.28s ease;
+    padding-top: 0;
+}
+.folder-content.open {
+    max-height: 1000px; /* se expande al abrirse */
+    padding-top: var(--spacing-sm);
+}
+.file-item {
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(0,0,0,0.04);
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+     
