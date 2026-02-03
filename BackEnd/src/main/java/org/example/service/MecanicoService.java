@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.dto.MecanicoDTO;
 import org.example.dto.MecanicoRequestDTO;
 import org.example.dto.LoginDTO;
+import org.example.entities.Mecanico;
 import org.example.repository.MecanicoRepository;
 import org.example.repository.VehiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

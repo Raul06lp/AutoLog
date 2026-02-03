@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.dto.ClienteDTO;
 import org.example.dto.ClienteRequestDTO;
 import org.example.dto.LoginDTO;
+import org.example.entities.Cliente;
 import org.example.repository.ClienteRepository;
 import org.example.repository.VehiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
