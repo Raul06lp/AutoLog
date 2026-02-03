@@ -1,62 +1,73 @@
 package org.example.entities;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "vehiculo")
+@Table(name = "vehiculos")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Vehiculo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_vehiculo")
+    private Long idVehiculo;
 
-    @Column(name = "uid_usuario", nullable = false)
-    private String uidUsuario; // UID de Firebase
+    @Column(nullable = false, unique = true)
+    private String matricula;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String marca;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String modelo;
 
     @Column(nullable = false)
     private Integer año;
 
-    @Column(length = 20)
-    private String matricula;
-
-    @Column(length = 30)
+    @Column
     private String color;
 
-    @Column(name = "kilometraje")
+    @Column
     private Integer kilometraje;
 
-    @Column(length = 50)
-    private String combustible; // Gasolina, Diesel, Eléctrico, Híbrido
-
     @Column(columnDefinition = "TEXT")
-    private String notas;
+    private String observaciones;
 
-    @Column(name = "url_imagen")
-    private String urlImagen;
+    @Column(name = "medidas_tomadas", columnDefinition = "TEXT")
+    private String medidasTomadas;
 
-    @Column(name = "fecha_creacion")
-    private LocalDateTime fechaCreacion;
+    @Column(name = "estado_revision")
+    private String estadoRevision;
 
-    @Column(name = "fecha_actualizacion")
-    private LocalDateTime fechaActualizacion;
+    // IMAGEN COMO BLOB
+    @Lob
+    @Column(name = "imagen", columnDefinition = "LONGBLOB")
+    private byte[] imagen;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "id_mecanico")
+    private Mecanico mecanico;
+
+    @Column(name = "fecha_ingreso")
+    private LocalDateTime fechaIngreso;
 
     @PrePersist
     protected void onCreate() {
-        fechaCreacion = LocalDateTime.now();
+        fechaIngreso = LocalDateTime.now();
+        if (estadoRevision == null) {
+            estadoRevision = "pendiente";
+        }
     }
 
-    @PreUpdate
-    protected void onUpdate() {
-        fechaActualizacion = LocalDateTime.now();
-    }
 }
