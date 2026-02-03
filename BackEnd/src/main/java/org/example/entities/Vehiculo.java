@@ -29,7 +29,7 @@ public class Vehiculo {
     private String modelo;
 
     @Column(nullable = false)
-    private Integer año;
+    private Integer anio;
 
     @Column
     private String color;
@@ -46,7 +46,6 @@ public class Vehiculo {
     @Column(name = "estado_revision")
     private String estadoRevision;
 
-    // IMAGEN COMO BLOB
     @Lob
     @Column(name = "imagen", columnDefinition = "LONGBLOB")
     private byte[] imagen;
@@ -69,5 +68,4 @@ public class Vehiculo {
             estadoRevision = "pendiente";
         }
     }
-
 }

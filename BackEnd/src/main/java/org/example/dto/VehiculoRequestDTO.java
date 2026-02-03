@@ -10,8 +10,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class VehiculoRequestDTO {
     
-    @NotBlank(message = "La matrícula es obligatoria")
-    @Size(max = 20, message = "La matrícula no puede exceder 20 caracteres")
+    @NotBlank(message = "La matricula es obligatoria")
+    @Size(max = 20, message = "La matricula no puede exceder 20 caracteres")
     private String matricula;
 
     @NotBlank(message = "La marca es obligatoria")
@@ -22,10 +22,10 @@ public class VehiculoRequestDTO {
     @Size(max = 50, message = "El modelo no puede exceder 50 caracteres")
     private String modelo;
 
-    @NotNull(message = "El año es obligatorio")
-    @Min(value = 1900, message = "El año debe ser mayor a 1900")
-    @Max(value = 2027, message = "El año debe ser menor o igual a 2027")
-    private Integer año;
+    @NotNull(message = "El anio es obligatorio")
+    @Min(value = 1900, message = "El anio debe ser mayor a 1900")
+    @Max(value = 2027, message = "El anio debe ser menor o igual a 2027")
+    private Integer anio;
 
     private String color;
 
@@ -35,8 +35,6 @@ public class VehiculoRequestDTO {
     private String observaciones;
     private String medidasTomadas;
     private String estadoRevision;
-    
-    // Imagen en Base64
     private String imagenBase64;
 
     @NotNull(message = "El ID del cliente es obligatorio")

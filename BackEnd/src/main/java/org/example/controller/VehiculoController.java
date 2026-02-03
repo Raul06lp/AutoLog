@@ -24,10 +24,6 @@ public class VehiculoController {
     @Autowired
     private VehiculoService vehiculoService;
 
-    /**
-     * Crear nuevo vehículo
-     * POST /api/vehiculos
-     */
     @PostMapping
     public ResponseEntity<VehiculoDTO> crearVehiculo(@Valid @RequestBody VehiculoRequestDTO requestDTO) {
         try {
@@ -38,16 +34,12 @@ public class VehiculoController {
         }
     }
 
-    /**
-     * Crear vehículo con imagen MultipartFile
-     * POST /api/vehiculos/con-imagen
-     */
     @PostMapping(value = "/con-imagen", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<VehiculoDTO> crearVehiculoConImagen(
             @RequestParam("matricula") String matricula,
             @RequestParam("marca") String marca,
             @RequestParam("modelo") String modelo,
-            @RequestParam("año") Integer año,
+            @RequestParam("anio") Integer anio,
             @RequestParam(value = "color", required = false) String color,
             @RequestParam(value = "kilometraje", required = false) Integer kilometraje,
             @RequestParam(value = "observaciones", required = false) String observaciones,
@@ -62,7 +54,7 @@ public class VehiculoController {
             requestDTO.setMatricula(matricula);
             requestDTO.setMarca(marca);
             requestDTO.setModelo(modelo);
-            requestDTO.setAño(año);
+            requestDTO.setAnio(anio);
             requestDTO.setColor(color);
             requestDTO.setKilometraje(kilometraje);
             requestDTO.setObservaciones(observaciones);
@@ -71,7 +63,6 @@ public class VehiculoController {
             requestDTO.setIdCliente(idCliente);
             requestDTO.setIdMecanico(idMecanico);
             
-            // Convertir MultipartFile a Base64
             if (imagen != null && !imagen.isEmpty()) {
                 byte[] bytes = imagen.getBytes();
                 String imagenBase64 = Base64.getEncoder().encodeToString(bytes);
@@ -87,20 +78,12 @@ public class VehiculoController {
         }
     }
 
-    /**
-     * Obtener todos los vehículos
-     * GET /api/vehiculos
-     */
     @GetMapping
     public ResponseEntity<List<VehiculoDTO>> obtenerTodos() {
         List<VehiculoDTO> vehiculos = vehiculoService.obtenerTodos();
         return ResponseEntity.ok(vehiculos);
     }
 
-    /**
-     * Obtener vehículo por ID
-     * GET /api/vehiculos/{id}
-     */
     @GetMapping("/{id}")
     public ResponseEntity<VehiculoDTO> obtenerPorId(@PathVariable Long id) {
         return vehiculoService.obtenerPorId(id)
@@ -108,10 +91,6 @@ public class VehiculoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /**
-     * Obtener solo la imagen de un vehículo
-     * GET /api/vehiculos/{id}/imagen
-     */
     @GetMapping(value = "/{id}/imagen", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> obtenerImagen(@PathVariable Long id) {
         return vehiculoService.obtenerImagen(id)
@@ -121,10 +100,6 @@ public class VehiculoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /**
-     * Actualizar solo la imagen
-     * PUT /api/vehiculos/{id}/imagen
-     */
     @PutMapping("/{id}/imagen")
     public ResponseEntity<VehiculoDTO> actualizarImagen(
             @PathVariable Long id,
@@ -140,10 +115,6 @@ public class VehiculoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /**
-     * Actualizar imagen con MultipartFile
-     * PUT /api/vehiculos/{id}/imagen-file
-     */
     @PutMapping(value = "/{id}/imagen-file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<VehiculoDTO> actualizarImagenFile(
             @PathVariable Long id,
@@ -165,10 +136,6 @@ public class VehiculoController {
         }
     }
 
-    /**
-     * Obtener vehículo por matrícula
-     * GET /api/vehiculos/matricula/{matricula}
-     */
     @GetMapping("/matricula/{matricula}")
     public ResponseEntity<VehiculoDTO> obtenerPorMatricula(@PathVariable String matricula) {
         return vehiculoService.obtenerPorMatricula(matricula)
@@ -176,40 +143,24 @@ public class VehiculoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /**
-     * Obtener vehículos por cliente
-     * GET /api/vehiculos/cliente/{idCliente}
-     */
     @GetMapping("/cliente/{idCliente}")
     public ResponseEntity<List<VehiculoDTO>> obtenerPorCliente(@PathVariable Long idCliente) {
         List<VehiculoDTO> vehiculos = vehiculoService.obtenerPorCliente(idCliente);
         return ResponseEntity.ok(vehiculos);
     }
 
-    /**
-     * Obtener vehículos por mecánico
-     * GET /api/vehiculos/mecanico/{idMecanico}
-     */
     @GetMapping("/mecanico/{idMecanico}")
     public ResponseEntity<List<VehiculoDTO>> obtenerPorMecanico(@PathVariable Long idMecanico) {
         List<VehiculoDTO> vehiculos = vehiculoService.obtenerPorMecanico(idMecanico);
         return ResponseEntity.ok(vehiculos);
     }
 
-    /**
-     * Obtener vehículos por estado
-     * GET /api/vehiculos/estado/{estado}
-     */
     @GetMapping("/estado/{estado}")
     public ResponseEntity<List<VehiculoDTO>> obtenerPorEstado(@PathVariable String estado) {
         List<VehiculoDTO> vehiculos = vehiculoService.obtenerPorEstado(estado);
         return ResponseEntity.ok(vehiculos);
     }
 
-    /**
-     * Obtener vehículos por cliente y estado
-     * GET /api/vehiculos/cliente/{idCliente}/estado/{estado}
-     */
     @GetMapping("/cliente/{idCliente}/estado/{estado}")
     public ResponseEntity<List<VehiculoDTO>> obtenerPorClienteYEstado(
             @PathVariable Long idCliente,
@@ -218,10 +169,6 @@ public class VehiculoController {
         return ResponseEntity.ok(vehiculos);
     }
 
-    /**
-     * Obtener vehículos por mecánico y estado
-     * GET /api/vehiculos/mecanico/{idMecanico}/estado/{estado}
-     */
     @GetMapping("/mecanico/{idMecanico}/estado/{estado}")
     public ResponseEntity<List<VehiculoDTO>> obtenerPorMecanicoYEstado(
             @PathVariable Long idMecanico,
@@ -230,10 +177,6 @@ public class VehiculoController {
         return ResponseEntity.ok(vehiculos);
     }
 
-    /**
-     * Actualizar vehículo
-     * PUT /api/vehiculos/{id}
-     */
     @PutMapping("/{id}")
     public ResponseEntity<VehiculoDTO> actualizarVehiculo(
             @PathVariable Long id,
@@ -247,10 +190,6 @@ public class VehiculoController {
         }
     }
 
-    /**
-     * Asignar mecánico a vehículo
-     * PATCH /api/vehiculos/{id}/mecanico
-     */
     @PatchMapping("/{id}/mecanico")
     public ResponseEntity<VehiculoDTO> asignarMecanico(
             @PathVariable Long id,
@@ -268,10 +207,6 @@ public class VehiculoController {
         }
     }
 
-    /**
-     * Actualizar estado de revisión
-     * PATCH /api/vehiculos/{id}/estado
-     */
     @PatchMapping("/{id}/estado")
     public ResponseEntity<VehiculoDTO> actualizarEstado(
             @PathVariable Long id,
@@ -285,10 +220,6 @@ public class VehiculoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /**
-     * Eliminar vehículo
-     * DELETE /api/vehiculos/{id}
-     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarVehiculo(@PathVariable Long id) {
         vehiculoService.eliminarVehiculo(id);

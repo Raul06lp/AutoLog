@@ -1,6 +1,5 @@
 package org.example.repository;
 
-import org.example.entities.Mecanico;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -16,16 +16,13 @@ public class VehiculoDTO {
     private String matricula;
     private String marca;
     private String modelo;
-    private Integer año;
+    private Integer anio;
     private String color;
     private Integer kilometraje;
     private String observaciones;
     private String medidasTomadas;
     private String estadoRevision;
-
-    // Imagen en Base64 para enviar/recibir
     private String imagenBase64;
-    
     private Long idCliente;
     private String nombreCliente;
     private String emailCliente;
