@@ -1,4 +1,4 @@
-package com.example.autolog.cars.presentation.components
+package com.example.autolog.feature.authentication.presentation.components
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons

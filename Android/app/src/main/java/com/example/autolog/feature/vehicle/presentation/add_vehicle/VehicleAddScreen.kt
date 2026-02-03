@@ -112,9 +112,9 @@ fun CarAddScreen(
                     .clickable { imagePickerLauncher.launch("image/*") },
                 contentAlignment = Alignment.Center
             ) {
-                if (imageUri != null) {
+                if (uiState.imageUri != null) {
                     AsyncImage(
-                        model = imageUri,
+                        model = uiState.imageUri,
                         contentDescription = "Imagen seleccionada",
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
@@ -149,32 +149,32 @@ fun CarAddScreen(
             )
 
             OutlinedTextField(
-                value = cliente,
-                onValueChange = { cliente = it },
+                value = uiState.clientName,
+                onValueChange = { uiState.clientName = it },
                 label = { Text("Cliente") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
 
             OutlinedTextField(
-                value = marca,
-                onValueChange = { marca = it },
+                value = uiState.marca,
+                onValueChange = { uiState.marca = it },
                 label = { Text("Marca") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
 
             OutlinedTextField(
-                value = modelo,
-                onValueChange = { modelo = it },
+                value = uiState.modelo,
+                onValueChange = { uiState.modelo = it },
                 label = { Text("Modelo") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
 
             OutlinedTextField(
-                value = matricula,
-                onValueChange = { matricula = it },
+                value = uiState.matricula,
+                onValueChange = { uiState.matricula = it },
                 label = { Text("Matrícula") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
@@ -188,8 +188,8 @@ fun CarAddScreen(
             )
 
             OutlinedTextField(
-                value = año,
-                onValueChange = { año = it },
+                value = uiState.year,
+                onValueChange = { uiState.year = it },
                 label = { Text("Año") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
@@ -197,16 +197,16 @@ fun CarAddScreen(
             )
 
             OutlinedTextField(
-                value = kilometros,
-                onValueChange = { kilometros = it },
+                value = uiState.kilometros,
+                onValueChange = { uiState.kilometros = it },
                 label = { Text("Kilómetros") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
 
             OutlinedTextField(
-                value = color,
-                onValueChange = { color = it },
+                value = uiState.color,
+                onValueChange = { uiState.color = it },
                 label = { Text("Color") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
@@ -220,8 +220,8 @@ fun CarAddScreen(
             )
 
             OutlinedTextField(
-                value = observaciones,
-                onValueChange = { observaciones = it },
+                value = uiState.observaciones,
+                onValueChange = { uiState.observaciones = it },
                 label = { Text("Observaciones") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -233,20 +233,11 @@ fun CarAddScreen(
             Button(
                 onClick = {
                     onAction(
-                        AddVehicleAction(
+                        AddVehicleAction.AddCar(
                             Vehicle(
-                                cliente = User(name = uiState.clientName),
+                                cliente = User(name = uiState.clientName, esMecanico = false)
                             )
                         )
-                        ,
-                        marca,
-                        modelo,
-                        matricula,
-                        año,
-                        kilometros,
-                        color,
-                        observaciones,
-                        imageUri
                     )
                 },
                 modifier = Modifier
@@ -256,7 +247,7 @@ fun CarAddScreen(
                     containerColor = Color(0xFF1976D2)
                 ),
                 shape = RoundedCornerShape(12.dp),
-                enabled = cliente.isNotEmpty() && marca.isNotEmpty() && modelo.isNotEmpty()
+                enabled = uiState.clientName.isNotEmpty() && uiState.marca.isNotEmpty() && uiState.modelo.isNotEmpty()
             ) {
                 Text(
                     text = "Añadir Vehículo",

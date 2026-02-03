@@ -12,6 +12,5 @@ data class Vehicle(
     val year: Int,
     val kilometros: String,
     val color: String,
-    val observaciones: String,
-    val medidas: String = ""
+    val observaciones: String
 )

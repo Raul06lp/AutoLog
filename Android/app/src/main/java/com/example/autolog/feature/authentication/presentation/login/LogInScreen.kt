@@ -32,7 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.autolog.R
-import com.example.autolog.cars.presentation.components.AuthTextField
+import com.example.autolog.feature.authentication.presentation.components.AuthTextField
 import com.example.autolog.ui.theme.AutoLogTheme
 
 @Composable

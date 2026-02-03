@@ -1,4 +1,4 @@
-package com.example.autolog.cars.presentation.components
+package com.example.autolog.feature.vehicle.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

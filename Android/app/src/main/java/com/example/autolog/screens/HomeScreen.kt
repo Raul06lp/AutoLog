@@ -32,7 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.autolog.cars.presentation.components.CarCard
+import com.example.autolog.feature.vehicle.presentation.components.CarCard
 import com.example.autolog.core.domain.model.User
 import com.example.autolog.feature.vehicle.domain.model.Vehicle
 import com.example.autolog.ui.theme.AutoLogTheme
