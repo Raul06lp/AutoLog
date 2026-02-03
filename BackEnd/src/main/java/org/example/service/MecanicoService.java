@@ -38,7 +38,7 @@ public class MecanicoService {
     }
 
     /**
-     * Registrar nuevo mecánico
+     * Registrar nuevo mecanico
      */
     @Transactional
     public MecanicoDTO registrarMecanico(MecanicoRequestDTO requestDTO) throws NoSuchAlgorithmException {
@@ -56,7 +56,7 @@ public class MecanicoService {
     }
 
     /**
-     * Login de mecánico
+     * Login de mecanico
      */
     public Optional<MecanicoDTO> login(LoginDTO loginDTO) throws NoSuchAlgorithmException {
         String contrasenaEncriptada = encriptarContrasena(loginDTO.getContrasena());
@@ -66,21 +66,21 @@ public class MecanicoService {
     }
 
     /**
-     * Obtener mecánico por ID
+     * Obtener mecanico por ID
      */
     public Optional<MecanicoDTO> obtenerPorId(Long id) {
         return mecanicoRepository.findById(id).map(this::convertirADTO);
     }
 
     /**
-     * Obtener mecánico por email
+     * Obtener mecanico por email
      */
     public Optional<MecanicoDTO> obtenerPorEmail(String email) {
         return mecanicoRepository.findByEmail(email).map(this::convertirADTO);
     }
 
     /**
-     * Obtener todos los mecánicos
+     * Obtener todos los mecanicos
      */
     public List<MecanicoDTO> obtenerTodos() {
         return mecanicoRepository.findAll().stream()
@@ -89,7 +89,7 @@ public class MecanicoService {
     }
 
     /**
-     * Actualizar mecánico
+     * Actualizar mecanico
      */
     @Transactional
     public Optional<MecanicoDTO> actualizarMecanico(Long id, MecanicoRequestDTO requestDTO) throws NoSuchAlgorithmException {
@@ -116,7 +116,7 @@ public class MecanicoService {
     }
 
     /**
-     * Eliminar mecánico
+     * Eliminar mecanico
      */
     @Transactional
     public void eliminarMecanico(Long id) {
