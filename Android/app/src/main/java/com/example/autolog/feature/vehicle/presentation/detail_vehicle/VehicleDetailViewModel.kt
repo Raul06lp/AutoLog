@@ -33,7 +33,7 @@ class VehicleDetailViewModel(
 
         viewModelScope.launch {
             try {
-                val vehicle = repository.getVehicleById(vehicleId)
+                val vehicle = repository.getVehiculoById(vehicleId)
                 _uiState.update {
                     it.copy(
                         vehicle = vehicle,

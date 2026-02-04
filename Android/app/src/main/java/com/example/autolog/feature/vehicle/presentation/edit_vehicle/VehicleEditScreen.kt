@@ -1,4 +1,4 @@
-package com.example.autolog.screens
+package com.example.autolog.feature.vehicle.presentation.edit_vehicle
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -56,7 +56,7 @@ fun CarEditScreen(
     var kilometros by remember { mutableStateOf(vehicle.kilometros) }
     var color by remember { mutableStateOf(vehicle.color) }
     var observaciones by remember { mutableStateOf(vehicle.observaciones) }
-    var medidas by remember { mutableStateOf(vehicle.medidas) }
+
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -197,16 +197,6 @@ fun CarEditScreen(
                 color = Color(0xFF1976D2)
             )
 
-            OutlinedTextField(
-                value = medidas,
-                onValueChange = { medidas = it },
-                label = { Text("Medidas tomadas") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp),
-                maxLines = 5
-            )
-
             // Botón de guardar
             Button(
                 onClick = {
@@ -249,7 +239,6 @@ fun CarEditScreenPreview() {
             kilometros = "120.000 km",
             color = "Rojo",
             observaciones = "Vehículo en excelente estado. Requiere cambio de aceite y revisión de frenos.",
-            medidas = "Aceite cambiado. Frenos revisados, están en buen estado pero se recomienda volver en 3 meses para volver a mirarlos."
         )
 
         CarEditScreen(vehicle = cocheDemo)
