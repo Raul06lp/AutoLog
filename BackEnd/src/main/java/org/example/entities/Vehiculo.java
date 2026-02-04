@@ -47,6 +47,7 @@ public class Vehiculo {
     private String estadoRevision;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "imagen", columnDefinition = "BYTEA")
     private byte[] imagen;
 
