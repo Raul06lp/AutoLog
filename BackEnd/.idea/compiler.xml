@@ -6,8 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="autolog-mysql-api" />
         <module name="BackEnd" />
+        <module name="autolog-api" />
+        <module name="autolog-mysql-api" />
         <module name="coches-api" />
       </profile>
     </annotationProcessing>
@@ -15,6 +16,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="BackEnd" options="-parameters" />
+      <module name="autolog-api" options="-parameters" />
       <module name="autolog-mysql-api" options="-parameters" />
       <module name="coches-api" options="-parameters" />
     </option>
