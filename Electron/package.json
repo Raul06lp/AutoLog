@@ -11,7 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "electron": "^40.0.0",
-    "firebase": "^12.8.0"
+    "firebase": "^12.8.0",
+    "puppeteer-core": "^24.36.1"
   },
   "repository": {
     "type": "git",
