@@ -47,7 +47,7 @@ public class Vehiculo {
     private String estadoRevision;
 
     @Lob
-    @Column(name = "imagen", columnDefinition = "LONGBLOB")
+    @Column(name = "imagen", columnDefinition = "BYTEA")
     private byte[] imagen;
 
     @ManyToOne
