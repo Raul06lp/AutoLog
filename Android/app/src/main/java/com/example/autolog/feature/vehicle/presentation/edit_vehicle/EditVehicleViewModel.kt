@@ -3,6 +3,7 @@ package com.example.autolog.feature.vehicle.presentation.edit_vehicle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.autolog.feature.vehicle.domain.repository.VehiculoRepository
+import com.example.autolog.feature.vehicle.domain.usecase.EditVehicleUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -10,15 +11,12 @@ import kotlinx.coroutines.launch
 
 class EditVehicleViewModel(
     private val vehicleId: String,
-    private val repository: VehiculoRepository
+    private val repository: VehiculoRepository,
+    private val editCarUseCase: EditVehicleUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(VehicleEditUiState())
     val uiState = _uiState.asStateFlow()
-
-    init {
-        loadVehicle()
-    }
 
     fun onAction(action: VehicleEditAction) {
         when(action) {
@@ -38,38 +36,6 @@ class EditVehicleViewModel(
             }
         }
     }
-
-    private fun loadVehicle() {
-        _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-
-        viewModelScope.launch {
-            try {
-                val vehicle = repository.getVehiculoById(vehicleId)
-                _uiState.update {
-                    it.copy(
-                        originalVehicle = vehicle,
-                        imageUri = vehicle?.imageUrl ?: "",
-                        clientName = vehicle?.cliente?.name ?: "",
-                        marca = vehicle?.marca ?: "",
-                        modelo = vehicle?.modelo ?: "",
-                        matricula = vehicle?.matricula ?: "",
-                        year = vehicle?.year?.toString() ?: "",
-                        kilometros = vehicle?.kilometros ?: "",
-                        color = vehicle?.color ?: "",
-                        observaciones = vehicle?.observaciones ?: ""
-                    )
-                }
-            } catch (e: Exception) {
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        errorMessage = e.message ?: "Error al cargar el vehículo"
-                    )
-                }
-            }
-        }
-    }
-
     private fun updateImageUri(uri: String) {
         _uiState.update { it.copy(imageUri = uri) }
     }
@@ -114,7 +80,7 @@ class EditVehicleViewModel(
         val currentState = _uiState.value
         val originalVehicle = currentState.originalVehicle ?: return
 
-        // Validación básica
+
         if (currentState.clientName.isBlank() ||
             currentState.marca.isBlank() ||
             currentState.modelo.isBlank()) {

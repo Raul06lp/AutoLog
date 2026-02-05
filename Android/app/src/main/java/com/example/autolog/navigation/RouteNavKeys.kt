@@ -8,3 +8,9 @@ object HomeKey : NavKey
 
 @Serializable
 object AddCarKey: NavKey
+
+@Serializable
+data class VehicleDetailKey(val vehicleId: String) : NavKey
+
+@Serializable
+data class EditVehicleKey(val vehicleId: String) : NavKey

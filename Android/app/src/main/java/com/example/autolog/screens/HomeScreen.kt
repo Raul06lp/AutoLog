@@ -55,7 +55,7 @@ fun HomeScreen(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                e       
+
                 Column(
                     modifier = Modifier.padding(16.dp)
                 ) {
@@ -182,8 +182,8 @@ fun HomeScreenPreview() {
                 year = 2000,
                 kilometros = "",
                 color = "",
-                observaciones = "",
-                medidas = ""
+                observaciones = ""
+
             ),
             Vehicle(
                 id = "2",
@@ -195,8 +195,8 @@ fun HomeScreenPreview() {
                 year = 2000,
                 kilometros = "",
                 color = "",
-                observaciones = "",
-                medidas = ""
+                observaciones = ""
+
             ),
             Vehicle(
                 id = "3",
@@ -208,8 +208,8 @@ fun HomeScreenPreview() {
                 year = 2000,
                 kilometros = "",
                 color = "",
-                observaciones = "",
-                medidas = ""
+                observaciones = ""
+
             ),
             Vehicle(
                 id = "4",
@@ -221,8 +221,8 @@ fun HomeScreenPreview() {
                 year = 2000,
                 kilometros = "",
                 color = "",
-                observaciones = "",
-                medidas = ""
+                observaciones = ""
+
             )
         )
 
