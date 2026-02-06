@@ -553,15 +553,25 @@ button {
 .car-card {
     background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
     border-radius: 20px;
-    padding: 24px;
+    padding: 18px;
     box-shadow: var(--shadow-md);
     transition: var(--transition);
     border: 2px solid transparent;
     position: relative;
     overflow: hidden;
-    min-height: 280px;
+    min-height: 220px;
     display: flex;
     flex-direction: column;
+}
+
+.car-photo {
+    width: 100%;
+    height: 180px;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    background: #f1f1f1;
 }
 
 .car-card::before {
@@ -593,7 +603,7 @@ button {
 }
 
 .car-card p:last-of-type {
-    margin-bottom: 60px;
+    margin-bottom: 16px;
 }
 
 .car-card strong {
@@ -604,6 +614,23 @@ button {
     letter-spacing: 0.8px;
     display: inline-block;
     min-width: 80px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: auto;
+    flex-wrap: wrap;
+}
+
+.card-actions button {
+    padding: 8px 12px;
+    font-size: 12px;
+    border-radius: 10px;
+    flex: 0 0 auto;
+    min-width: auto;
 }
 
 /* Centrar formulario de login */

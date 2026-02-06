@@ -1,21 +1,16 @@
-import { auth, db } from './firebase.js';
-import { createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js';
-import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js';
-
 const form = document.querySelector('form');
 const username = document.getElementById('username');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const confirmPassword = document.getElementById('confirm_password');
 const tipoCheckbox = document.getElementById('tipo');
-// const switchLabel = document.getElementById('switch-label');
 
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
 
     // Limpiar mensaje de error anterior
-    document.getElementById('error-message').style.display = 'none';
+    // document.getElementById('error-message').style.display = 'none';
 
     // VALIDACIONES
     const errorElement = document.getElementById('error-message');
@@ -37,40 +32,47 @@ form.addEventListener('submit', (e) => {
         return;
     }
 
-    // CREAR USUARIO CON AUTH DE FIREBASE
-    createUserWithEmailAndPassword(auth, email.value, password.value)
-    .then(async (userCredential) => {
-        const user = userCredential.user;
+    // CREAR USUARIO USANDO API REST
+    (async () => {
+        const tipo = tipoCheckbox.checked; // false = cliente, true = mecanico
+        const endpoint = tipo
+            ? 'https://autolog-0mnd.onrender.com/api/mecanicos/registro'
+            : 'https://autolog-0mnd.onrender.com/api/clientes/registro';
 
-        // Guardar datos adicionales en Firestore
-        const tipo = tipoCheckbox.checked;
-        await setDoc(doc(db, "usuario", user.uid), {
-            email: user.email,
-            username: username.value,
-            esMecanico: tipo,
-            createdAt: new Date()
-        });
+        const datos = {
+            nombre: username.value,
+            email: email.value,
+            contrasena: password.value
+        };
 
-        // Redirigir según el tipo de usuario
-        if (tipo === false) {
-            window.location.href = '../screensCliente/home.html';
-        } else {
-            window.location.href = '../screensMecanico/home.html';
+        try {
+            const resp = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            });
+
+            const data = await resp.json().catch(() => ({}));
+
+            if (!resp.ok) {
+                const errorElement = document.getElementById('error-message');
+                const msg = data.message || data.error || 'Error en el registro.';
+                errorElement.textContent = msg;
+                errorElement.style.display = 'block';
+                return;
+            }
+
+            // Registro exitoso: redirigir según tipo
+            if (tipo === false) {
+                window.location.href = '../screensCliente/home.html';
+            } else {
+                window.location.href = '../screensMecanico/home.html';
+            }
+        } catch (err) {
+            console.error('Error en fetch registro:', err);
+            const errorElement = document.getElementById('error-message');
+            errorElement.textContent = 'No se pudo conectar con el servidor.';
+            errorElement.style.display = 'block';
         }
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error('Error en registro:', errorCode, errorMessage);
-        const errorElement = document.getElementById('error-message');
-        // Mostrar mensaje de error al usuario
-        if (errorCode === 'auth/email-already-in-use') {
-            errorElement.textContent = 'El correo electrónico ya está registrado.';
-        } else if (errorCode === 'auth/weak-password') {
-            errorElement.textContent = 'La contraseña es demasiado débil.';
-        } else {
-            errorElement.textContent = 'Error en el registro: ' + errorMessage;
-        }
-        errorElement.style.display = 'block';
-    });
+    })();
 });

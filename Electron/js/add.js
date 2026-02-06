@@ -1,7 +1,3 @@
-import { collection, addDoc } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-storage.js';
-import { db } from './firebase.js';
-
 console.log("Formulario de registro de vehículo listo.");
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,58 +19,81 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         
         try {
-            const storage = getStorage();
-            let fotoURL = '';
+            const userRaw = localStorage.getItem('autolog_user');
+            const user = userRaw ? JSON.parse(userRaw) : null;
+            const idMecanico = user?.role === 'mecanico' ? user.id : null;
 
-            // Subir imagen a Storage
-            if (foto.files && foto.files[0]) {
-                const file = foto.files[0];
-                const storageRef = ref(storage, 'vehiculos/' + Date.now() + '_' + file.name);
-                const uploadTask = uploadBytesResumable(storageRef, file);
-
-                // Esperar a que se complete la carga
-                await new Promise((resolve, reject) => {
-                    uploadTask.on('state_changed',
-                        (snapshot) => {
-                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            console.log('Progreso de carga: ' + progress + '%');
-                        },
-                        (error) => {
-                            console.error("Error en carga:", error);
-                            reject(error);
-                        },
-                        async () => {
-                            fotoURL = await getDownloadURL(uploadTask.snapshot.ref);
-                            console.log("Imagen subida. URL: ", fotoURL);
-                            resolve();
-                        }
-                    );
-                });
+            if (!idMecanico) {
+                alert('No se encontró el mecánico logeado. Inicia sesión nuevamente.');
+                return;
             }
 
-            const vehiculoData = {
-                correo: correoCliente.value,
-                marca: marca.value,
-                modelo: modelo.value,
-                matricula: matricula.value,
-                anyo: parseInt(anyo.value) || 0,
-                color: color.value,
-                kilometraje: parseInt(kilometraje.value) || 0,
-                estadoRevision: estadoRevision.value,
-                foto: fotoURL,
-                observaciones: observaciones.value,
-                fechaRegistro: new Date().toISOString()
-            };
-            
-            console.log("Datos a guardar:", vehiculoData);
-            
-            const docRef = await addDoc(collection(db, "vehiculo"), vehiculoData);
-            
-            console.log("Vehículo registrado con ID: ", docRef.id);
+            const clientesResp = await fetch('https://autolog-0mnd.onrender.com/api/clientes');
+            const clientesData = await clientesResp.json().catch(() => ([]));
+
+            if (!clientesResp.ok || !Array.isArray(clientesData)) {
+                alert('No se pudo obtener la lista de clientes.');
+                return;
+            }
+
+            const correo = correoCliente.value.trim().toLowerCase();
+            const cliente = clientesData.find((c) => {
+                const email = (c.email || c.correo || c.mail || '').toString().toLowerCase();
+                return email === correo;
+            });
+
+            if (!cliente) {
+                alert('No se encontró un cliente con ese correo.');
+                return;
+            }
+
+            const idCliente = cliente.id ?? cliente.idCliente;
+            if (!idCliente) {
+                alert('No se pudo obtener el ID del cliente.');
+                return;
+            }
+
+            const anioValue = parseInt(anyo.value, 10);
+            if (!matricula.value || !marca.value || !modelo.value || !anioValue) {
+                alert('Completa matrícula, marca, modelo y año.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('matricula', matricula.value);
+            formData.append('marca', marca.value);
+            formData.append('modelo', modelo.value);
+            formData.append('anio', anioValue.toString());
+            formData.append('idCliente', idCliente.toString());
+            formData.append('idMecanico', idMecanico.toString());
+
+            if (color.value) formData.append('color', color.value);
+            if (kilometraje.value) formData.append('kilometraje', kilometraje.value);
+            if (observaciones.value) formData.append('observaciones', observaciones.value);
+            if (estadoRevision.value) formData.append('estadoRevision', estadoRevision.value);
+            if (foto?.files && foto.files[0]) {
+                formData.append('imagen', foto.files[0]);
+            }
+
+            console.log("Datos a enviar (multipart):", Object.fromEntries(formData.entries()));
+
+            const resp = await fetch('https://autolog-0mnd.onrender.com/api/vehiculos/con-imagen', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await resp.json().catch(() => ({}));
+
+            if (!resp.ok) {
+                const msg = data.message || data.error || 'Error al registrar el vehículo.';
+                alert(msg);
+                return;
+            }
+
             form.reset();
             window.location.href = "home.html";
         } catch (e) {
-            console.error("✗ Error al agregar documento: ", e);
+            console.error("✗ Error al registrar vehículo: ", e);
             alert("Error: " + e.message);
         }
     })
