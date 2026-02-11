@@ -11,6 +11,194 @@ document.addEventListener("DOMContentLoaded", () => {
     titleEl.textContent = nombre ? `¡Bienvenido ${nombre}!` : '¡Bienvenido!';
   }
 
+  // Delegación para botones "Ver más" — carga detalle desde API y muestra modal
+  wrapper.addEventListener('click', async (ev) => {
+    const btn = ev.target.closest('.btn-ver-mas');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    if (!id) return;
+    try {
+      showModalLoading();
+      const resp = await fetch(`https://autolog-0mnd.onrender.com/api/vehiculos/${encodeURIComponent(id)}`);
+      const veh = await resp.json().catch(() => null);
+      if (!resp.ok || !veh) throw new Error('No se pudo obtener el vehículo');
+      renderModal(veh);
+    } catch (err) {
+      console.error('Error al cargar detalle:', err);
+      renderModal({ error: 'Error al cargar información del vehículo.' });
+    }
+  });
+
+  // Modal helpers
+  function showModal() {
+    const modal = document.getElementById('modalDetalle');
+    if (modal) modal.classList.remove('hidden');
+  }
+  function hideModal() {
+    const modal = document.getElementById('modalDetalle');
+    if (modal) modal.classList.add('hidden');
+  }
+  function showModalLoading() {
+    const body = document.getElementById('modalBody');
+    if (body) body.innerHTML = '<p>Cargando...</p>';
+    showModal();
+  }
+  function renderModal(veh) {
+    const body = document.getElementById('modalBody');
+    if (!body) return;
+    if (veh && veh.error) {
+      body.innerHTML = `<p>${veh.error}</p>`;
+      return;
+    }
+
+    let html = '';
+    if (veh.imagenBase64) {
+      html += `<img src="data:image/jpeg;base64,${veh.imagenBase64}" style="width:100%;max-height:260px;object-fit:cover;border-radius:8px;margin-bottom:12px;">`;
+    }
+
+    const skip = new Set(['imagenBase64', '__v', '_id']);
+    const entries = Object.entries(veh || {}).filter(([k]) => !skip.has(k));
+    if (entries.length === 0) {
+      html += '<p>No hay información adicional.</p>';
+    } else {
+      html += entries.map(([k, v]) => `<p><strong>${formatKey(k)}:</strong> ${escapeHTML(String(v ?? ''))}</p>`).join('');
+    }
+
+    body.innerHTML = html;
+  }
+
+  function formatKey(key) {
+    return key.replace(/([A-Z])/g, ' $1').replace(/_/g, ' ').replace(/^./, s => s.toUpperCase());
+  }
+
+  function escapeHTML(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  // Eventos de cierre del modal
+  const modalCloseButton = document.getElementById('modalClose');
+  if (modalCloseButton) modalCloseButton.addEventListener('click', hideModal);
+  const modalOverlay = document.getElementById('modalDetalle');
+  if (modalOverlay) modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) hideModal(); });
+
+  // --- Edit modal: abrir formulario con valores actuales y enviar PUT ---
+  wrapper.addEventListener('click', async (ev) => {
+    const btn = ev.target.closest('.btn-editar');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    if (!id) return;
+    try {
+      // fetch current vehicle
+      const resp = await fetch(`https://autolog-0mnd.onrender.com/api/vehiculos/${encodeURIComponent(id)}`);
+      const veh = await resp.json().catch(() => null);
+      if (!resp.ok || !veh) throw new Error('No se pudo obtener el vehículo para editar');
+      renderEditForm(veh, id);
+      showEditModal();
+    } catch (err) {
+      console.error('Error al obtener vehículo para editar', err);
+      // show quick error in detalle modal if edit modal missing
+      const editBody = document.getElementById('modalEditBody');
+      if (editBody) editBody.innerHTML = '<p>Error al cargar el formulario de edición.</p>';
+      showEditModal();
+    }
+  });
+
+  function showEditModal() {
+    const modal = document.getElementById('modalEditar');
+    if (modal) modal.classList.remove('hidden');
+  }
+  function hideEditModal() {
+    const modal = document.getElementById('modalEditar');
+    if (modal) modal.classList.add('hidden');
+  }
+
+  function renderEditForm(veh, id) {
+    const body = document.getElementById('modalEditBody');
+    if (!body) return;
+    const skip = new Set(['imagenBase64', '__v', '_id']);
+    const entries = Object.entries(veh || {}).filter(([k]) => !skip.has(k));
+
+    let html = `<form id="editForm">
+      <div style="display:flex;flex-direction:column;gap:10px;">
+    `;
+
+    // show image if exists
+    if (veh.imagenBase64) {
+      html += `<img src="data:image/jpeg;base64,${veh.imagenBase64}" style="width:100%;max-height:200px;object-fit:cover;border-radius:8px;margin-bottom:8px;">`;
+    }
+
+    entries.forEach(([k, v]) => {
+      // avoid editing idVehiculo key (keep as hidden)
+      if (k === 'idVehiculo') {
+        html += `<input type="hidden" name="${escapeHTML(k)}" value="${escapeHTML(String(v ?? ''))}">`;
+        return;
+      }
+      const name = escapeHTML(k);
+      const value = v == null ? '' : String(v);
+      // choose input type
+      const type = /^\d+$/.test(value) ? 'number' : 'text';
+      html += `
+        <label style="font-weight:700;color:#133;">${formatKey(k)}</label>
+        <input name="${name}" placeholder="${escapeHTML(value)}" value="${escapeHTML(value)}" type="${type}" />
+      `;
+    });
+
+    html += `
+        <div style="display:flex;gap:10px;margin-top:8px;">
+          <button type="submit" class="btn-submit">Guardar</button>
+          <button type="button" class="btn-reset" id="cancelEdit">Cancelar</button>
+        </div>
+      </div>
+    </form>`;
+
+    body.innerHTML = html;
+
+    const form = document.getElementById('editForm');
+    if (!form) return;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = form.querySelector('button[type=submit]');
+      if (submitBtn) submitBtn.disabled = true;
+      const formData = new FormData(form);
+      const payload = {};
+      for (const [k, v] of formData.entries()) {
+        payload[k] = v;
+      }
+      try {
+        const putResp = await fetch(`https://autolog-0mnd.onrender.com/api/vehiculos/${encodeURIComponent(id)}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await putResp.json().catch(() => ({}));
+        if (!putResp.ok) throw new Error(result?.message || 'Error al actualizar');
+        // success
+        const successNode = document.createElement('p');
+        successNode.textContent = 'Vehículo actualizado correctamente.';
+        body.prepend(successNode);
+        await mostrarCoches();
+        setTimeout(() => { hideEditModal(); }, 800);
+      } catch (err) {
+        console.error('Error en PUT', err);
+        const errNode = document.createElement('p');
+        errNode.style.color = 'red';
+        errNode.textContent = 'Error al actualizar vehículo.';
+        body.prepend(errNode);
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+
+    const cancelBtn = document.getElementById('cancelEdit');
+    if (cancelBtn) cancelBtn.addEventListener('click', hideEditModal);
+  }
+
+  // Close edit modal on overlay or close button
+  const modalEditClose = document.getElementById('modalEditClose');
+  if (modalEditClose) modalEditClose.addEventListener('click', hideEditModal);
+  const modalEditOverlay = document.getElementById('modalEditar');
+  if (modalEditOverlay) modalEditOverlay.addEventListener('click', (e) => { if (e.target === modalEditOverlay) hideEditModal(); });
+
   mostrarCoches();
 
   async function mostrarCoches() {
