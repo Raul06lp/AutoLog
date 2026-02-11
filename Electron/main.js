@@ -1,5 +1,8 @@
 const electron = require('electron');
 const { app, BrowserWindow, Menu } = electron;
+const remoteMain = require('@electron/remote/main');
+
+remoteMain.initialize();
 
 const templateMenu = [
   {
@@ -49,6 +52,8 @@ function createWindow() {
         win.show();
         // win.webContents.openDevTools();
     });
+    //remote 
+    remoteMain.enable(win.webContents);
 }
 
 app.on('ready', createWindow);

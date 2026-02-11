@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informes</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Informe de Reparación</title>
+    <link rel="stylesheet" href="../css/form.css">
 </head>
 
 <body>
@@ -15,13 +15,17 @@
                 <img src="../icons/close.png" alt="Back">
             </a>
         </div>
-        <div class="header">
+
+        <header class="header">
             <h1>Informe de Reparación</h1>
             <p>AutoLog</p>
-        </div>
+        </header>
+
         <div class="form-content">
             <form id="formularioTaller">
-                <div class="form-section">
+
+                <!-- Datos del Cliente -->
+                <section class="form-section">
                     <h2 class="section-title">Datos del Cliente</h2>
                     <div class="form-row">
                         <div class="form-group">
@@ -33,9 +37,10 @@
                             <input type="text" id="telefono" name="telefono">
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <div class="form-section">
+                <!-- Datos del Vehículo -->
+                <section class="form-section">
                     <h2 class="section-title">Datos del Vehículo</h2>
                     <div class="form-row">
                         <div class="form-group">
@@ -57,29 +62,32 @@
                             <input type="number" id="kilometraje" name="kilometraje">
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <div class="form-section">
+                <!-- Detalles de la Reparación -->
+                <section class="form-section">
                     <h2 class="section-title">Detalles de la Reparación</h2>
                     <div class="form-group">
                         <label for="fecha">Fecha de Reparación</label>
                         <input type="date" id="fecha" name="fecha" required>
                     </div>
-                    <div class="form-group">
-                        <label for="trabajosRealizados">Trabajos Realizados</label>
-                        <textarea id="trabajosRealizados" name="trabajosRealizados" required
-                            placeholder="Describe los trabajos realizados en el vehículo..."></textarea>
-                    </div>
+                    <label>Trabajos realizados</label>
+                    <table id="tablaFormTrabajos" class="tabla-trabajos-form">
+                        <thead>
+                            <tr>
+                                <th>Trabajo</th>
+                                <th>Precio (€)</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button type="button" id="btnAddTrabajo">+ Añadir trabajo</button>
                     <div class="form-group">
                         <label for="observaciones">Observaciones</label>
-                        <textarea id="observaciones" name="observaciones"
-                            placeholder="Notas adicionales"></textarea>
+                        <textarea id="observaciones" name="observaciones" placeholder="Notas adicionales"></textarea>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="precio">Precio de Reparación (€)</label>
-                            <input type="number" id="precio" name="precio" step="0.01" required>
-                        </div>
                         <div class="form-group">
                             <label for="estadoPago">Estado del Pago</label>
                             <select id="estadoPago" name="estadoPago">
@@ -89,15 +97,20 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </section>
 
                 <div class="btn-container">
-                    <button type="submit" class="btn-submit">Generar Informe</button>
+                    <button type="button" id="btnGenerar" class="btn-submit">
+                        Generar Informe
+                    </button>
                     <button type="reset" class="btn-reset">Limpiar Formulario</button>
                 </div>
+
             </form>
 
         </div>
     </div>
+    <script  src="../js/folder.js"></script>
 </body>
+
 </html>
