@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ? data.filter((v) => v.idMecanico === user.id)
           : data;
 
-      // Generar HTML dinámico para mostrar los vehículos
+      // Generar HTML para mostrar los vehículos
       let html = '';
       vehiculosFiltrados.forEach((vehiculo) => {
         const fotoSrc = vehiculo.imagenBase64
@@ -87,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (body) body.innerHTML = '<p>Cargando...</p>';
     showModal();
   }
+
   function renderModal(veh) {
     const body = document.getElementById('modalBody');
     if (!body) return;
@@ -100,8 +101,27 @@ document.addEventListener("DOMContentLoaded", () => {
       html += `<img src="data:image/jpeg;base64,${veh.imagenBase64}" style="width:100%;max-height:260px;object-fit:cover;border-radius:8px;margin-bottom:12px;">`;
     }
 
-    const skip = new Set(['imagenBase64', '__v', '_id']);
-    const entries = Object.entries(veh || {}).filter(([k]) => !skip.has(k));
+    // Definir los campos específicos que queremos mostrar
+    const camposAMostrar = [
+      'matricula',
+      'marca',
+      'modelo',
+      'anio',
+      'color',
+      'kilometraje',
+      'observaciones',
+      'medidasTomadas',
+      'estadoRevision',
+      'nombreCliente',
+      'nombreMecanico',
+      'emailMecanico',
+    ];
+
+    // Filtrar solo los campos definidos que existan en el vehículo
+    const entries = camposAMostrar
+      .filter(campo => veh.hasOwnProperty(campo) && veh[campo] !== null && veh[campo] !== undefined)
+      .map(campo => [campo, veh[campo]]);
+
     if (entries.length === 0) {
       html += '<p>No hay información adicional.</p>';
     } else {

@@ -551,17 +551,16 @@ button {
 
 .car-card {
     background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
-    border-radius: 20px;
-    padding: 18px;
+    border-radius: 25px;
+    padding: 20px;
     box-shadow: var(--shadow-md);
     transition: var(--transition);
     border: 2px solid transparent;
     position: relative;
     overflow: hidden;
-    height: 380px;
+    min-height: 320px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     padding-bottom: 14px;
 }
 
@@ -573,16 +572,6 @@ button {
     border-radius: 14px;
     margin-bottom: 12px;
     background: #f1f1f1;
-}
-
-.car-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
 }
 
 .car-card:hover {
@@ -624,6 +613,7 @@ button {
     align-items: center;
     margin-top: auto;
     flex-wrap: wrap;
+    margin-top: 10px !important;
 }
 
 .card-actions button {
@@ -860,12 +850,14 @@ input:checked + .slider:before {
     position: absolute;
     top: 8px;
     right: 10px;
-    background: transparent;
-    border: none;
-    font-size: 28px;
+    background: rgb(196, 70, 70);
+    border-radius: 50% !important;
+    font-size: 20px;
     line-height: 1;
     cursor: pointer;
     color: #333;
+    width: 32px !important;
+
 }
 .modal-content p { margin: 6px 0; }
 .modal-content p strong { display: inline-block; min-width: 140px; color: var(--accent); }
