@@ -1,10 +1,10 @@
 package com.example.autolog.di
 
 import com.example.autolog.core.data.remote.api.VehiculoApi
-import com.example.autolog.feature.vehicle.domain.repository.FakeVehicleRepository
-import com.example.autolog.feature.vehicle.domain.repository.VehiculoRepository
-import com.example.autolog.feature.vehicle.domain.usecase.AddVehicleUseCase
-import com.example.autolog.feature.vehicle.presentation.add_vehicle.AddVehicleViewModel
+import com.example.autolog.domain.repository.FakeVehicleRepository
+import com.example.autolog.domain.repository.VehiculoRepository
+import com.example.autolog.domain.usecase.AddVehicleUseCase
+import com.example.autolog.presentation.screens.add_vehicle.AddVehicleViewModel
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

@@ -5,7 +5,7 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.example.autolog.feature.vehicle.presentation.add_vehicle.AddCarRoute
+import com.example.autolog.presentation.screens.add_vehicle.AddCarRoute
 
 @Composable
 fun NavigationRoot(startRoute: NavKey= HomeKey) {
