@@ -8,9 +8,7 @@ class AddVehicleUseCase(val repository: VehiculoRepository) {
     suspend operator fun invoke(vehicle: Vehicle) {
         if(vehicle.matricula.isBlank()) throw IllegalArgumentException("ghhghf")
 
-        repository.ibsertVehiculo(vehicle = vehicle)
-
-
+        repository.insertVehiculo(vehicle = vehicle)
     }
 
 }

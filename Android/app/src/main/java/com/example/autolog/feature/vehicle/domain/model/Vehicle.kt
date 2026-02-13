@@ -1,10 +1,10 @@
 package com.example.autolog.feature.vehicle.domain.model
 
-import com.example.autolog.core.domain.model.User
+import android.net.Uri
 
 data class Vehicle(
     val id: String,
-    val imageUrl: String,
+    val imagen: Uri? = null,
     val cliente: User,
     val marca: String,
     val modelo: String,

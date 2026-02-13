@@ -95,7 +95,7 @@ class EditVehicleViewModel(
         viewModelScope.launch {
             try {
                 val updatedVehicle = originalVehicle.copy(
-                    imageUrl = currentState.imageUri,
+                    imagen = null,
                     cliente = originalVehicle.cliente.copy(name = currentState.clientName),
                     marca = currentState.marca,
                     modelo = currentState.modelo,

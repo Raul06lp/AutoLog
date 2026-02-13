@@ -1,7 +1,9 @@
 package com.example.autolog.feature.vehicle.presentation.add_vehicle
 
+import android.net.Uri
+
 data class AddVehicleUiState(
-    var imageUri : String ="",
+    var imageUri : Uri? = null,
     var clientName : String = "",
     var marca: String = "",
     var modelo: String = "",

@@ -1,5 +1,6 @@
 package com.example.autolog.feature.vehicle.presentation.components
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,7 +37,7 @@ import coil.compose.AsyncImage
 @Composable
 fun CarCard(
     modifier: Modifier = Modifier,
-    imageUrl: String,
+    imagen: Uri?,
     cliente: String,
     marca: String,
     modelo: String,
@@ -62,7 +63,7 @@ fun CarCard(
         ) {
             // Imagen del coche
             AsyncImage(
-                model = imageUrl,
+                model = imagen,
                 contentDescription = "Imagen del coche",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -213,7 +214,7 @@ fun CarCardPreview() {
         // Vista del mecánico (con dos botones)
         Text("Vista del mecánico:", fontWeight = FontWeight.Bold)
         CarCard(
-            imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
+            imagen = null,
             cliente = "Carla Fernandez",
             marca = "Mazda",
             modelo = "Miata mx5",
@@ -226,7 +227,7 @@ fun CarCardPreview() {
         // Vista del cliente (solo un botón)
         Text("Vista del cliente:", fontWeight = FontWeight.Bold)
         CarCard(
-            imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
+            imagen = null,
             cliente = "Carla Fernandez",
             marca = "Mazda",
             modelo = "Miata mx5",

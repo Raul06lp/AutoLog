@@ -44,7 +44,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.autolog.core.domain.model.User
 import com.example.autolog.feature.vehicle.domain.model.Vehicle
 import com.example.autolog.ui.theme.AutoLogTheme
 
@@ -98,7 +97,7 @@ fun CarAddScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // Selector de imagen
-            Box(
+           Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
@@ -129,7 +128,7 @@ fun CarAddScreen(
                             imageVector = Icons.Default.AddAPhoto,
                             contentDescription = "Añadir foto",
                             modifier = Modifier.size(48.dp),
-                            tint = Color(0xFF1976D2)
+                           tint = Color(0xFF1976D2)
                         )
                         Text(
                             text = "Toca para añadir foto",
@@ -138,8 +137,8 @@ fun CarAddScreen(
                             textAlign = TextAlign.Center
                         )
                     }
-                }
-            }
+              }
+           }
 
             // Campos de información general
             Text(
@@ -196,6 +195,7 @@ fun CarAddScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
+
             OutlinedTextField(
                 value = uiState.kilometros,
                 onValueChange = { uiState.kilometros = it },
@@ -235,7 +235,16 @@ fun CarAddScreen(
                     onAction(
                         AddVehicleAction.AddCar(
                             Vehicle(
-                                cliente = User(name = uiState.clientName, esMecanico = false)
+                                id = TODO(),
+                                imagen = TODO(),
+                                marca = TODO(),
+                                modelo = TODO(),
+                                matricula = TODO(),
+                                year = TODO(),
+                                kilometros = TODO(),
+                                color = TODO(),
+                                observaciones = TODO(),
+                                cliente = TODO()
                             )
                         )
                     )
@@ -262,6 +271,10 @@ fun CarAddScreen(
 @Composable
 fun CarAddScreenPreview() {
     AutoLogTheme {
-        CarAddScreen()
+        CarAddScreen(
+            uiState = TODO(),
+            onAction = TODO(),
+            modifier = TODO()
+        )
     }
 }

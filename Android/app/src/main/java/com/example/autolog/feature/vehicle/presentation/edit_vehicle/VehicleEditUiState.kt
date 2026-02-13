@@ -1,11 +1,12 @@
 package com.example.autolog.feature.vehicle.presentation.edit_vehicle
 
 
+import android.net.Uri
 import com.example.autolog.feature.vehicle.domain.model.Vehicle
 
 data class VehicleEditUiState(
     val originalVehicle: Vehicle? = null,
-    val imageUri: String = "",
+    val imageUri: Uri? = null,
     val clientName: String = "",
     val marca: String = "",
     val modelo: String = "",

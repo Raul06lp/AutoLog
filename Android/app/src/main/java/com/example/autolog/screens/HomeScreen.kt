@@ -33,7 +33,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.autolog.feature.vehicle.presentation.components.CarCard
-import com.example.autolog.core.domain.model.User
 import com.example.autolog.feature.vehicle.domain.model.Vehicle
 import com.example.autolog.ui.theme.AutoLogTheme
 import kotlinx.coroutines.launch
@@ -82,7 +81,7 @@ fun HomeScreen(
                         }
                     )
 
-                    if (user.esMecanico) {
+                    if (user::class.simpleName == "Mecanico") {
                         NavigationDrawerItem(
                             label = { Text("Gestión") },
                             selected = false,
@@ -145,12 +144,12 @@ fun HomeScreen(
             ) {
                 items(vehicles) { vehiculo ->
                     CarCard(
-                        imageUrl = vehiculo.imageUrl,
+                        imagen = vehiculo.imagen,
                         cliente = vehiculo.cliente.name,
                         marca = vehiculo.marca,
                         modelo = vehiculo.modelo,
                         onDetailsClick = { onCarDetailsClick(vehiculo.id) },
-                        onCompleteClick = if (user.esMecanico) {
+                        onCompleteClick = if (user::class.simpleName == "Mecanico") {
                             { onCarCompleteClick(vehiculo.id) }
                         } else null
                     )
@@ -164,17 +163,16 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     AutoLogTheme {
-        val user = User(
+        val user = User.Mecanico(
             email = "",
             name = "Carla Fernández",
-            esMecanico = true,
-            vehicles = null
+            id = 123
         )
 
         val cochesDemo = listOf(
             Vehicle(
                 id = "1",
-                imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
+                imagen = null,
                 cliente = user,
                 marca = "Mazda",
                 modelo = "Miata MX5",
@@ -187,7 +185,7 @@ fun HomeScreenPreview() {
             ),
             Vehicle(
                 id = "2",
-                imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
+                imagen = null,
                 cliente = user,
                 marca = "Toyota",
                 modelo = "Supra",
@@ -200,7 +198,7 @@ fun HomeScreenPreview() {
             ),
             Vehicle(
                 id = "3",
-                imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
+                imagen = null,
                 cliente = user,
                 marca = "Honda",
                 modelo = "Civic Type R",
@@ -213,7 +211,7 @@ fun HomeScreenPreview() {
             ),
             Vehicle(
                 id = "4",
-                imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
+                imagen = null,
                 cliente = user,
                 marca = "Nissan",
                 modelo = "GT-R R35",

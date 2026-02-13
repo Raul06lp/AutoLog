@@ -1,11 +1,13 @@
 package com.example.autolog.feature.vehicle.presentation.edit_vehicle
 
+import android.net.Uri
+
 sealed interface VehicleEditAction {
     data object NavigateBack : VehicleEditAction
     data object SaveVehicle : VehicleEditAction
 
     // Acciones para actualizar cada campo del formulario
-    data class UpdateImageUri(val uri: String) : VehicleEditAction
+    data class UpdateImageUri(val uri: Uri?) : VehicleEditAction
     data class UpdateClientName(val name: String) : VehicleEditAction
     data class UpdateMarca(val marca: String) : VehicleEditAction
     data class UpdateModelo(val modelo: String) : VehicleEditAction

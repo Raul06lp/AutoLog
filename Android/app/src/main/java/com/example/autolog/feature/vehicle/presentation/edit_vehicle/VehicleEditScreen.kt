@@ -36,7 +36,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.autolog.core.domain.model.User
 import com.example.autolog.feature.vehicle.domain.model.Vehicle
 import com.example.autolog.ui.theme.AutoLogTheme
 
@@ -94,7 +93,7 @@ fun CarEditScreen(
         ) {
             // Imagen del coche
             AsyncImage(
-                model = vehicle.imageUrl,
+                model = vehicle.imagen,
                 contentDescription = "Imagen del coche",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -225,7 +224,7 @@ fun CarEditScreenPreview() {
     AutoLogTheme {
         val cocheDemo = Vehicle(
             id = "1",
-            imageUrl = "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/438ad923cef6d8239e95d61e7d6849486bae11d9/photos/9lRX14pG-G0xeMwtrjW-(edit).jpg?t=166569778341",
+            imagen = null,
             cliente = User(
                 email = "",
                 name = "Carla Fernández",
