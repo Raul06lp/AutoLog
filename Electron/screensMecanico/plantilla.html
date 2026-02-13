@@ -1,59 +1,88 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Informe de Reparación</title>
-    <link rel="stylesheet" href="plantilla.css">
-</head>
-<body>
+    <link rel="stylesheet" href="plantilla.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><img id="logo" src="../icons/logo.png" alt="Logo" /></li>
+        <li>
+          <div id="navButton">
+            <a href="home.html"><img src="../icons/car.png" alt="Home" /></a>
+          </div>
+        </li>
+        <li>
+          <div id="navButton">
+            <a href="add.html"><img src="../icons/add.png" alt="add" /></a>
+          </div>
+        </li>
+        <li>
+          <div id="navButton">
+            <a href="folder.html"
+              ><img src="../icons/folder.png" alt="folder"
+            /></a>
+          </div>
+        </li>
+        <li>
+          <div id="logOut">
+            <a href="../index.html"
+              ><img src="../icons/logOut.svg" alt="logOut"
+            /></a>
+          </div>
+        </li>
+      </ul>
+    </nav>
 
-    <header>
+    <div id="content">
+      <header>
         <h1>Informe de Reparación</h1>
         <p>AutoLog</p>
-    </header>
+      </header>
 
-    <section>
+      <section>
         <h2>Datos del Cliente</h2>
         <p><strong>Nombre:</strong> <span id="nombreCliente"></span></p>
         <p><strong>Teléfono:</strong> <span id="telefono"></span></p>
-    </section>
+      </section>
 
-    <section>
+      <section>
         <h2>Datos del Vehículo</h2>
         <p><strong>Marca:</strong> <span id="marca"></span></p>
         <p><strong>Modelo:</strong> <span id="modelo"></span></p>
         <p><strong>Matrícula:</strong> <span id="matricula"></span></p>
         <p><strong>Kilometraje:</strong> <span id="kilometraje"></span></p>
-    </section>
+      </section>
 
-    <section>
+      <section>
         <h2>Detalles de la Reparación</h2>
         <p><strong>Fecha:</strong> <span id="fecha"></span></p>
 
         <table id="tablaTrabajos">
-            <thead>
-                <tr>
-                    <th>Trabajo</th>
-                    <th>Precio (€)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Se inyectarán los trabajos aquí -->
-            </tbody>
+          <thead>
+            <tr>
+              <th>Trabajo</th>
+              <th>Precio (€)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Se inyectarán los trabajos aquí -->
+          </tbody>
         </table>
 
         <p><strong>Observaciones:</strong> <span id="observaciones"></span></p>
         <p><strong>Total:</strong> <span id="total"></span></p>
         <p><strong>Estado del Pago:</strong> <span id="estadoPago"></span></p>
-    </section>
+      </section>
 
-    <seaction id="firmas">
+      <seaction id="firmas">
         <h2>Firma del Cliente</h2>
         <p><span id="firmaCliente"></span></p>
         <h2>Firma del Mecánico</h2>
         <p><span id="firmaMecanico"></span></p>
-    </seaction>
-
-
-</body>
+      </seaction>
+    </div>
+  </body>
 </html>

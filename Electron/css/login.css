@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* VARIABLES (heredadas del estilo principal) */
+:root {
+    --primary: #0077b6;
+    --primary-dark: #023e8a;
+    --primary-light: #00b4d8;
+    --secondary: #0B6FA4;
+    --bg-main: #CAF0F8;
+    --bg-card: #F2FDFF;
+    --accent: #03045E;
+    --text-dark: #03045E;
+    --text-light: #333;
+    --border: #e0e0e0;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BODY DE LOGIN - Sin navegación lateral */
+body.login-page {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-light);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-left: 0;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* HEADER DEL LOGIN */
+body.login-page header h1 {
+    text-align: center;
+    color: var(--accent);
+    font-size: 65px;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+body.login-page header p,
+body.login-page header .subtitulo {
+    text-align: center;
+    color: var(--accent);
+    font-size: 25px;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+/* CONTENEDOR PRINCIPAL DE LOGIN */
+body.login-page #content {
+    width: 90%;
+    max-width: 600px;
+    min-height: auto;
+    background: linear-gradient(135deg, #ffffff 0%, var(--bg-card) 100%);
+    border-radius: 30px;
+    padding: 40px 50px 50px;
+    margin: 20px auto;
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+}
+
+/* TÍTULO DEL FORMULARIO */
+.form_title {
+    text-align: center;
+    color: var(--accent);
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* FORMULARIO DE LOGIN */
+body.login-page #content form {
+    text-align: center;
+}
+
+/* LABELS DEL LOGIN */
+.log_label {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #03045E;
+    font-weight: 500;
+    font-size: 20px;
+    text-align: left;
+    margin-left: 20%;
+}
+
+/* INPUTS DEL LOGIN */
+.inputlogin {
+    width: 60% !important;
+    padding: 14px 18px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 15px;
+    transition: var(--transition);
+    font-family: inherit;
+    background: #ffffff;
+    color: var(--text-dark);
+    margin: 0 auto;
+    display: block;
+}
+
+body.login-page #content form input[type="text"],
+body.login-page #content form input[type="email"],
+body.login-page #content form input[type="password"] {
+    margin: 0 auto;
+    display: block;
+}
+
+.inputlogin:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.1);
+    transform: translateY(-1px);
+}
+
+/* BOTÓN DE LOGIN */
+body.login-page button {
+    flex: 1;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: #0077B6;
+    color: white;
+    box-shadow: 0 4px 16px rgba(0, 119, 182, 0.3);
+    min-width: 200px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+    display: block;
+}
+
+body.login-page button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+body.login-page button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+body.login-page button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 119, 182, 0.4);
+}
+
+body.login-page button:active {
+    transform: translateY(-1px);
+}
+
+/* LINK DE REGISTRO */
+body.login-page .link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+body.login-page .link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+body.login-page .link a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* PÁRRAFOS DENTRO DEL CONTENT */
+body.login-page #content p {
+    text-align: center;
+}
+
+/* MENSAJE DE ERROR */
+#error-message {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
