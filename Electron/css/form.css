@@ -39,7 +39,7 @@ body {
 }
 
 
-.form-section {
+#formularioTaller .form-section {
     margin-bottom: 30px;
     padding: 20px;
     border-left: 4px solid #1976d2;
@@ -47,7 +47,7 @@ body {
     border-radius: 8px;
 }
 
-.section-title {
+#formularioTaller .section-title {
     margin-bottom: 18px;
     font-size: 18px;
     font-weight: 600;
@@ -55,28 +55,28 @@ body {
 }
 
 
-.form-row {
+#formularioTaller .form-row {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
 }
 
-.form-group {
+#formularioTaller .form-group {
     flex: 1;
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
 }
 
-label {
+#formularioTallerlabel {
     font-size: 13px;
     margin-bottom: 6px;
     color: #4a5b73;
 }
 
-input,
-textarea,
-select {
+#formularioTaller input,
+#formularioTaller textarea,
+#formularioTaller select {
     padding: 9px 11px;
     border-radius: 6px;
     border: 1px solid #cfd8e3;
@@ -84,22 +84,22 @@ select {
     transition: 0.2s;
 }
 
-input:focus,
-textarea:focus,
-select:focus {
+#formularioTaller input:focus,
+#formularioTaller textarea:focus,
+#formularioTaller select:focus {
     outline: none;
     border-color: #1976d2;
     box-shadow: 0 0 0 2px rgba(25,118,210,0.15);
 }
 
-textarea {
+#formularioTaller textarea {
     min-height: 90px;
     resize: vertical;
 }
 
 
 
-.tabla-trabajos-form {
+#formularioTaller .tabla-trabajos-form {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
@@ -109,7 +109,7 @@ textarea {
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.tabla-trabajos-form th {
+#formularioTaller .tabla-trabajos-form th {
     background: #1976d2;
     color: white;
     padding: 10px;
@@ -117,17 +117,17 @@ textarea {
     text-align: left;
 }
 
-.tabla-trabajos-form td {
+#formularioTaller .tabla-trabajos-form td {
     padding: 8px;
     border-bottom: 1px solid #e6eef8;
 }
 
-.tabla-trabajos-form input {
+#formularioTaller .tabla-trabajos-form input {
     width: 100%;
     border: 1px solid #d6e1ef;
 }
 
-.tabla-trabajos-form tr:hover {
+#formularioTaller   .tabla-trabajos-form tr:hover {
     background: #f3f8ff;
 }
 
