@@ -1,3 +1,8 @@
+// Credenciales de autenticación para la API
+const APP_USER = "autolog";
+const APP_PASS = "X9#mK2$vQpL7@nRw";
+const AUTH = 'Basic ' + btoa(`${APP_USER}:${APP_PASS}`);
+
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const form = document.querySelector('form');
@@ -5,7 +10,10 @@ const form = document.querySelector('form');
 const tryLogin = async (endpoint, payload) => {
     const resp = await fetch(endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Authorization': AUTH,
+            'Content-Type': 'application/json' 
+        },
         body: JSON.stringify(payload)
     });
 

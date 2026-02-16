@@ -1,14 +1,14 @@
-/* BODY DE LOGIN*/
-body.login-page {
+/* BODY DE REGISTRO*/
+body.register-page {
     padding: 0;
 }
 
-/* HEADER DEL LOGIN */
-body.login-page header {
+/* HEADER DEL REGISTRO */
+body.register-page header {
     text-align: center;
 }
 
-body.login-page header img {
+body.register-page header img {
     display: inline-block;
     vertical-align: middle;
     height: 70px;
@@ -17,7 +17,7 @@ body.login-page header img {
     margin-right: 15px;
 }
 
-body.login-page header h1 {
+body.register-page header h1 {
     display: inline-block;
     vertical-align: middle;
     color: var(--accent);
@@ -26,18 +26,18 @@ body.login-page header h1 {
     margin: 20px 0 0 0;
 }
 
-body.login-page header .subtitulo {
+body.register-page header .subtitulo {
     display: block;
     width: 100%;
     text-align: center;
     color: var(--accent);
     font-size: 22px;
-    margin: 10px 0 20px;
+    margin: 5px 0 20px;
     font-weight: 500;
 }
 
-/* CONTENEDOR PRINCIPAL DE LOGIN */
-body.login-page #content {
+/* CONTENEDOR PRINCIPAL DE REGISTRO */
+body.register-page #content {
     width: 90%;
     max-width: 700px;
     min-height: auto;
@@ -58,21 +58,21 @@ body.login-page #content {
 .form_title {
     text-align: center;
     color: var(--accent);
-    font-size: 42px;
+    font-size: 35px;
     font-weight: 700;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-/* FORMULARIO DE LOGIN */
-body.login-page #content form {
+/* FORMULARIO DE REGISTRO */
+body.register-page #content form {
     text-align: center;
 }
 
-/* LABELS DEL LOGIN */
+/* LABELS DEL REGISTRO */
 .log_label {
     display: block;
     margin-bottom: 12px;
@@ -86,10 +86,10 @@ body.login-page #content form {
     margin-left: 12%;
 }
 
-/* INPUTS DEL LOGIN */
-.inputlogin {
+/* INPUTS DEL REGISTRO */
+.inputregister {
     width: 80% !important;
-    padding: 14px 18px;
+    padding: 12px 14px !important;
     border: 2px solid var(--border);
     border-radius: 12px;
     font-size: 15px;
@@ -101,14 +101,14 @@ body.login-page #content form {
     display: block;
 }
 
-body.login-page #content form input[type="text"],
-body.login-page #content form input[type="email"],
-body.login-page #content form input[type="password"] {
+body.register-page #content form input[type="text"],
+body.register-page #content form input[type="email"],
+body.register-page #content form input[type="password"] {
     margin: 0 auto;
     display: block;
 }
 
-.inputlogin:focus,
+.inputregister:focus,
 input[type="email"]:focus,
 input[type="password"]:focus {
     outline: none;
@@ -117,8 +117,8 @@ input[type="password"]:focus {
     transform: translateY(-1px);
 }
 
-/* BOTÓN DE LOGIN */
-body.login-page button {
+/* BOTÓN DE REGISTRO */
+body.register-page button {
     flex: 1;
     padding: 15px 30px;
     border: none;
@@ -139,7 +139,7 @@ body.login-page button {
     display: block;
 }
 
-body.login-page button::before {
+body.register-page button::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -152,41 +152,41 @@ body.login-page button::before {
     transition: width 0.6s, height 0.6s;
 }
 
-body.login-page button:hover::before {
+body.register-page button:hover::before {
     width: 300px;
     height: 300px;
 }
 
-body.login-page button:hover {
+body.register-page button:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 24px rgba(0, 119, 182, 0.4);
 }
 
-body.login-page button:active {
+body.register-page button:active {
     transform: translateY(-1px);
 }
 
 /* LINK DE REGISTRO */
-body.login-page .link {
+body.register-page .link {
     text-align: center;
     margin-top: 20px;
     font-size: 14px;
 }
 
-body.login-page .link a {
+body.register-page .link a {
     color: var(--primary);
     text-decoration: none;
     font-weight: 600;
     transition: var(--transition);
 }
 
-body.login-page .link a:hover {
+body.register-page .link a:hover {
     color: var(--primary-dark);
     text-decoration: underline;
 }
 
 /* PÁRRAFOS DENTRO DEL CONTENT */
-body.login-page #content p {
+body.register-page #content p {
     text-align: center;
 }
 
@@ -197,4 +197,66 @@ body.login-page #content p {
     border-radius: 8px;
     font-size: 14px;
     font-weight: 500;
+}
+
+/* SWITCH TOGGLE (movido desde style.css) */
+.switch-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    margin: 20px 0;
+    margin-left: 20% !important;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.switch-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    transition: var(--transition);
 }

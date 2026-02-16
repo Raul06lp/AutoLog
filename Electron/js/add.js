@@ -1,3 +1,8 @@
+// Credenciales de autenticación para la API
+const APP_USER = "autolog";
+const APP_PASS = "X9#mK2$vQpL7@nRw";
+const AUTH = 'Basic ' + btoa(`${APP_USER}:${APP_PASS}`);
+
 console.log("Formulario de registro de vehículo listo.");
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -28,7 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const clientesResp = await fetch('https://autolog-0mnd.onrender.com/api/clientes');
+            const clientesResp = await fetch('https://autolog-0mnd.onrender.com/api/clientes', {
+                headers: { 'Authorization': AUTH }
+            });
             const clientesData = await clientesResp.json().catch(() => ([]));
 
             if (!clientesResp.ok || !Array.isArray(clientesData)) {
@@ -79,7 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const resp = await fetch('https://autolog-0mnd.onrender.com/api/vehiculos/con-imagen', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    'Authorization': AUTH
+                }
             });
 
             const data = await resp.json().catch(() => ({}));

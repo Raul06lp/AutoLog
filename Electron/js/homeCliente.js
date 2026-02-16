@@ -1,3 +1,8 @@
+// Credenciales de autenticación para la API
+const APP_USER = "autolog";
+const APP_PASS = "X9#mK2$vQpL7@nRw";
+const AUTH = 'Basic ' + btoa(`${APP_USER}:${APP_PASS}`);
+
 const logOut = document.getElementById("logOut");
 const wrapper = document.getElementById("wrapper");
 
@@ -63,7 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!id) return;
     try {
       showModalLoading();
-      const resp = await fetch(`https://autolog-0mnd.onrender.com/api/vehiculos/${encodeURIComponent(id)}`);
+      const resp = await fetch(`https://autolog-0mnd.onrender.com/api/vehiculos/${encodeURIComponent(id)}`, {
+        headers: { 'Authorization': AUTH }
+      });
       const veh = await resp.json().catch(() => null);
       if (!resp.ok || !veh) throw new Error('No se pudo obtener el vehículo');
       renderModal(veh);

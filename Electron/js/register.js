@@ -1,3 +1,8 @@
+// Credenciales de autenticación para la API
+const APP_USER = "autolog";
+const APP_PASS = "X9#mK2$vQpL7@nRw";
+const AUTH = 'Basic ' + btoa(`${APP_USER}:${APP_PASS}`);
+
 const form = document.querySelector('form');
 const username = document.getElementById('username');
 const email = document.getElementById('email');
@@ -10,10 +15,10 @@ form.addEventListener('submit', (e) => {
     e.preventDefault();
 
     // Limpiar mensaje de error anterior
-    // document.getElementById('error-message').style.display = 'none';
+    const errorElement = document.getElementById('error-message');
+    if (errorElement) errorElement.style.display = 'none';
 
     // VALIDACIONES
-    const errorElement = document.getElementById('error-message');
     if (!email.value || !username.value || !password.value || !confirmPassword.value) {
         errorElement.textContent = 'Por favor, completa todos los campos.';
         errorElement.style.display = 'block';
@@ -48,7 +53,10 @@ form.addEventListener('submit', (e) => {
         try {
             const resp = await fetch(endpoint, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': AUTH
+                },
                 body: JSON.stringify(datos)
             });
 
