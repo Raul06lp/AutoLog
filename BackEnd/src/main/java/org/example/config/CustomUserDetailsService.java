@@ -20,9 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     /**
      * Spring Security llama a este método automáticamente cada vez que
-     * recibe una petición con Basic Authentication.
-     * Busca el usuario en la BD y lo convierte al tipo UserDetails que
-     * Spring Security entiende.
+     * recibe una petición con Basic Authentication
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -32,8 +32,6 @@ public class AuthController {
     /**
      * Registrar nuevo usuario de seguridad.
      * POST /api/auth/registro
-     * Este endpoint es PÚBLICO (configurado en SecurityConfig).
-     *
      * Body: { "username": "admin@correo.com", "password": "mi1234", "role": "ROLE_ADMIN" }
      */
     @PostMapping("/registro")
@@ -69,13 +67,6 @@ public class AuthController {
     /**
      * Verificar credenciales (login).
      * POST /api/auth/verificar
-     * Este endpoint es PRIVADO: el cliente ya debe autenticarse con Basic Auth.
-     * Si las credenciales son correctas, Spring Security deja pasar la petición
-     * y devolvemos 200 OK con los datos del usuario.
-     *
-     * NOTA: No usamos la URL /login porque está reservada por Spring Security
-     * para el formulario web de login.
-     *
      * Body: { "email": "usuario", "contrasena": "password" }
      */
     @PostMapping("/verificar")

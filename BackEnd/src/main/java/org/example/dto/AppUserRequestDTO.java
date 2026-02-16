@@ -19,6 +19,5 @@ public class AppUserRequestDTO {
     @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
     private String password;
 
-    // Por defecto se asignará ROLE_USER si no se indica nada
     private String role;
 }

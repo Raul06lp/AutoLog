@@ -10,6 +10,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,54 +25,43 @@ public class SecurityConfig {
     private CustomUserDetailsService userDetailsService;
 
     /**
-     * Cadena principal de filtros de seguridad.
-     * Define qué endpoints son públicos y cuáles requieren autenticación.
+     * Cadena principal de filtros de seguridad
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // Desactivar CSRF: nuestra API es REST (sin formularios HTML)
-            .csrf(csrf -> csrf.disable())
+            .csrf(AbstractHttpConfigurer::disable)
 
-            // Política de sesiones: STATELESS → no se crean sesiones en servidor
-            // El cliente envía credenciales en cada petición (Basic Auth)
             .sessionManagement(session ->
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
             // Reglas de autorización por endpoint
             .authorizeHttpRequests(auth -> auth
 
-                // ── Endpoints PÚBLICOS (no requieren autenticación) ──────────────
+                // Endpoints públicos
                 .requestMatchers(HttpMethod.POST, "/api/clientes/registro").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/clientes/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/mecanicos/registro").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/mecanicos/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/auth/registro").permitAll()
                 .requestMatchers(HttpMethod.GET,  "/health").permitAll()
 
-                // ── El resto requiere autenticación ──────────────────────────────
+                .requestMatchers(HttpMethod.POST, "/api/auth/registro").hasRole("ADMIN")
+
                 .anyRequest().authenticated()
             )
 
-            // Activar Basic Authentication (envío de usuario:password en cabecera)
             .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
 
-    /**
-     * Algoritmo de cifrado de contraseñas: BCrypt (estándar actual).
-     * BCrypt incluye "salt" automáticamente, por lo que es resistente a
-     * ataques de diccionario y rainbow tables.
-     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     /**
-     * Gestor de autenticación que usa DaoAuthenticationProvider.
-     * Conecta Spring Security con nuestra BD a través de CustomUserDetailsService.
+     * Gestor de autenticación
      */
     @Bean
     public AuthenticationManager authenticationManager() {
@@ -82,15 +72,14 @@ public class SecurityConfig {
     }
 
     /**
-     * Firewall HTTP que rechaza URLs con caracteres peligrosos (ej: ";").
-     * Ayuda a prevenir ataques de path traversal y similares.
+     * Firewall HTTP que rechaza URLs con caracteres peligrosos
      */
     @Bean
     public StrictHttpFirewall httpFirewall() {
         StrictHttpFirewall firewall = new StrictHttpFirewall();
-        firewall.setAllowSemicolon(false);         // bloquear ";"
-        firewall.setAllowBackSlash(false);         // bloquear "\"
-        firewall.setAllowUrlEncodedPercent(false); // bloquear "%25"
+        firewall.setAllowSemicolon(false);
+        firewall.setAllowBackSlash(false);
+        firewall.setAllowUrlEncodedPercent(false);
         return firewall;
     }
 }
