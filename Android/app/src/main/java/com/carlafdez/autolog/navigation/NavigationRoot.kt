@@ -9,15 +9,25 @@ import com.carlafdez.autolog.presentation.screens.addScreen.AddRoute
 import com.carlafdez.autolog.presentation.screens.detailScreen.VehicleDetailRoute
 import com.carlafdez.autolog.presentation.screens.editScreen.EditRoute
 import com.carlafdez.autolog.presentation.screens.homeScreen.HomeRoute
+import com.carlafdez.autolog.presentation.screens.loginScreen.LoginRoute
 
 @Composable
 fun NavigationRoot() {
-    val backStack = rememberNavBackStack(VehicleListKey)
+    val backStack = rememberNavBackStack(LoginKey)
 
     NavDisplay(
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
         entryProvider = entryProvider {
+
+            entry<LoginKey> {
+                LoginRoute(
+                    onLoginSuccess = { 
+                        backStack.removeLastOrNull()
+                        backStack.add(VehicleListKey) 
+                    }
+                )
+            }
 
             entry<VehicleListKey> {
                 HomeRoute(

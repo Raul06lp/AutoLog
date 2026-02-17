@@ -1,12 +1,16 @@
 package com.carlafdez.autolog.di
 
+import com.carlafdez.autolog.data.remote.api.AuthApi
 import com.carlafdez.autolog.data.remote.api.VehiculoApi
+import com.carlafdez.autolog.data.repository.AuthRepositoryImpl
 import com.carlafdez.autolog.data.repository.VehiculoRepositoryImpl
+import com.carlafdez.autolog.domain.repository.AuthRepository
 import com.carlafdez.autolog.domain.repository.VehiculoRepository
 import com.carlafdez.autolog.presentation.screens.addScreen.AddViewModel
 import com.carlafdez.autolog.presentation.screens.detailScreen.VehicleDetailViewModel
 import com.carlafdez.autolog.presentation.screens.editScreen.EditViewModel
 import com.carlafdez.autolog.presentation.screens.homeScreen.HomeViewModel
+import com.carlafdez.autolog.presentation.screens.loginScreen.LoginViewModel
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -46,11 +50,14 @@ val appModule = module {
     }
 
     single<VehiculoApi> { get<Retrofit>().create(VehiculoApi::class.java) }
+    single<AuthApi> { get<Retrofit>().create(AuthApi::class.java) }
 
     single<VehiculoRepository> { VehiculoRepositoryImpl(get<VehiculoApi>(), androidContext()) }
+    single<AuthRepository> { AuthRepositoryImpl(get<AuthApi>()) }
 
     viewModel { HomeViewModel(get<VehiculoRepository>()) }
     viewModel { (vehiculoId: Long) -> VehicleDetailViewModel(vehiculoId, get<VehiculoRepository>()) }
     viewModel { AddViewModel(get<VehiculoRepository>()) }
     viewModel { (vehiculoId: Long) -> EditViewModel(vehiculoId, get<VehiculoRepository>()) }
+    viewModel { LoginViewModel(get<AuthRepository>()) }
 }

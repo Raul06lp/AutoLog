@@ -6,5 +6,6 @@ data class ClienteDTO(
     @SerializedName("idCliente") val idCliente: Long,
     @SerializedName("nombre") val nombre: String,
     @SerializedName("email") val email: String,
+    @SerializedName("contrasena") val contrasena: String?, // Añadido
     @SerializedName("cantidadVehiculos") val cantidadVehiculos: Int?
 )

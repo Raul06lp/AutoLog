@@ -53,11 +53,13 @@ fun HomeScreen(
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold
                         )
-                        Text(
-                            text = "mecanico@gmail.com",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                        if (state.userName.isNotEmpty()) {
+                            Text(
+                                text = state.userName,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 },colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Texto,
@@ -154,7 +156,10 @@ fun HomeScreen(
 fun HomeScreenPreview() {
     PruebaKotlinTheme {
         HomeScreen(
-            state = HomeUiState(vehicles = vehiclePreviews),
+            state = HomeUiState(
+                userName = "mecanico@gmail.com",
+                vehicles = vehiclePreviews
+            ),
             onEvent = {},
             onAddClick = {}
         )
