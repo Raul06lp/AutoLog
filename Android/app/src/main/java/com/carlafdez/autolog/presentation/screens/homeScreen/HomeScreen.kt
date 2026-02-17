@@ -56,7 +56,7 @@ fun HomeScreen(
                         Text(
                             text = "mecanico@gmail.com",
                             style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 },colors = TopAppBarDefaults.topAppBarColors(

@@ -58,7 +58,7 @@ fun EditScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Editar Vehículo",
+                        text = "Editar vehículo",
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
