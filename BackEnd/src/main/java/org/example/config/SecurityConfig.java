@@ -44,6 +44,11 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/mecanicos/registro").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/mecanicos/login").permitAll()
                 .requestMatchers(HttpMethod.GET,  "/health").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
+                .requestMatchers("/v3/api-docs/**").permitAll()
+                .requestMatchers("/swagger-resources/**").permitAll()
+                .requestMatchers("/webjars/**").permitAll()
 
                 .requestMatchers(HttpMethod.POST, "/api/auth/registro").hasRole("ADMIN")
 
