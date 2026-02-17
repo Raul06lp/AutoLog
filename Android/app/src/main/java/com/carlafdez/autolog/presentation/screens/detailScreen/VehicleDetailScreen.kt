@@ -26,6 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carlafdez.autolog.domain.model.Vehiculo
 import com.carlafdez.autolog.presentation.components.vehiclePreviews
+import com.carlafdez.autolog.ui.theme.Botones
+import com.carlafdez.autolog.ui.theme.Carta
+import com.carlafdez.autolog.ui.theme.PruebaKotlinTheme
+import com.carlafdez.autolog.ui.theme.Texto
 
 private val NavyBlue = Color(0xFF1E3A5F)
 private val AccentBlue = Color(0xFF1976D2)
@@ -57,14 +61,14 @@ fun VehicleDetailScreen(
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = NavyBlue)
+                colors = TopAppBarDefaults.topAppBarColors(Texto)
             )
         },
         floatingActionButton = {
             if (state.vehiculo != null) {
                 FloatingActionButton(
                     onClick = onEditClick,
-                    containerColor = AccentBlue,
+                    containerColor = Botones,
                     contentColor = Color.White
                 ) {
                     Icon(Icons.Default.Edit, contentDescription = "Editar")
@@ -216,7 +220,7 @@ private fun VehicleHeaderImage(imagenBase64: String?, modifier: Modifier = Modif
 
     // Placeholder
     Box(
-        modifier = modifier.background(Color(0xFFE3F2FD)),
+        modifier = modifier.background(Carta),
         contentAlignment = Alignment.Center
     ) {
         Icon(
@@ -238,7 +242,7 @@ private fun DetailSection(
             text = title,
             fontWeight = FontWeight.Bold,
             fontSize = 13.sp,
-            color = AccentBlue,
+            color = Texto,
             letterSpacing = 0.5.sp
         )
         content()
@@ -299,7 +303,7 @@ private fun EstadoChip(estado: String) {
 @Preview(showSystemUi = true)
 @Composable
 fun VehicleDetailScreenPreview() {
-    MaterialTheme {
+    PruebaKotlinTheme {
         VehicleDetailScreen(
             state = VehicleDetailUiState(vehiculo = vehiclePreviews[0]),
             onEvent = {},
@@ -312,7 +316,7 @@ fun VehicleDetailScreenPreview() {
 @Preview(showSystemUi = true)
 @Composable
 fun VehicleDetailLoadingPreview() {
-    MaterialTheme {
+    PruebaKotlinTheme {
         VehicleDetailScreen(
             state = VehicleDetailUiState(isLoading = true),
             onEvent = {},
