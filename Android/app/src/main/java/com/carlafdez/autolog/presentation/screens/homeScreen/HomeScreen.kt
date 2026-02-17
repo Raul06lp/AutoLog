@@ -1,5 +1,6 @@
 package com.carlafdez.autolog.presentation.screens.homeScreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,6 +32,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.carlafdez.autolog.presentation.components.CarCard
 import com.carlafdez.autolog.presentation.components.vehiclePreviews
+import com.carlafdez.autolog.ui.theme.Botones
+import com.carlafdez.autolog.ui.theme.PruebaKotlinTheme
+import com.carlafdez.autolog.ui.theme.Texto
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,11 +59,14 @@ fun HomeScreen(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-                }
+                },colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Texto,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = onAddClick) {
+            FloatingActionButton(onClick = onAddClick,containerColor = Botones) {
                 Icon(Icons.Default.Add, contentDescription = "Añadir vehículo")
             }
         }
@@ -114,6 +122,7 @@ fun HomeScreen(
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                         modifier = Modifier.fillMaxSize()
+
                     ) {
                         item {
                             Text(
@@ -143,7 +152,7 @@ fun HomeScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {
-    MaterialTheme {
+    PruebaKotlinTheme {
         HomeScreen(
             state = HomeUiState(vehicles = vehiclePreviews),
             onEvent = {},
@@ -155,7 +164,7 @@ fun HomeScreenPreview() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeLoadingPreview() {
-    MaterialTheme {
+    PruebaKotlinTheme {
         HomeScreen(
             state = HomeUiState(isLoading = true),
             onEvent = {},
@@ -167,7 +176,7 @@ fun HomeLoadingPreview() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeEmptyPreview() {
-    MaterialTheme {
+    PruebaKotlinTheme {
         HomeScreen(
             state = HomeUiState(),
             onEvent = {},

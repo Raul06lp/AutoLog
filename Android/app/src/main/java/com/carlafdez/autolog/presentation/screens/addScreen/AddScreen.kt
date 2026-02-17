@@ -31,6 +31,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.carlafdez.autolog.domain.model.Cliente
+import com.carlafdez.autolog.ui.theme.Carta
+import com.carlafdez.autolog.ui.theme.PruebaKotlinTheme
+import com.carlafdez.autolog.ui.theme.Texto
 
 private val NavyBlue = Color(0xFF1E3A5F)
 private val AccentBlue = Color(0xFF1976D2)
@@ -73,7 +76,7 @@ fun AddScreen(
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = NavyBlue)
+                colors = TopAppBarDefaults.topAppBarColors(Texto)
             )
         }
     ) { padding ->
@@ -267,7 +270,7 @@ private fun ClienteBottomSheet(
                 text = "Seleccionar cliente",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
-                color = NavyBlue,
+                color = Texto,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             )
             HorizontalDivider()
@@ -321,16 +324,21 @@ private fun ClienteSelector(
         onValueChange = {},
         readOnly = true,
         label = { Text("Cliente") },
-        placeholder = { Text(if (isLoading) "Cargando clientes..." else "Selecciona un cliente") },
-        trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) },
-        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
-        enabled = false,
+        placeholder = {
+            Text(if (isLoading) "Cargando clientes..." else "Selecciona un cliente")
+        },
+        trailingIcon = {
+            Icon(Icons.Default.ArrowDropDown, contentDescription = null)
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
+        enabled = true,
         colors = OutlinedTextFieldDefaults.colors(
-            disabledTextColor = Color.Black,
-            disabledBorderColor = MaterialTheme.colorScheme.outline,
-            disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-            disabledPlaceholderColor = Color.Gray,
-            disabledTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant
+            unfocusedContainerColor = Carta,
+            focusedContainerColor = Carta,
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.outline
         )
     )
 }
@@ -355,7 +363,12 @@ private fun FormField(
         modifier = Modifier.fillMaxWidth(),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-        enabled = enabled
+        enabled = enabled,
+        colors = OutlinedTextFieldDefaults.colors(
+            unfocusedContainerColor = Carta,
+            focusedContainerColor = Carta
+
+        )
     )
 }
 
@@ -364,7 +377,7 @@ private fun FormField(
 @Preview(showSystemUi = true)
 @Composable
 fun AddScreenPreview() {
-    MaterialTheme {
+    PruebaKotlinTheme {
         AddScreen(
             state = AddUiState(
                 clientes = listOf(
@@ -381,7 +394,7 @@ fun AddScreenPreview() {
 @Preview(showSystemUi = true)
 @Composable
 fun AddScreenConClientePreview() {
-    MaterialTheme {
+    PruebaKotlinTheme {
         AddScreen(
             state = AddUiState(
                 clienteSeleccionado = Cliente(1, "Carlos López", "carlos@email.com"),

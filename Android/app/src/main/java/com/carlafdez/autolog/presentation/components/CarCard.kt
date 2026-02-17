@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.carlafdez.autolog.domain.model.Vehiculo
+import com.carlafdez.autolog.ui.theme.Carta
 
 @Composable
 fun CarCard(
@@ -29,9 +30,13 @@ fun CarCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick),
+            .clickable(onClick = onClick)
+    ,
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Carta
+        )
     ) {
         Row(
             modifier = Modifier
