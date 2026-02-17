@@ -5,12 +5,13 @@ import com.carlafdez.autolog.data.repository.VehiculoRepositoryImpl
 import com.carlafdez.autolog.domain.repository.VehiculoRepository
 import com.carlafdez.autolog.presentation.screens.addScreen.AddViewModel
 import com.carlafdez.autolog.presentation.screens.detailScreen.VehicleDetailViewModel
+import com.carlafdez.autolog.presentation.screens.editScreen.EditViewModel
 import com.carlafdez.autolog.presentation.screens.homeScreen.HomeViewModel
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.dsl.*
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -50,5 +51,6 @@ val appModule = module {
 
     viewModel { HomeViewModel(get<VehiculoRepository>()) }
     viewModel { (vehiculoId: Long) -> VehicleDetailViewModel(vehiculoId, get<VehiculoRepository>()) }
-    viewModel { AddViewModel(get()) }
+    viewModel { AddViewModel(get<VehiculoRepository>()) }
+    viewModel { (vehiculoId: Long) -> EditViewModel(vehiculoId, get<VehiculoRepository>()) }
 }

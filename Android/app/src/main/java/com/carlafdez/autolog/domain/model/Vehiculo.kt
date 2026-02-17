@@ -1,6 +1,6 @@
 package com.carlafdez.autolog.domain.model
 
-data class Vehiculo (
+data class Vehiculo(
     val id: Long,
     val matricula: String,
     val marca: String,
@@ -9,6 +9,7 @@ data class Vehiculo (
     val color: String,
     val kilometraje: Int,
     val observaciones: String,
+    val medidasTomadas: String,
     val estadoRevision: String,
     val imagenBase64: String?,
     val idCliente: Long,

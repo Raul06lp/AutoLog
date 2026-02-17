@@ -33,6 +33,19 @@ interface VehiculoApi {
         @Part imagen: MultipartBody.Part?
     ): VehiculoDTO
 
+    @PUT("api/vehiculos/{id}")
+    suspend fun actualizarVehiculo(
+        @Path("id") id: Long,
+        @Body request: VehiculoRequestDTO
+    ): VehiculoDTO
+
+    @Multipart
+    @PUT("api/vehiculos/{id}/imagen-file")
+    suspend fun actualizarImagenFile(
+        @Path("id") id: Long,
+        @Part imagen: MultipartBody.Part
+    ): VehiculoDTO
+
     @GET("api/clientes")
     suspend fun getClientes(): List<ClienteDTO>
 }

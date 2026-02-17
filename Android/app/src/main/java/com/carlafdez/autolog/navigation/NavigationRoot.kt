@@ -7,6 +7,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.carlafdez.autolog.presentation.screens.addScreen.AddRoute
 import com.carlafdez.autolog.presentation.screens.detailScreen.VehicleDetailRoute
+import com.carlafdez.autolog.presentation.screens.editScreen.EditRoute
 import com.carlafdez.autolog.presentation.screens.homeScreen.HomeRoute
 
 @Composable
@@ -34,13 +35,14 @@ fun NavigationRoot() {
             }
 
             entry<AddVehicleKey> {
-                AddRoute(
-                    onBack = { backStack.removeLastOrNull() }
-                )
+                AddRoute(onBack = { backStack.removeLastOrNull() })
             }
 
-            entry<EditVehicleKey> { _ ->
-                // TODO: EditVehicleRoute(onBack = { backStack.removeLastOrNull() })
+            entry<EditVehicleKey> { key ->
+                EditRoute(
+                    vehiculoId = key.vehicleId,
+                    onBack = { backStack.removeLastOrNull() }
+                )
             }
         }
     )

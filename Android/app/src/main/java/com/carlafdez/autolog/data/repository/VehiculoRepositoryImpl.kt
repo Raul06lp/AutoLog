@@ -18,32 +18,19 @@ class VehiculoRepositoryImpl(
     private val context: Context
 ) : VehiculoRepository {
 
-    override suspend fun getVehiclesByMecanico(idMecanico: Long): List<Vehiculo> {
-        return api.getVehiculosByMecanico(idMecanico).map { it.toVehicle() }
-    }
+    override suspend fun getVehiclesByMecanico(idMecanico: Long): List<Vehiculo> =
+        api.getVehiculosByMecanico(idMecanico).map { it.toVehicle() }
 
-    override suspend fun getVehiculoById(id: Long): Vehiculo? {
-        return try {
-            api.getVehiculoById(id).toVehicle()
-        } catch (e: Exception) {
-            null
-        }
-    }
+    override suspend fun getVehiculoById(id: Long): Vehiculo? = try {
+        api.getVehiculoById(id).toVehicle()
+    } catch (e: Exception) { null }
 
     override suspend fun crearVehiculo(
-        matricula: String,
-        marca: String,
-        modelo: String,
-        anio: Int,
-        color: String?,
-        kilometraje: Int?,
-        observaciones: String?,
-        idCliente: Long,
-        idMecanico: Long,
-        imagenUri: Uri?
+        matricula: String, marca: String, modelo: String, anio: Int,
+        color: String?, kilometraje: Int?, observaciones: String?,
+        idCliente: Long, idMecanico: Long, imagenUri: Uri?
     ): Vehiculo {
         return if (imagenUri != null) {
-            // Con imagen → multipart
             val imagenPart = prepareImagePart(imagenUri)
             api.crearVehiculoConImagen(
                 matricula = matricula.toPlainBody(),
@@ -58,28 +45,43 @@ class VehiculoRepositoryImpl(
                 imagen = imagenPart
             ).toVehicle()
         } else {
-            // Sin imagen → JSON
             api.crearVehiculo(
                 VehiculoRequestDTO(
-                    matricula = matricula,
-                    marca = marca,
-                    modelo = modelo,
-                    anio = anio,
-                    color = color,
-                    kilometraje = kilometraje,
-                    observaciones = observaciones,
-                    idCliente = idCliente,
-                    idMecanico = idMecanico
+                    matricula = matricula, marca = marca, modelo = modelo, anio = anio,
+                    color = color, kilometraje = kilometraje, observaciones = observaciones,
+                    medidasTomadas = null, idCliente = idCliente, idMecanico = idMecanico
                 )
             ).toVehicle()
         }
     }
 
-    override suspend fun getClientes(): List<Cliente> {
-        return api.getClientes().map {
-            Cliente(id = it.idCliente, nombre = it.nombre, email = it.email)
+    override suspend fun actualizarVehiculo(
+        id: Long, matricula: String, marca: String, modelo: String, anio: Int,
+        color: String?, kilometraje: Int?, observaciones: String?,
+        medidasTomadas: String?, idCliente: Long, idMecanico: Long?,
+        nuevaImagenUri: Uri?
+    ): Vehiculo {
+        val vehiculoActualizado = api.actualizarVehiculo(
+            id,
+            VehiculoRequestDTO(
+                matricula = matricula, marca = marca, modelo = modelo, anio = anio,
+                color = color, kilometraje = kilometraje, observaciones = observaciones,
+                medidasTomadas = medidasTomadas, idCliente = idCliente, idMecanico = idMecanico
+            )
+        ).toVehicle()
+
+        if (nuevaImagenUri != null) {
+            val imagenPart = prepareImagePart(nuevaImagenUri)
+            if (imagenPart != null) {
+                return api.actualizarImagenFile(id, imagenPart).toVehicle()
+            }
         }
+
+        return vehiculoActualizado
     }
+
+    override suspend fun getClientes(): List<Cliente> =
+        api.getClientes().map { Cliente(id = it.idCliente, nombre = it.nombre, email = it.email) }
 
     private fun prepareImagePart(uri: Uri): MultipartBody.Part? {
         return try {
@@ -88,11 +90,8 @@ class VehiculoRepositoryImpl(
             tempFile.outputStream().use { inputStream.copyTo(it) }
             val requestBody = tempFile.readBytes().toRequestBody("image/*".toMediaTypeOrNull())
             MultipartBody.Part.createFormData("imagen", tempFile.name, requestBody)
-        } catch (e: Exception) {
-            null
-        }
+        } catch (e: Exception) { null }
     }
 
-    private fun String.toPlainBody() =
-        toRequestBody("text/plain".toMediaTypeOrNull())
+    private fun String.toPlainBody() = toRequestBody("text/plain".toMediaTypeOrNull())
 }

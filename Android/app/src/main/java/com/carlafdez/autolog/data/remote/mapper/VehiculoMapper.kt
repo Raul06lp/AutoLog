@@ -12,6 +12,7 @@ fun VehiculoDTO.toVehicle() = Vehiculo(
     color = color ?: "",
     kilometraje = kilometraje ?: 0,
     observaciones = observaciones ?: "",
+    medidasTomadas = medidasTomadas ?: "",
     estadoRevision = estadoRevision ?: "pendiente",
     imagenBase64 = imagenBase64,
     idCliente = idCliente,

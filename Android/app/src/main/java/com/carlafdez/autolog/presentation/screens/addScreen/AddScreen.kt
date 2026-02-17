@@ -76,7 +76,7 @@ fun AddScreen(
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(Texto)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Texto)
             )
         }
     ) { padding ->
@@ -157,7 +157,11 @@ fun AddScreen(
                     .fillMaxWidth()
                     .height(120.dp),
                 maxLines = 5,
-                enabled = !state.isLoading
+                enabled = !state.isLoading,
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedContainerColor = Carta,
+                    focusedContainerColor = Carta
+                )
             )
 
             // --- Botón guardar ---
@@ -188,6 +192,7 @@ fun AddScreen(
     if (showClienteSheet) {
         ClienteBottomSheet(
             clientes = state.clientes,
+            isLoading = state.isLoadingClientes,
             clienteSeleccionado = state.clienteSeleccionado,
             onClienteClick = {
                 onEvent(AddEvent.ClienteSeleccionado(it))
@@ -260,12 +265,17 @@ private fun ImagePicker(
 @Composable
 private fun ClienteBottomSheet(
     clientes: List<Cliente>,
+    isLoading: Boolean,
     clienteSeleccionado: Cliente?,
     onClienteClick: (Cliente) -> Unit,
     onDismiss: () -> Unit
 ) {
     ModalBottomSheet(onDismissRequest = onDismiss) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 32.dp)
+        ) {
             Text(
                 text = "Seleccionar cliente",
                 fontWeight = FontWeight.Bold,
@@ -275,40 +285,52 @@ private fun ClienteBottomSheet(
             )
             HorizontalDivider()
 
-            if (clientes.isEmpty()) {
+            if (isLoading) {
                 Box(
-                    modifier = Modifier.fillMaxWidth().padding(32.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(32.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator(color = AccentBlue)
                 }
+            } else if (clientes.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(32.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("No se encontraron clientes", color = Color.Gray)
+                }
             } else {
-                clientes.forEach { cliente ->
-                    val seleccionado = cliente.id == clienteSeleccionado?.id
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onClienteClick(cliente) }
-                            .padding(horizontal = 16.dp, vertical = 14.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column {
-                            Text(
-                                text = cliente.nombre,
-                                fontWeight = if (seleccionado) FontWeight.Bold else FontWeight.Normal,
-                                color = if (seleccionado) AccentBlue else Color.Black
-                            )
-                            Text(text = cliente.email, fontSize = 12.sp, color = Color.Gray)
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    clientes.forEach { cliente ->
+                        val seleccionado = cliente.id == clienteSeleccionado?.id
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onClienteClick(cliente) }
+                                .padding(horizontal = 16.dp, vertical = 14.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column {
+                                Text(
+                                    text = cliente.nombre,
+                                    fontWeight = if (seleccionado) FontWeight.Bold else FontWeight.Normal,
+                                    color = if (seleccionado) AccentBlue else Color.Black
+                                )
+                                Text(text = cliente.email, fontSize = 12.sp, color = Color.Gray)
+                            }
+                            if (seleccionado) {
+                                Icon(Icons.Default.Check, contentDescription = null, tint = AccentBlue)
+                            }
                         }
-                        if (seleccionado) {
-                            Icon(Icons.Default.Check, contentDescription = null, tint = AccentBlue)
-                        }
+                        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     }
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                 }
             }
-            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
@@ -319,28 +341,34 @@ private fun ClienteSelector(
     isLoading: Boolean,
     onClick: () -> Unit
 ) {
-    OutlinedTextField(
-        value = clienteSeleccionado?.nombre ?: "",
-        onValueChange = {},
-        readOnly = true,
-        label = { Text("Cliente") },
-        placeholder = {
-            Text(if (isLoading) "Cargando clientes..." else "Selecciona un cliente")
-        },
-        trailingIcon = {
-            Icon(Icons.Default.ArrowDropDown, contentDescription = null)
-        },
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick),
-        enabled = true,
-        colors = OutlinedTextFieldDefaults.colors(
-            unfocusedContainerColor = Carta,
-            focusedContainerColor = Carta,
-            focusedBorderColor = MaterialTheme.colorScheme.primary,
-            unfocusedBorderColor = MaterialTheme.colorScheme.outline
+            .clickable(onClick = onClick)
+    ) {
+        OutlinedTextField(
+            value = clienteSeleccionado?.nombre ?: "",
+            onValueChange = {},
+            readOnly = true,
+            label = { Text("Cliente") },
+            placeholder = {
+                Text(if (isLoading) "Cargando clientes..." else "Selecciona un cliente")
+            },
+            trailingIcon = {
+                Icon(Icons.Default.ArrowDropDown, contentDescription = null)
+            },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = false, // Deshabilitamos para que el click lo capture el Box
+            colors = OutlinedTextFieldDefaults.colors(
+                disabledTextColor = Color.Black,
+                disabledBorderColor = MaterialTheme.colorScheme.outline,
+                disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                disabledPlaceholderColor = Color.Gray,
+                disabledTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                disabledContainerColor = Carta
+            )
         )
-    )
+    }
 }
 
 @Composable
@@ -367,7 +395,6 @@ private fun FormField(
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedContainerColor = Carta,
             focusedContainerColor = Carta
-
         )
     )
 }

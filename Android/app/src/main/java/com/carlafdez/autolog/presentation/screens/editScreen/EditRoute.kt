@@ -1,33 +1,25 @@
-package com.carlafdez.autolog.presentation.screens.detailScreen
+package com.carlafdez.autolog.presentation.screens.editScreen
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 @Composable
-fun VehicleDetailRoute(
+fun EditRoute(
     vehiculoId: Long,
     onBack: () -> Unit,
-    onEditClick: () -> Unit,
-    viewModel: VehicleDetailViewModel = koinViewModel(
-        key = "vehicle_$vehiculoId",
+    viewModel: EditViewModel = koinViewModel(
+        key = "edit_$vehiculoId",
         parameters = { parametersOf(vehiculoId) }
     )
 ) {
-    // Recargar datos cada vez que se entra a esta pantalla
-    LaunchedEffect(Unit) {
-        viewModel.onEvent(VehicleDetailEvent.Refresh)
-    }
-
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    VehicleDetailScreen(
+    EditScreen(
         state = state,
         onEvent = viewModel::onEvent,
-        onBack = onBack,
-        onEditClick = onEditClick
+        onBack = onBack
     )
 }

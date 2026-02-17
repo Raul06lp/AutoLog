@@ -23,6 +23,7 @@ class VehicleDetailViewModel(
     fun onEvent(event: VehicleDetailEvent) {
         when (event) {
             VehicleDetailEvent.Retry -> loadVehiculo()
+            VehicleDetailEvent.Refresh -> loadVehiculo()
         }
     }
 

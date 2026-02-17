@@ -11,6 +11,7 @@ data class VehiculoDTO(
     @SerializedName("color") val color: String?,
     @SerializedName("kilometraje") val kilometraje: Int?,
     @SerializedName("observaciones") val observaciones: String?,
+    @SerializedName("medidasTomadas") val medidasTomadas: String?,
     @SerializedName("estadoRevision") val estadoRevision: String?,
     @SerializedName("imagenBase64") val imagenBase64: String?,
     @SerializedName("idCliente") val idCliente: Long,
