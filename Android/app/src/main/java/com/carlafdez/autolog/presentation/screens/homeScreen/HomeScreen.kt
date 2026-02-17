@@ -53,7 +53,6 @@ fun HomeScreen(
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold
                         )
-<<<<<<< HEAD
                         if (state.userName.isNotEmpty()) {
                             Text(
                                 text = state.userName,
@@ -61,13 +60,11 @@ fun HomeScreen(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
-=======
                         Text(
                             text = "mecanico@gmail.com",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onPrimary
                         )
->>>>>>> 9cdbd707749c489e242355dda81f74acd209c0ff
                     }
                 },colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Texto,
