@@ -49,24 +49,38 @@ class VehiculoRepositoryImpl(
                 VehiculoRequestDTO(
                     matricula = matricula, marca = marca, modelo = modelo, anio = anio,
                     color = color, kilometraje = kilometraje, observaciones = observaciones,
-                    medidasTomadas = null, idCliente = idCliente, idMecanico = idMecanico
+                    medidasTomadas = null, idCliente = idCliente, idMecanico = idMecanico,
+                    estadoRevision = "Pendiente"
                 )
             ).toVehicle()
         }
     }
 
+    
     override suspend fun actualizarVehiculo(
-        id: Long, matricula: String, marca: String, modelo: String, anio: Int,
-        color: String?, kilometraje: Int?, observaciones: String?,
-        medidasTomadas: String?, idCliente: Long, idMecanico: Long?,
+        id: Long,
+        matricula: String,
+        marca: String,
+        modelo: String,
+        anio: Int,
+        color: String?,
+        kilometraje: Int?,
+        observaciones: String?,
+        medidasTomadas: String?,
+        idCliente: Long,
+        idMecanico: Long?,
         nuevaImagenUri: Uri?
     ): Vehiculo {
+        val vehiculoActual = getVehiculoById(id)
+
         val vehiculoActualizado = api.actualizarVehiculo(
             id,
             VehiculoRequestDTO(
                 matricula = matricula, marca = marca, modelo = modelo, anio = anio,
                 color = color, kilometraje = kilometraje, observaciones = observaciones,
-                medidasTomadas = medidasTomadas, idCliente = idCliente, idMecanico = idMecanico
+                medidasTomadas = medidasTomadas,
+                estadoRevision = vehiculoActual?.estadoRevision,
+                idCliente = idCliente, idMecanico = idMecanico
             )
         ).toVehicle()
 
@@ -78,6 +92,10 @@ class VehiculoRepositoryImpl(
         }
 
         return vehiculoActualizado
+    }
+
+    override suspend fun cambiarEstado(id: Long, nuevoEstado: String) {
+        api.cambiarEstado(id, mapOf("estadoRevision" to nuevoEstado))
     }
 
     override suspend fun getClientes(): List<Cliente> =

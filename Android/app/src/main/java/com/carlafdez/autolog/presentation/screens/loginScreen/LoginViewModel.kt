@@ -17,37 +17,22 @@ class LoginViewModel(
 
     fun onEvent(event: LoginEvent) {
         when (event) {
-            is LoginEvent.OnEmailChanged -> {
-                _state.update { it.copy(email = event.email) }
-            }
-            is LoginEvent.OnPasswordChanged -> {
-                _state.update { it.copy(password = event.password) }
-            }
-            LoginEvent.OnLoginClick -> {
-                login()
-            }
+            is LoginEvent.OnEmailChanged -> _state.update { it.copy(email = event.email, error = null) }
+            is LoginEvent.OnPasswordChanged -> _state.update { it.copy(password = event.password, error = null) }
+            LoginEvent.OnLoginClick -> login()
         }
     }
 
     private fun login() {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
-            
-            val result = authRepository.login(
-                email = _state.value.email,
+            authRepository.login(
+                email = _state.value.email.trim(),
                 contrasena = _state.value.password
-            )
-
-            result.onSuccess {
-                _state.update { it.copy(
-                    isLoading = false,
-                    isLoginSuccessful = true
-                ) }
-            }.onFailure { e ->
-                _state.update { it.copy(
-                    isLoading = false,
-                    error = e.message ?: "Error desconocido"
-                ) }
+            ).onSuccess {
+                _state.update { it.copy(isLoading = false, isLoginSuccessful = true) }
+            }.onFailure {
+                _state.update { it.copy(isLoading = false, error = "Credenciales incorrectas") }
             }
         }
     }

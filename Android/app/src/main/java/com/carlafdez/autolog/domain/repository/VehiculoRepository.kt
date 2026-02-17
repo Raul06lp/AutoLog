@@ -18,5 +18,6 @@ interface VehiculoRepository {
         medidasTomadas: String?, idCliente: Long, idMecanico: Long?,
         nuevaImagenUri: Uri?
     ): Vehiculo
+    suspend fun cambiarEstado(id: Long, nuevoEstado: String)
     suspend fun getClientes(): List<Cliente>
 }

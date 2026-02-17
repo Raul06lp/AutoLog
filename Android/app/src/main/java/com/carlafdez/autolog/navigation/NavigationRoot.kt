@@ -10,6 +10,7 @@ import com.carlafdez.autolog.presentation.screens.detailScreen.VehicleDetailRout
 import com.carlafdez.autolog.presentation.screens.editScreen.EditRoute
 import com.carlafdez.autolog.presentation.screens.homeScreen.HomeRoute
 import com.carlafdez.autolog.presentation.screens.loginScreen.LoginRoute
+import com.carlafdez.autolog.presentation.screens.registerScreen.RegisterRoute
 
 @Composable
 fun NavigationRoot() {
@@ -22,10 +23,21 @@ fun NavigationRoot() {
 
             entry<LoginKey> {
                 LoginRoute(
-                    onLoginSuccess = { 
+                    onLoginSuccess = {
                         backStack.removeLastOrNull()
-                        backStack.add(VehicleListKey) 
-                    }
+                        backStack.add(VehicleListKey)
+                    },
+                    onNavigateToRegister = { backStack.add(RegisterKey) }
+                )
+            }
+
+            entry<RegisterKey> {
+                RegisterRoute(
+                    onRegisterSuccess = {
+                        backStack.removeLastOrNull()
+                        backStack.add(VehicleListKey)
+                    },
+                    onNavigateToLogin = { backStack.removeLastOrNull() }
                 )
             }
 

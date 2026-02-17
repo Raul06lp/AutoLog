@@ -46,6 +46,12 @@ interface VehiculoApi {
         @Part imagen: MultipartBody.Part
     ): VehiculoDTO
 
+    @PATCH("api/vehiculos/{id}/estado")
+    suspend fun cambiarEstado(
+        @Path("id") id: Long,
+        @Body body: Map<String, String>
+    ): VehiculoDTO
+
     @GET("api/clientes")
     suspend fun getClientes(): List<ClienteDTO>
 }

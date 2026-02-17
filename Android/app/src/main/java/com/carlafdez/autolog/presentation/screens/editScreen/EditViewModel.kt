@@ -36,7 +36,7 @@ class EditViewModel(
 
     private fun loadVehiculo() {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
+            _state.update { it.copy(isLoading = true, guardadoOk = false) }
             try {
                 val v = repository.getVehiculoById(vehiculoId)
                 if (v != null) {

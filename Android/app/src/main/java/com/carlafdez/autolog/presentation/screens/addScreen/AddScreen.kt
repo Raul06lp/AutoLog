@@ -3,40 +3,32 @@ package com.carlafdez.autolog.presentation.screens.addScreen
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.AddAPhoto
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import com.carlafdez.autolog.domain.model.Cliente
+import com.carlafdez.autolog.presentation.screens.addScreen.components.ClienteBottomSheet
+import com.carlafdez.autolog.presentation.screens.addScreen.components.ClienteSelector
+import com.carlafdez.autolog.presentation.components.FormField
+import com.carlafdez.autolog.presentation.screens.addScreen.components.ImagePicker
+import com.carlafdez.autolog.presentation.components.SectionTitle
 import com.carlafdez.autolog.ui.theme.Carta
 import com.carlafdez.autolog.ui.theme.PruebaKotlinTheme
 import com.carlafdez.autolog.ui.theme.Texto
 
 private val NavyBlue = Color(0xFF1E3A5F)
-private val AccentBlue = Color(0xFF1976D2)
+val AccentBlue = Color(0xFF1976D2)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -214,189 +206,6 @@ fun AddScreen(
             }
         )
     }
-}
-
-@Composable
-private fun ImagePicker(
-    imagenUri: Uri?,
-    onClick: () -> Unit,
-    enabled: Boolean
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(Color(0xFFF5F5F5))
-            .border(2.dp, AccentBlue, RoundedCornerShape(16.dp))
-            .clickable(enabled = enabled, onClick = onClick),
-        contentAlignment = Alignment.Center
-    ) {
-        if (imagenUri != null) {
-            AsyncImage(
-                model = imagenUri,
-                contentDescription = "Imagen seleccionada",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-        } else {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.AddAPhoto,
-                    contentDescription = null,
-                    modifier = Modifier.size(48.dp),
-                    tint = AccentBlue
-                )
-                Text(
-                    text = "Toca para añadir foto",
-                    color = Color.Gray,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun ClienteBottomSheet(
-    clientes: List<Cliente>,
-    isLoading: Boolean,
-    clienteSeleccionado: Cliente?,
-    onClienteClick: (Cliente) -> Unit,
-    onDismiss: () -> Unit
-) {
-    ModalBottomSheet(onDismissRequest = onDismiss) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 32.dp)
-        ) {
-            Text(
-                text = "Seleccionar cliente",
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                color = Texto,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-            )
-            HorizontalDivider()
-
-            if (isLoading) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(32.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(color = AccentBlue)
-                }
-            } else if (clientes.isEmpty()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(32.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("No se encontraron clientes", color = Color.Gray)
-                }
-            } else {
-                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                    clientes.forEach { cliente ->
-                        val seleccionado = cliente.id == clienteSeleccionado?.id
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable { onClienteClick(cliente) }
-                                .padding(horizontal = 16.dp, vertical = 14.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column {
-                                Text(
-                                    text = cliente.nombre,
-                                    fontWeight = if (seleccionado) FontWeight.Bold else FontWeight.Normal,
-                                    color = if (seleccionado) AccentBlue else Color.Black
-                                )
-                                Text(text = cliente.email, fontSize = 12.sp, color = Color.Gray)
-                            }
-                            if (seleccionado) {
-                                Icon(Icons.Default.Check, contentDescription = null, tint = AccentBlue)
-                            }
-                        }
-                        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ClienteSelector(
-    clienteSeleccionado: Cliente?,
-    isLoading: Boolean,
-    onClick: () -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-    ) {
-        OutlinedTextField(
-            value = clienteSeleccionado?.nombre ?: "",
-            onValueChange = {},
-            readOnly = true,
-            label = { Text("Cliente") },
-            placeholder = {
-                Text(if (isLoading) "Cargando clientes..." else "Selecciona un cliente")
-            },
-            trailingIcon = {
-                Icon(Icons.Default.ArrowDropDown, contentDescription = null)
-            },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = false, // Deshabilitamos para que el click lo capture el Box
-            colors = OutlinedTextFieldDefaults.colors(
-                disabledTextColor = Color.Black,
-                disabledBorderColor = MaterialTheme.colorScheme.outline,
-                disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                disabledPlaceholderColor = Color.Gray,
-                disabledTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                disabledContainerColor = Carta
-            )
-        )
-    }
-}
-
-@Composable
-private fun SectionTitle(text: String) {
-    Text(text = text, fontWeight = FontWeight.Bold, color = AccentBlue, fontSize = 13.sp)
-}
-
-@Composable
-private fun FormField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    enabled: Boolean = true
-) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(label) },
-        modifier = Modifier.fillMaxWidth(),
-        singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-        enabled = enabled,
-        colors = OutlinedTextFieldDefaults.colors(
-            unfocusedContainerColor = Carta,
-            focusedContainerColor = Carta
-        )
-    )
 }
 
 // ---- PREVIEWS ----

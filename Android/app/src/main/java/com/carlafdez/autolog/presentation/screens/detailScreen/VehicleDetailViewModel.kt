@@ -24,6 +24,7 @@ class VehicleDetailViewModel(
         when (event) {
             VehicleDetailEvent.Retry -> loadVehiculo()
             VehicleDetailEvent.Refresh -> loadVehiculo()
+            VehicleDetailEvent.CambiarEstado -> cambiarEstado()
         }
     }
 
@@ -39,6 +40,25 @@ class VehicleDetailViewModel(
                 }
             } catch (e: Exception) {
                 _state.update { it.copy(error = "Error al cargar los datos", isLoading = false) }
+            }
+        }
+    }
+
+    private fun cambiarEstado() {
+        val vehiculo = _state.value.vehiculo ?: return
+        val nuevoEstado = when (vehiculo.estadoRevision) {
+            "pendiente" -> "en_revision"
+            "en_revision" -> "finalizado"
+            else -> return // Si ya está finalizado, no hacer nada
+        }
+
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            try {
+                repository.cambiarEstado(vehiculoId, nuevoEstado)
+                loadVehiculo() // Recargar para mostrar el nuevo estado
+            } catch (e: Exception) {
+                _state.update { it.copy(error = "Error al cambiar el estado", isLoading = false) }
             }
         }
     }

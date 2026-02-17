@@ -1,6 +1,5 @@
 package com.carlafdez.autolog.presentation.screens.homeScreen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,8 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.carlafdez.autolog.presentation.components.CarCard
-import com.carlafdez.autolog.presentation.components.vehiclePreviews
+import com.carlafdez.autolog.presentation.screens.homeScreen.components.CarCard
+import com.carlafdez.autolog.presentation.screens.homeScreen.components.vehiclePreviews
 import com.carlafdez.autolog.ui.theme.Botones
 import com.carlafdez.autolog.ui.theme.PruebaKotlinTheme
 import com.carlafdez.autolog.ui.theme.Texto

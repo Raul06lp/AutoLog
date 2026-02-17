@@ -11,6 +11,7 @@ data class VehiculoRequestDTO(
     @SerializedName("kilometraje") val kilometraje: Int?,
     @SerializedName("observaciones") val observaciones: String?,
     @SerializedName("medidasTomadas") val medidasTomadas: String?,
+    @SerializedName("estadoRevision") val estadoRevision: String?,
     @SerializedName("idCliente") val idCliente: Long?,
     @SerializedName("idMecanico") val idMecanico: Long?
 )

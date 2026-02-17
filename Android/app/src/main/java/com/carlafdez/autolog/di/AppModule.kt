@@ -1,5 +1,6 @@
 package com.carlafdez.autolog.di
 
+import com.carlafdez.autolog.data.local.SessionManager
 import com.carlafdez.autolog.data.remote.api.AuthApi
 import com.carlafdez.autolog.data.remote.api.VehiculoApi
 import com.carlafdez.autolog.data.repository.AuthRepositoryImpl
@@ -11,11 +12,12 @@ import com.carlafdez.autolog.presentation.screens.detailScreen.VehicleDetailView
 import com.carlafdez.autolog.presentation.screens.editScreen.EditViewModel
 import com.carlafdez.autolog.presentation.screens.homeScreen.HomeViewModel
 import com.carlafdez.autolog.presentation.screens.loginScreen.LoginViewModel
+import com.carlafdez.autolog.presentation.screens.registerScreen.RegisterViewModel
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.module.dsl.*
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -51,13 +53,15 @@ val appModule = module {
 
     single<VehiculoApi> { get<Retrofit>().create(VehiculoApi::class.java) }
     single<AuthApi> { get<Retrofit>().create(AuthApi::class.java) }
+    single { SessionManager(androidContext()) }
 
     single<VehiculoRepository> { VehiculoRepositoryImpl(get<VehiculoApi>(), androidContext()) }
-    single<AuthRepository> { AuthRepositoryImpl(get<AuthApi>()) }
+    single<AuthRepository> { AuthRepositoryImpl(get<AuthApi>(), get<SessionManager>()) }
 
-    viewModel { HomeViewModel(get<VehiculoRepository>()) }
+    viewModel { HomeViewModel(get<VehiculoRepository>(), get<AuthRepository>()) }
     viewModel { (vehiculoId: Long) -> VehicleDetailViewModel(vehiculoId, get<VehiculoRepository>()) }
     viewModel { AddViewModel(get<VehiculoRepository>()) }
     viewModel { (vehiculoId: Long) -> EditViewModel(vehiculoId, get<VehiculoRepository>()) }
     viewModel { LoginViewModel(get<AuthRepository>()) }
+    viewModel { RegisterViewModel(get<AuthRepository>()) }
 }

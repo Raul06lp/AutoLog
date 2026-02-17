@@ -1,4 +1,4 @@
-package com.carlafdez.autolog.presentation.components
+package com.carlafdez.autolog.presentation.screens.homeScreen.components
 
 import android.graphics.BitmapFactory
 import android.util.Base64

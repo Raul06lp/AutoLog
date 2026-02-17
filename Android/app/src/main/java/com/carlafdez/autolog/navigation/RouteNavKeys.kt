@@ -7,6 +7,9 @@ import kotlinx.serialization.Serializable
 object LoginKey : NavKey
 
 @Serializable
+object RegisterKey : NavKey
+
+@Serializable
 object VehicleListKey : NavKey
 
 @Serializable

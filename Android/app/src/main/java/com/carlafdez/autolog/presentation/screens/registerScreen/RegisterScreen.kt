@@ -1,9 +1,11 @@
-package com.carlafdez.autolog.presentation.screens.loginScreen
+package com.carlafdez.autolog.presentation.screens.registerScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,14 +28,14 @@ import com.example.autolog.R
 private val NavyBlue = Color(0xFF1E3A5F)
 
 @Composable
-fun LoginScreen(
-    state: LoginUiState,
-    onEvent: (LoginEvent) -> Unit,
-    onLoginSuccess: () -> Unit,
-    onNavigateToRegister: () -> Unit
+fun RegisterScreen(
+    state: RegisterUiState,
+    onEvent: (RegisterEvent) -> Unit,
+    onRegisterSuccess: () -> Unit,
+    onNavigateToLogin: () -> Unit
 ) {
-    LaunchedEffect(state.isLoginSuccessful) {
-        if (state.isLoginSuccessful) onLoginSuccess()
+    LaunchedEffect(state.isRegisterSuccessful) {
+        if (state.isRegisterSuccessful) onRegisterSuccess()
     }
 
     Column(
@@ -47,8 +49,8 @@ fun LoginScreen(
             painter = painterResource(id = R.drawable.logo_app),
             contentDescription = "Logo AutoLog",
             modifier = Modifier
-                .size(140.dp)
-                .padding(bottom = 8.dp)
+                .size(120.dp)
+                .padding(bottom = 4.dp)
         )
 
         Card(
@@ -62,21 +64,30 @@ fun LoginScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
                     .padding(32.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 Text(
-                    text = "INICIAR SESIÓN",
+                    text = "CREAR CUENTA",
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
 
                 AuthTextField(
+                    value = state.nombre,
+                    onValueChange = { onEvent(RegisterEvent.OnNombreChanged(it)) },
+                    label = "Nombre completo",
+                    imeAction = ImeAction.Next,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                AuthTextField(
                     value = state.email,
-                    onValueChange = { onEvent(LoginEvent.OnEmailChanged(it)) },
-                    label = "Correo electrónico",
+                    onValueChange = { onEvent(RegisterEvent.OnEmailChanged(it)) },
+                    label = "Email",
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
                     modifier = Modifier.fillMaxWidth()
@@ -84,8 +95,17 @@ fun LoginScreen(
 
                 AuthTextField(
                     value = state.password,
-                    onValueChange = { onEvent(LoginEvent.OnPasswordChanged(it)) },
+                    onValueChange = { onEvent(RegisterEvent.OnPasswordChanged(it)) },
                     label = "Contraseña",
+                    isPassword = true,
+                    imeAction = ImeAction.Next,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                AuthTextField(
+                    value = state.confirmPassword,
+                    onValueChange = { onEvent(RegisterEvent.OnConfirmPasswordChanged(it)) },
+                    label = "Confirmar contraseña",
                     isPassword = true,
                     imeAction = ImeAction.Done,
                     modifier = Modifier.fillMaxWidth()
@@ -100,7 +120,7 @@ fun LoginScreen(
                 }
 
                 Button(
-                    onClick = { onEvent(LoginEvent.OnLoginClick) },
+                    onClick = { onEvent(RegisterEvent.OnRegisterClick) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
@@ -115,13 +135,13 @@ fun LoginScreen(
                             strokeWidth = 2.dp
                         )
                     } else {
-                        Text("ENTRAR", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                        Text("REGISTRARSE", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                     }
                 }
 
-                TextButton(onClick = onNavigateToRegister) {
+                TextButton(onClick = onNavigateToLogin) {
                     Text(
-                        text = "¿No tienes cuenta? Regístrate",
+                        text = "¿Ya tienes cuenta? Inicia sesión",
                         color = Color.White,
                         fontSize = 14.sp
                     )
@@ -133,26 +153,13 @@ fun LoginScreen(
 
 @Preview(showSystemUi = true)
 @Composable
-fun LoginScreenPreview() {
+fun RegisterScreenPreview() {
     PruebaKotlinTheme {
-        LoginScreen(
-            state = LoginUiState(),
+        RegisterScreen(
+            state = RegisterUiState(),
             onEvent = {},
-            onLoginSuccess = {},
-            onNavigateToRegister = {}
-        )
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun LoginErrorPreview() {
-    PruebaKotlinTheme {
-        LoginScreen(
-            state = LoginUiState(error = "Credenciales incorrectas"),
-            onEvent = {},
-            onLoginSuccess = {},
-            onNavigateToRegister = {}
+            onRegisterSuccess = {},
+            onNavigateToLogin = {}
         )
     }
 }
