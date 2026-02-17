@@ -28,6 +28,10 @@ const templateMenu = [
   }
 ];
 
+try {
+  require('electron-reloader')(module);
+} catch (_) {}
+
 const mainMenu = Menu.buildFromTemplate(templateMenu);
 Menu.setApplicationMenu(mainMenu);
 

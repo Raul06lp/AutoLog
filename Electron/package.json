@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/Raul06lp/AutoLog/issues"
   },
-  "homepage": "https://github.com/Raul06lp/AutoLog#readme"
+  "homepage": "https://github.com/Raul06lp/AutoLog#readme",
+  "devDependencies": {
+    "electron-reloader": "^1.2.3"
+  }
 }
