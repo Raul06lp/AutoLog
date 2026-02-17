@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.carlafdez.autolog.presentation.screens.detailScreen.AccentBlue
 import com.carlafdez.autolog.ui.theme.Carta
@@ -24,6 +25,7 @@ fun VehicleHeaderImage(
     imagenBase64: String?,
     modifier: Modifier = Modifier
 ) {
+fun VehicleHeaderImage(imagenBase64: String?, modifier: Modifier = Modifier) {
     if (imagenBase64 != null) {
         val bitmap = remember(imagenBase64) {
             runCatching {
@@ -54,4 +56,10 @@ fun VehicleHeaderImage(
             modifier = Modifier.size(96.dp)
         )
     }
+}
+
+@Preview
+@Composable
+fun VehicleHeaderImagePreview(){
+    VehicleHeaderImage(imagenBase64 = null)
 }

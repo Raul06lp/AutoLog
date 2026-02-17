@@ -16,6 +16,9 @@ import androidx.compose.ui.graphics.Color
 import com.carlafdez.autolog.domain.model.Cliente
 import com.carlafdez.autolog.ui.theme.Carta
 
+import androidx.compose.ui.tooling.preview.Preview
+import com.carlafdez.autolog.domain.model.Cliente
+import com.carlafdez.autolog.ui.theme.Carta
 @Composable
 fun ClienteSelector(
     clienteSeleccionado: Cliente?,
@@ -50,4 +53,14 @@ fun ClienteSelector(
             )
         )
     }
+}
+
+@Preview
+@Composable
+fun ClienteSelectorPreview(){
+    ClienteSelector(
+        clienteSeleccionado = null,
+        isLoading = false,
+        onClick = {}
+    )
 }

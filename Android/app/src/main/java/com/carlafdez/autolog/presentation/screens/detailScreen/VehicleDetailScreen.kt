@@ -16,11 +16,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.carlafdez.autolog.presentation.screens.detailScreen.components.VehicleDetailContent
 import com.carlafdez.autolog.presentation.screens.homeScreen.components.vehiclePreviews
+import androidx.compose.ui.unit.sp
+import com.carlafdez.autolog.domain.model.Vehiculo
+import com.carlafdez.autolog.presentation.components.vehiclePreviews
+import com.carlafdez.autolog.presentation.screens.detailScreen.components.DetailRow
+import com.carlafdez.autolog.presentation.screens.detailScreen.components.DetailSection
+import com.carlafdez.autolog.presentation.screens.detailScreen.components.EstadoChip
+import com.carlafdez.autolog.presentation.screens.detailScreen.components.VehicleHeaderImage
+>>>>>>> Stashed changes
 import com.carlafdez.autolog.ui.theme.Botones
 import com.carlafdez.autolog.ui.theme.PruebaKotlinTheme
 import com.carlafdez.autolog.ui.theme.Texto
 
 val NavyBlue = Color(0xFF1E3A5F)
+private val NavyBlue = Color(0xFF1E3A5F)
 val AccentBlue = Color(0xFF1976D2)
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -124,6 +133,106 @@ fun VehicleDetailScreen(
         }
     }
 }
+
+@Composable
+private fun VehicleDetailContent(
+    vehiculo: Vehiculo,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+        // Imagen arriba del todo
+        VehicleHeaderImage(
+            imagenBase64 = vehiculo.imagenBase64,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(260.dp)
+        )
+
+        // Contenido
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            // Título y estado
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text(
+                        text = "${vehiculo.marca} ${vehiculo.modelo}",
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = NavyBlue
+                    )
+                    Text(
+                        text = vehiculo.matricula,
+                        fontSize = 14.sp,
+                        color = Color.Gray
+                    )
+                }
+                EstadoChip(estado = vehiculo.estadoRevision)
+            }
+
+            HorizontalDivider()
+
+            // Sección: Información general
+            DetailSection(title = "Información general") {
+                DetailRow(label = "Año", value = vehiculo.anio.toString())
+                DetailRow(label = "Color", value = vehiculo.color.ifBlank { "—" })
+                DetailRow(label = "Kilometraje", value = "${vehiculo.kilometraje} km")
+                DetailRow(label = "Fecha de ingreso", value = vehiculo.fechaIngreso.take(10))
+            }
+
+            HorizontalDivider()
+
+            // Sección: Cliente
+            DetailSection(title = "Cliente") {
+                DetailRow(label = "Nombre", value = vehiculo.nombreCliente)
+            }
+
+            HorizontalDivider()
+
+            // Sección: Observaciones
+            if (vehiculo.observaciones.isNotBlank()) {
+                DetailSection(title = "Observaciones") {
+                    Text(
+                        text = vehiculo.observaciones,
+                        fontSize = 14.sp,
+                        color = Color.DarkGray,
+                        lineHeight = 20.sp
+                    )
+                }
+                HorizontalDivider()
+            }
+
+            // Sección: Medidas
+            if (vehiculo.medidasTomadas.isNotBlank()) {
+                DetailSection(title = "Medidas tomadas") {
+                    Text(
+                        text = vehiculo.medidasTomadas,
+                        fontSize = 14.sp,
+                        color = Color.DarkGray,
+                        lineHeight = 20.sp
+                    )
+                }
+                HorizontalDivider()
+            }
+
+            // Espacio para que el FAB no tape el contenido
+            Spacer(modifier = Modifier.height(72.dp))
+        }
+    }
+}
+
+
 
 // ---- PREVIEWS ----
 
