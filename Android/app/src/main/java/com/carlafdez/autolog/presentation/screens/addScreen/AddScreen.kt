@@ -62,7 +62,7 @@ fun AddScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Añadir Vehículo",
+                        text = "Añadir vehículo",
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
@@ -170,7 +170,7 @@ fun AddScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = AccentBlue),
+                colors = ButtonDefaults.buttonColors(containerColor = Texto),
                 shape = RoundedCornerShape(12.dp),
                 enabled = !state.isLoading
             ) {
@@ -181,7 +181,7 @@ fun AddScreen(
                         strokeWidth = 2.dp
                     )
                 } else {
-                    Text("Añadir Vehículo", fontWeight = FontWeight.Bold)
+                    Text("Añadir vehículo", fontWeight = FontWeight.Bold)
                 }
             }
 
