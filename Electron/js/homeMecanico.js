@@ -7,6 +7,37 @@ const logOut = document.getElementById("logOut");
 const wrapper = document.getElementById("wrapper");
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Acción para botón finalizar
+    wrapper.addEventListener('click', async (ev) => {
+      const btn = ev.target.closest('.btn-finalizar');
+      if (!btn) return;
+      const id = btn.dataset.id;
+      if (!id) return;
+      try {
+        // 1. Obtener datos actuales del vehículo
+        const getResp = await fetch(`https://autolog-0mnd.onrender.com/api/vehiculos/${encodeURIComponent(id)}`, {
+          headers: { 'Authorization': AUTH }
+        });
+        const veh = await getResp.json().catch(() => null);
+        if (!getResp.ok || !veh) throw new Error('No se pudo obtener el vehículo');
+        // 2. Preparar payload con todos los datos, cambiando solo estadoRevision
+        const payload = { ...veh, estadoRevision: 'finalizado' };
+        // Elimina campos que no deben enviarse (como _id, __v, imagenBase64)
+        delete payload._id;
+        delete payload.__v;
+        delete payload.imagenBase64;
+        // 3. PUT con todos los datos
+        const putResp = await fetch(`https://autolog-0mnd.onrender.com/api/vehiculos/${encodeURIComponent(id)}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'Authorization': AUTH },
+          body: JSON.stringify(payload)
+        });
+        if (!putResp.ok) throw new Error('No se pudo finalizar el vehículo');
+        await mostrarCoches();
+      } catch (err) {
+        alert('Error al finalizar el vehículo');
+      }
+    });
   const titleEl = document.querySelector('#title h1');
   const userRaw = localStorage.getItem('autolog_user');
   const user = userRaw ? JSON.parse(userRaw) : null;
@@ -60,15 +91,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let html = '';
     if (veh.imagenBase64) {
-      html += `<img src="data:image/jpeg;base64,${veh.imagenBase64}" style="width:100%;max-height:260px;object-fit:cover;border-radius:8px;margin-bottom:12px;">`;
+      html += `<img src=\"data:image/jpeg;base64,${veh.imagenBase64}\" style=\"width:100%;max-height:260px;object-fit:cover;border-radius:8px;margin-bottom:12px;\">`;
     }
 
-    const skip = new Set(['imagenBase64', '__v', '_id']);
-    const entries = Object.entries(veh || {}).filter(([k]) => !skip.has(k));
-    if (entries.length === 0) {
+    // Apartados a mostrar (puedes personalizar el orden y los campos)
+    const apartados = [
+      {
+        titulo: 'Datos del Cliente',
+        campos: [
+          { key: 'emailCliente', label: 'Correo cliente' },
+          { key: 'nombreCliente', label: 'Nombre cliente' },
+          { key: 'telefono', label: 'Teléfono' }
+        ]
+      },
+      {
+        titulo: 'Datos del Vehículo',
+        campos: [
+          { key: 'marca', label: 'Marca' },
+          { key: 'modelo', label: 'Modelo' },
+          { key: 'matricula', label: 'Matrícula' },
+          { key: 'anyo', label: 'Año' },
+          { key: 'color', label: 'Color' },
+          { key: 'kilometraje', label: 'Kilometraje' }
+        ]
+      },
+      {
+        titulo: 'Estado y Observaciones',
+        campos: [
+          { key: 'estadoRevision', label: 'Estado revisión' },
+          { key: 'observaciones', label: 'Observaciones' }
+        ]
+      }
+    ];
+
+    let hayDatos = false;
+    html += '<div class="modal-apartados">';
+    apartados.forEach(apartado => {
+      // Solo mostrar el apartado si hay algún campo con valor
+      const camposConValor = apartado.campos.filter(c => veh[c.key] != null && veh[c.key] !== '');
+      if (camposConValor.length > 0) {
+        hayDatos = true;
+        html += `<div class="modal-apartado"><h3 class="modal-apartado-titulo">${apartado.titulo}</h3><div class="modal-grid">`;
+        for (let i = 0; i < camposConValor.length; i += 2) {
+          html += '<div class="modal-row">';
+          for (let j = i; j < i + 2 && j < camposConValor.length; j++) {
+            const campo = camposConValor[j];
+            html += `<div class=\"modal-block\"><span class=\"modal-label\">${campo.label}:</span> <span class=\"modal-value\">${escapeHTML(String(veh[campo.key] ?? ''))}</span></div>`;
+          }
+          html += '</div>';
+        }
+        html += '</div></div>';
+      }
+    });
+    html += '</div>';
+    if (!hayDatos) {
       html += '<p>No hay información adicional.</p>';
-    } else {
-      html += entries.map(([k, v]) => `<p><strong>${formatKey(k)}:</strong> ${escapeHTML(String(v ?? ''))}</p>`).join('');
     }
 
     body.innerHTML = html;
@@ -136,24 +213,33 @@ document.addEventListener("DOMContentLoaded", () => {
       html += `<img src="data:image/jpeg;base64,${veh.imagenBase64}" style="width:100%;max-height:200px;object-fit:cover;border-radius:8px;margin-bottom:8px;">`;
     }
 
-    entries.forEach(([k, v]) => {
-      // avoid editing idVehiculo key (keep as hidden)
-      if (k === 'idVehiculo') {
-        html += `<input type="hidden" name="${escapeHTML(k)}" value="${escapeHTML(String(v ?? ''))}">`;
-        return;
+    // Agrupar inputs en bloques de 2 por fila
+    const visibleEntries = entries.filter(([k]) => k !== 'idVehiculo');
+    for (let i = 0; i < visibleEntries.length; i += 2) {
+      html += '<div class="edit-row">';
+      for (let j = i; j < i + 2 && j < visibleEntries.length; j++) {
+        const [k, v] = visibleEntries[j];
+        const name = escapeHTML(k);
+        const value = v == null ? '' : String(v);
+        const type = /^\d+$/.test(value) ? 'number' : 'text';
+        html += `
+          <div class="edit-block">
+            <label style="font-weight:700;color:#133;">${formatKey(k)}</label>
+            <input name="${name}" placeholder="${escapeHTML(value)}" value="${escapeHTML(value)}" type="${type}" />
+          </div>
+        `;
       }
-      const name = escapeHTML(k);
-      const value = v == null ? '' : String(v);
-      // choose input type
-      const type = /^\d+$/.test(value) ? 'number' : 'text';
-      html += `
-        <label style="font-weight:700;color:#133;">${formatKey(k)}</label>
-        <input name="${name}" placeholder="${escapeHTML(value)}" value="${escapeHTML(value)}" type="${type}" />
-      `;
-    });
+      html += '</div>';
+    }
+
+    // idVehiculo como hidden
+    const idEntry = entries.find(([k]) => k === 'idVehiculo');
+    if (idEntry) {
+      html += `<input type="hidden" name="${escapeHTML(idEntry[0])}" value="${escapeHTML(String(idEntry[1] ?? ''))}">`;
+    }
 
     html += `
-        <div style="display:flex;gap:10px;margin-top:8px;">
+        <div class="modal-edit-actions">
           <button type="submit" class="btn-submit">Guardar</button>
           <button type="button" class="btn-reset" id="cancelEdit">Cancelar</button>
         </div>
@@ -224,11 +310,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const userRaw = localStorage.getItem('autolog_user');
       const user = userRaw ? JSON.parse(userRaw) : null;
 
-      const vehiculosFiltrados = user?.role === 'cliente'
-        ? data.filter((v) => v.idCliente === user.id)
-        : user?.role === 'mecanico'
-          ? data.filter((v) => v.idMecanico === user.id)
-          : data;
+      let vehiculosFiltrados = [];
+      if (user?.role === 'cliente') {
+        vehiculosFiltrados = data.filter((v) => v.idCliente === user.id);
+      } else if (user?.role === 'mecanico') {
+        vehiculosFiltrados = data.filter((v) => v.idMecanico === user.id && v.estadoRevision !== 'finalizado');
+      } else {
+        vehiculosFiltrados = data;
+      }
 
       // Generar HTML dinámico para mostrar los vehículos
       let html = '';

@@ -38,7 +38,7 @@ Menu.setApplicationMenu(mainMenu);
 function createWindow() {
     const win = new BrowserWindow({
         show: false,
-        icon: './icons/logo.png',
+        icon: './icons/logo_sin_titulo.png',
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false

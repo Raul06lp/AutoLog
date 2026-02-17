@@ -20,7 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function mostrarCoches() {
     try {
-      const resp = await fetch('https://autolog-0mnd.onrender.com/api/vehiculos');
+      const resp = await fetch('https://autolog-0mnd.onrender.com/api/vehiculos', {
+        headers: { 'Authorization': AUTH }
+      });
       const data = await resp.json().catch(() => ([]));
 
       if (!resp.ok || !Array.isArray(data)) {
@@ -46,8 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="car-card">
             <img class="car-photo" src="${fotoSrc}" alt="Foto del coche">
             <p><strong>Matrícula:</strong> ${vehiculo.matricula || 'N/A'}</p>
-            <div class="card-actions">
+            <div class="card-actions" style="align-items:center;">
               <button type="button" class="btn-ver-mas" data-id="${vehiculo.idVehiculo || ''}">Ver más</button>
+              <span class="estado-revision" style="margin-left:16px;font-size:14px;color:#1976d2;font-weight:600;">${vehiculo.estadoRevision ? vehiculo.estadoRevision : ''}</span>
             </div>
           </div>
         `;
@@ -108,31 +111,59 @@ document.addEventListener("DOMContentLoaded", () => {
       html += `<img src="data:image/jpeg;base64,${veh.imagenBase64}" style="width:100%;max-height:260px;object-fit:cover;border-radius:8px;margin-bottom:12px;">`;
     }
 
-    // Definir los campos específicos que queremos mostrar
-    const camposAMostrar = [
-      'matricula',
-      'marca',
-      'modelo',
-      'anio',
-      'color',
-      'kilometraje',
-      'observaciones',
-      'medidasTomadas',
-      'estadoRevision',
-      'nombreCliente',
-      'nombreMecanico',
-      'emailMecanico',
+    // Apartados a mostrar (puedes personalizar el orden y los campos)
+    const apartados = [
+      {
+        titulo: 'Datos del Vehículo',
+        campos: [
+          { key: 'matricula', label: 'Matrícula' },
+          { key: 'marca', label: 'Marca' },
+          { key: 'modelo', label: 'Modelo' },
+          { key: 'anio', label: 'Año' },
+          { key: 'color', label: 'Color' },
+          { key: 'kilometraje', label: 'Kilometraje' }
+        ]
+      },
+      {
+        titulo: 'Estado y Observaciones',
+        campos: [
+          { key: 'estadoRevision', label: 'Estado revisión' },
+          { key: 'observaciones', label: 'Observaciones' },
+          { key: 'medidasTomadas', label: 'Medidas tomadas' }
+        ]
+      },
+      {
+        titulo: 'Datos del Cliente y Mecánico',
+        campos: [
+          { key: 'nombreCliente', label: 'Nombre cliente' },
+          { key: 'nombreMecanico', label: 'Nombre mecánico' },
+          { key: 'emailMecanico', label: 'Email mecánico' }
+        ]
+      }
     ];
 
-    // Filtrar solo los campos definidos que existan en el vehículo
-    const entries = camposAMostrar
-      .filter(campo => veh.hasOwnProperty(campo) && veh[campo] !== null && veh[campo] !== undefined)
-      .map(campo => [campo, veh[campo]]);
-
-    if (entries.length === 0) {
+    let hayDatos = false;
+    html += '<div class="modal-apartados">';
+    apartados.forEach(apartado => {
+      // Solo mostrar el apartado si hay algún campo con valor
+      const camposConValor = apartado.campos.filter(c => veh[c.key] != null && veh[c.key] !== '');
+      if (camposConValor.length > 0) {
+        hayDatos = true;
+        html += `<div class="modal-apartado"><h3 class="modal-apartado-titulo">${apartado.titulo}</h3><div class="modal-grid">`;
+        for (let i = 0; i < camposConValor.length; i += 2) {
+          html += '<div class="modal-row">';
+          for (let j = i; j < i + 2 && j < camposConValor.length; j++) {
+            const campo = camposConValor[j];
+            html += `<div class=\"modal-block\"><span class=\"modal-label\">${campo.label}:</span> <span class=\"modal-value\">${escapeHTML(String(veh[campo.key] ?? ''))}</span></div>`;
+          }
+          html += '</div>';
+        }
+        html += '</div></div>';
+      }
+    });
+    html += '</div>';
+    if (!hayDatos) {
       html += '<p>No hay información adicional.</p>';
-    } else {
-      html += entries.map(([k, v]) => `<p><strong>${formatKey(k)}:</strong> ${escapeHTML(String(v ?? ''))}</p>`).join('');
     }
 
     body.innerHTML = html;
