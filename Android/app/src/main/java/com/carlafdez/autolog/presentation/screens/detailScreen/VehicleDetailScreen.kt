@@ -242,7 +242,7 @@ private fun DetailSection(
             text = title,
             fontWeight = FontWeight.Bold,
             fontSize = 13.sp,
-            color = AccentBlue,
+            color = Texto,
             letterSpacing = 0.5.sp
         )
         content()
