@@ -192,6 +192,19 @@ private fun VehicleDetailContent(
                 HorizontalDivider()
             }
 
+            // Sección: Medidas
+            if (vehiculo.medidasTomadas.isNotBlank()) {
+                DetailSection(title = "Medidas tomadas") {
+                    Text(
+                        text = vehiculo.medidasTomadas,
+                        fontSize = 14.sp,
+                        color = Color.DarkGray,
+                        lineHeight = 20.sp
+                    )
+                }
+                HorizontalDivider()
+            }
+
             // Espacio para que el FAB no tape el contenido
             Spacer(modifier = Modifier.height(72.dp))
         }
