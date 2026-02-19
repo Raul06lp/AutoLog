@@ -18,6 +18,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const foto = document.getElementById('foto');
     const observaciones = document.getElementById('observaciones');
 
+    // Poblar el desplegable de correos de clientes
+    fetch('https://autolog-0mnd.onrender.com/api/clientes', {
+        headers: { 'Authorization': AUTH }
+    })
+    .then(resp => resp.json())
+    .then(clientes => {
+        if (Array.isArray(clientes)) {
+            clientes.forEach(cliente => {
+                const email = cliente.email || cliente.correo || cliente.mail;
+                if (email) {
+                    const option = document.createElement('option');
+                    option.value = email;
+                    option.textContent = email;
+                    correoCliente.appendChild(option);
+                }
+            });
+        }
+    })
+    .catch(() => {
+        // Si falla, no poblar nada
+    });
+
     console.log("Formulario de registro de vehículo listo.");
 
     form.addEventListener('submit', async (e) => {
@@ -28,8 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const user = userRaw ? JSON.parse(userRaw) : null;
             const idMecanico = user?.role === 'mecanico' ? user.id : null;
 
+            const errorElement = document.getElementById('error-message');
+            if (errorElement) errorElement.style.display = 'none';
             if (!idMecanico) {
-                alert('No se encontró el mecánico logeado. Inicia sesión nuevamente.');
+                if (errorElement) {
+                    errorElement.textContent = 'No se encontró el mecánico logeado. Inicia sesión nuevamente.';
+                    errorElement.style.display = 'block';
+                }
                 return;
             }
 
@@ -39,7 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const clientesData = await clientesResp.json().catch(() => ([]));
 
             if (!clientesResp.ok || !Array.isArray(clientesData)) {
-                alert('No se pudo obtener la lista de clientes.');
+                if (errorElement) {
+                    errorElement.textContent = 'No se pudo obtener la lista de clientes.';
+                    errorElement.style.display = 'block';
+                }
                 return;
             }
 
@@ -50,19 +80,28 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!cliente) {
-                alert('No se encontró un cliente con ese correo.');
+                if (errorElement) {
+                    errorElement.textContent = 'No se encontró un cliente con ese correo.';
+                    errorElement.style.display = 'block';
+                }
                 return;
             }
 
             const idCliente = cliente.id ?? cliente.idCliente;
             if (!idCliente) {
-                alert('No se pudo obtener el ID del cliente.');
+                if (errorElement) {
+                    errorElement.textContent = 'No se pudo obtener el ID del cliente.';
+                    errorElement.style.display = 'block';
+                }
                 return;
             }
 
             const anioValue = parseInt(anyo.value, 10);
             if (!matricula.value || !marca.value || !modelo.value || !anioValue) {
-                alert('Completa matrícula, marca, modelo y año.');
+                if (errorElement) {
+                    errorElement.textContent = 'Completa matrícula, marca, modelo y año.';
+                    errorElement.style.display = 'block';
+                }
                 return;
             }
 
@@ -96,7 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!resp.ok) {
                 const msg = data.message || data.error || 'Error al registrar el vehículo.';
-                alert(msg);
+                if (errorElement) {
+                    errorElement.textContent = msg;
+                    errorElement.style.display = 'block';
+                }
                 return;
             }
 
@@ -104,7 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = "home.html";
         } catch (e) {
             console.error("✗ Error al registrar vehículo: ", e);
-            alert("Error: " + e.message);
+            const errorElement = document.getElementById('error-message');
+            if (errorElement) {
+                errorElement.textContent = "Error: " + (e.message || 'Error desconocido.');
+                errorElement.style.display = 'block';
+            }
         }
     })
 });

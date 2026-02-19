@@ -86,7 +86,7 @@ nav ul li:first-child {
   width: 48px;
   height: 48px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
+  /* filter: brightness(0) invert(1); */
   opacity: 0.95;
 }
 
