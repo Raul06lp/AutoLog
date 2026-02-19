@@ -1,74 +1,279 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 30px;
-    color: #2c3e50;
-    background-color: #fff;
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --blue-500: #2563eb;
+  --blue-600: #1d4ed8;
+  --blue-900: #0f1e4e;
+
+  --text-primary:   #0f1e4e;
+  --text-secondary: #4a5f8a;
+  --text-muted:     #8fa3cc;
+
+  --border:    #dde4f2;
+  --surface-2: #f4f6fb;
 }
 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #e8ecf5;
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 48px 24px;
+}
+
+
+body > * {
+  width: 100%;
+  max-width: 760px;
+}
+
+body {
+  flex-direction: column;
+  align-items: center;
+}
+
+body::before {
+  content: '';
+  display: none;
+}
+
+header,
+section,
+#firmas {
+  background: #fff;
+  width: 100%;
+  max-width: 760px;
+}
+
+header { border-radius: 16px 16px 0 0; }
+section:last-of-type,
+#firmas { border-radius: 0 0 16px 16px; }
+
 header {
-    text-align: center;
-    margin-bottom: 30px;
+  background: var(--blue-900);
+  padding: 32px 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 4px solid var(--blue-500);
 }
 
 header h1 {
-    color: #1e88e5;
-    border-bottom: 4px solid #1e88e5;
-    display: inline-block;
-    padding-bottom: 5px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.04em;
 }
 
 header p {
-    color: #1565c0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
 }
+
 
 section {
-    margin-bottom: 25px;
+  padding: 28px 44px;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
-h2 {
-    color: #1e88e5;
-    border-bottom: 2px solid #1e88e5;
-    padding-bottom: 3px;
-    margin-bottom: 10px;
+section h2 {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--blue-500);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-p {
-    margin: 5px 0;
-    font-size: 14px;
+section h2::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 13px;
+  background: var(--blue-500);
+  border-radius: 2px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    margin-bottom: 10px;
+/* Pares clave–valor */
+section > p {
+  display: flex;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border);
+  align-items: baseline;
 }
 
-table, th, td {
-    border: 1px solid #1e88e5;
+section > p:last-of-type { border-bottom: none; }
+
+section > p strong {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  min-width: 120px;
+  flex-shrink: 0;
 }
 
-th, td {
-    padding: 8px;
-    text-align: left;
-    font-size: 14px;
+section > p span {
+  font-weight: 500;
+  color: var(--text-primary);
 }
 
-th {
-    background-color: #e3f2fd;
+/* Total — destacado */
+section > p:has(#total) strong,
+section > p:has(#total) span {
+  color: var(--blue-600);
+  font-weight: 700;
+  font-size: 1rem;
 }
 
-#total {
-    font-weight: bold;
-    color: #1e88e5;
+#tablaTrabajos {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 16px 0 20px;
+  font-size: 0.88rem;
 }
 
-/* Estilos para la sección de firmas */
+#tablaTrabajos thead {
+  background: var(--surface-2);
+}
+
+#tablaTrabajos thead th {
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 0.67rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+#tablaTrabajos thead th:last-child {
+  text-align: right;
+}
+
+#tablaTrabajos tbody tr {
+  border-bottom: 1px solid var(--border);
+}
+
+#tablaTrabajos tbody tr:last-child { border-bottom: none; }
+
+#tablaTrabajos tbody tr:nth-child(even) {
+  background: #fafbff;
+}
+
+#tablaTrabajos tbody td {
+  padding: 10px 16px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+#tablaTrabajos tbody td:last-child {
+  text-align: right;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+
 #firmas {
-    margin: 30px;
-    display: flex;
-    flex-direction: row;   
-    gap: 20px;            
-    align-items: center;  
-    justify-content: space-between;
+  padding: 32px 44px;
+  border: 1px solid var(--border);
+  border-top: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+#firmas h2 {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  margin-bottom: 48px; /* espacio para la firma */
+}
+
+#firmas p {
+  border-top: 1px solid var(--text-muted);
+  padding-top: 8px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  min-height: 24px;
+}
+
+
+@media print {
+  @page {
+    size: A4;
+    margin: 16mm 18mm;
+  }
+
+  body {
+    background: none;
+    padding: 0;
+    display: block;
+  }
+
+  header,
+  section,
+  #firmas {
+    max-width: 100%;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  header { border-radius: 0 !important; }
+
+  section { page-break-inside: avoid; }
+  #firmas { page-break-inside: avoid; }
+
+  /* Forzar colores en impresión */
+  header { background: var(--blue-900) !important; }
+  #tablaTrabajos thead { background: var(--surface-2) !important; }
+  #tablaTrabajos tbody tr:nth-child(even) { background: #fafbff !important; }
+}
+
+
+
+@media (max-width: 600px) {
+  body { padding: 0; }
+
+  header,
+  section,
+  #firmas {
+    border-radius: 0 !important;
+    padding: 24px 20px;
+  }
+
+  header { flex-direction: column; align-items: flex-start; gap: 4px; }
+
+  #firmas { grid-template-columns: 1fr; }
+
+  section > p strong { min-width: 90px; }
 }
