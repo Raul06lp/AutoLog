@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const anyo = document.getElementById('anyo');
     const color = document.getElementById('color');
     const kilometraje = document.getElementById('kilometraje');
-    const estadoRevision = document.getElementById('estadoRevision');
     const foto = document.getElementById('foto');
     const observaciones = document.getElementById('observaciones');
 
@@ -116,7 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (color.value) formData.append('color', color.value);
             if (kilometraje.value) formData.append('kilometraje', kilometraje.value);
             if (observaciones.value) formData.append('observaciones', observaciones.value);
-            if (estadoRevision.value) formData.append('estadoRevision', estadoRevision.value);
+            // Estado siempre será 'Pendiente' al crear
+            formData.append('estado', 'Pendiente');
             if (foto?.files && foto.files[0]) {
                 formData.append('imagen', foto.files[0]);
             }

@@ -7,77 +7,6 @@ const logOut = document.getElementById("logOut");
 const wrapper = document.getElementById("wrapper");
 
 document.addEventListener("DOMContentLoaded", () => {
-      // Acción para botón reparar
-      wrapper.addEventListener('click', async (ev) => {
-        const btn = ev.target.closest('.btn-reparar');
-        if (!btn) return;
-        const id = btn.dataset.id;
-        if (!id) return;
-        try {
-          // Obtener datos actuales del vehículo
-          const getResp = await fetch(`https://autolog-0mnd.onrender.com/api/vehiculos/${encodeURIComponent(id)}`, {
-            headers: { 'Authorization': AUTH }
-          });
-          const veh = await getResp.json().catch(() => null);
-          if (!getResp.ok || !veh) throw new Error('No se pudo obtener el vehículo');
-          // Cambiar estado a reparando
-          const payload = { ...veh, estadoRevision: 'reparando' };
-          delete payload._id;
-          delete payload.__v;
-          delete payload.imagenBase64;
-          const putResp = await fetch(`https://autolog-0mnd.onrender.com/api/vehiculos/${encodeURIComponent(id)}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json', 'Authorization': AUTH },
-            body: JSON.stringify(payload)
-          });
-          if (!putResp.ok) throw new Error('No se pudo cambiar a reparando');
-          await mostrarCoches();
-        } catch (err) {
-          alert('Error al cambiar a reparando');
-        }
-      });
-    // Acción para botón restaurar
-    wrapper.addEventListener('click', async (ev) => {
-      const btn = ev.target.closest('.btn-restaurar');
-      if (!btn) return;
-      const id = btn.dataset.id;
-      if (!id) return;
-      try {
-        // Obtener datos actuales del vehículo
-        const getResp = await fetch(`https://autolog-0mnd.onrender.com/api/vehiculos/${encodeURIComponent(id)}`, {
-          headers: { 'Authorization': AUTH }
-        });
-        const veh = await getResp.json().catch(() => null);
-        if (!getResp.ok || !veh) throw new Error('No se pudo obtener el vehículo');
-        // Cambiar estado a pendiente y fechaIngreso a hoy
-        const hoy = new Date().toISOString();
-        const payload = { ...veh, estadoRevision: 'pendiente', fechaIngreso: hoy };
-        delete payload._id;
-        delete payload.__v;
-        delete payload.imagenBase64;
-        const putResp = await fetch(`https://autolog-0mnd.onrender.com/api/vehiculos/${encodeURIComponent(id)}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json', 'Authorization': AUTH },
-          body: JSON.stringify(payload)
-        });
-        if (!putResp.ok) throw new Error('No se pudo restaurar el vehículo');
-        await mostrarCoches();
-      } catch (err) {
-        alert('Error al restaurar el vehículo');
-      }
-    });
-  // Filtro de estado
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  let estadoFiltro = null;
-
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      estadoFiltro = btn.dataset.estado;
-      mostrarCoches();
-    });
-  });
     // Acción para botón finalizar
     wrapper.addEventListener('click', async (ev) => {
       const btn = ev.target.closest('.btn-finalizar');
@@ -272,8 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderEditForm(veh, id) {
     const body = document.getElementById('modalEditBody');
     if (!body) return;
-    // Excluir imagen, __v, _id, fechaIngreso e idMecanico del formulario
-    const skip = new Set(['imagenBase64', '__v', '_id', 'fechaIngreso', 'idMecanico']);
+    const skip = new Set(['imagenBase64', '__v', '_id']);
     const entries = Object.entries(veh || {}).filter(([k]) => !skip.has(k));
 
     let html = `<form id="editForm">
@@ -285,8 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
       html += `<img src="data:image/jpeg;base64,${veh.imagenBase64}" style="width:100%;max-height:200px;object-fit:cover;border-radius:8px;margin-bottom:8px;">`;
     }
 
-
-    // Agrupar inputs en bloques de 2 por fila (sin confirmación de correo)
+    // Agrupar inputs en bloques de 2 por fila
     const visibleEntries = entries.filter(([k]) => k !== 'idVehiculo');
     for (let i = 0; i < visibleEntries.length; i += 2) {
       html += '<div class="edit-row">';
@@ -305,14 +232,6 @@ document.addEventListener("DOMContentLoaded", () => {
       html += '</div>';
     }
 
-    // Guardar los valores originales de fechaIngreso e idMecanico como hidden
-    if (veh.fechaIngreso !== undefined) {
-      html += `<input type="hidden" name="fechaIngreso" value="${escapeHTML(String(veh.fechaIngreso))}">`;
-    }
-    if (veh.idMecanico !== undefined) {
-      html += `<input type="hidden" name="idMecanico" value="${escapeHTML(String(veh.idMecanico))}">`;
-    }
-
     // idVehiculo como hidden
     const idEntry = entries.find(([k]) => k === 'idVehiculo');
     if (idEntry) {
@@ -327,8 +246,6 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     </form>`;
 
-    // Mensaje de error para email
-    html += '<div id="edit-email-error" style="color:red;margin-bottom:8px;"></div>';
     body.innerHTML = html;
 
     const form = document.getElementById('editForm');
@@ -343,11 +260,11 @@ document.addEventListener("DOMContentLoaded", () => {
         payload[k] = v;
       }
       try {
-        const putResp = await fetch(`https://autolog-0mnd.onrender.com/api/vehiculos/${encodeURIComponent(id)}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json', 'Authorization': AUTH },
-          body: JSON.stringify(payload)
-        });
+          const putResp = await fetch(`https://autolog-0mnd.onrender.com/api/vehiculos/${encodeURIComponent(id)}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Authorization': AUTH },
+            body: JSON.stringify(payload)
+          });
         const result = await putResp.json().catch(() => ({}));
         if (!putResp.ok) throw new Error(result?.message || 'Error al actualizar');
         // success
@@ -397,22 +314,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (user?.role === 'cliente') {
         vehiculosFiltrados = data.filter((v) => v.idCliente === user.id);
       } else if (user?.role === 'mecanico') {
-        vehiculosFiltrados = data.filter((v) => v.idMecanico === user.id);
+        vehiculosFiltrados = data.filter((v) => v.idMecanico === user.id && v.estadoRevision !== 'finalizado');
       } else {
         vehiculosFiltrados = data;
-      }
-
-      // Aplicar filtro de estado si está seleccionado
-      if (estadoFiltro) {
-        vehiculosFiltrados = vehiculosFiltrados.filter(v => {
-          // Normalizar para evitar problemas de mayúsculas/minúsculas
-          return (v.estadoRevision || '').toLowerCase() === estadoFiltro.toLowerCase();
-        });
-      } else {
-        // Si no hay filtro, mostrar solo los que no están finalizados (comportamiento original)
-        if (user?.role === 'mecanico') {
-          vehiculosFiltrados = vehiculosFiltrados.filter(v => v.estadoRevision !== 'finalizado');
-        }
       }
 
       // Generar HTML dinámico para mostrar los vehículos
@@ -424,27 +328,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const dataMat = (vehiculo.matricula || '').toString().replace(/\s+/g, '').toLowerCase();
         const dataEmail = (vehiculo.emailCliente || '').toString().toLowerCase();
         const estadoRaw = (vehiculo.estadoRevision || '').toString();
-<<<<<<< HEAD
-        const estadoSlug = estadoRaw.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
-        let cardBtns = '';
-        if (estadoRaw.toLowerCase() === 'finalizado') {
-          cardBtns = `
-            <button type="button" class="btn-ver-mas" data-id="${vehiculo.idVehiculo || ''}">Ver más</button>
-            <button type="button" class="btn-restaurar" data-id="${vehiculo.idVehiculo || ''}">Restaurar</button>
-          `;
-        } else if (estadoRaw.toLowerCase() === 'pendiente') {
-          cardBtns = `
-            <button type="button" class="btn-ver-mas" data-id="${vehiculo.idVehiculo || ''}">Ver más</button>
-            <button type="button" class="btn-editar" data-id="${vehiculo.idVehiculo || ''}">Editar</button>
-            <button type="button" class="btn-reparar" data-id="${vehiculo.idVehiculo || ''}">Reparar</button>
-          `;
-        } else {
-          cardBtns = `
-            <button type="button" class="btn-ver-mas" data-id="${vehiculo.idVehiculo || ''}">Ver más</button>
-            <button type="button" class="btn-editar" data-id="${vehiculo.idVehiculo || ''}">Editar</button>
-            <button type="button" class="btn-finalizar" data-id="${vehiculo.idVehiculo || ''}">Finalizar</button>
-          `;
-=======
         let estadoSlug = estadoRaw
           .normalize('NFD')
           .replace(/[\u0300-\u036f]/g, '')
@@ -461,7 +344,6 @@ document.addEventListener("DOMContentLoaded", () => {
           estadoSlug = 'finalizado';
         } else if (/esper/.test(estadoSlug)) {
           estadoSlug = 'espera';
->>>>>>> 2b634fc5b2332c40ae9756d2cb47b34b967beb27
         }
         html += `
           <div class="car-card" data-matricula="${escapeHTML(dataMat)}" data-email="${escapeHTML(dataEmail)}">
@@ -469,7 +351,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <p><strong>Correo cliente:</strong> ${vehiculo.emailCliente || 'N/A'}</p>
             <p><strong>Matrícula:</strong> ${vehiculo.matricula || 'N/A'}</p>
             <div class="card-actions">
-              ${cardBtns}
+              <button type="button" class="btn-ver-mas" data-id="${vehiculo.idVehiculo || ''}">Ver más</button>
+              <button type="button" class="btn-editar" data-id="${vehiculo.idVehiculo || ''}">Editar</button>
+              <button type="button" class="btn-finalizar" data-id="${vehiculo.idVehiculo || ''}">Finalizar</button>
               <span class="estado-revision ${estadoSlug ? 'estado-'+estadoSlug : ''}" aria-hidden="false">${escapeHTML(estadoRaw)}</span>
             </div>
           </div>
@@ -478,7 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       wrapper.innerHTML = html || '<p>No hay vehículos registrados.</p>';
       // apply current filter if any
-      const searchEl = document.getElementById('buscador-mecanico');
+      const searchEl = document.getElementById('search-input');
       if (searchEl && searchEl.value.trim() !== '') applyFilter(searchEl.value);
     } catch (error) {
       console.error("Error al obtener vehículos:", error);
