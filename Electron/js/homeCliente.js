@@ -44,13 +44,31 @@ document.addEventListener("DOMContentLoaded", () => {
         const fotoSrc = vehiculo.imagenBase64
           ? `data:image/jpeg;base64,${vehiculo.imagenBase64}`
           : '../icons/coche.svg';
+        const estadoRaw = (vehiculo.estadoRevision || '').toString();
+        let estadoSlug = estadoRaw
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLowerCase()
+          .replace(/\s+/g,'-')
+          .replace(/[^a-z0-9\-]/g,'');
+
+        // Map common variations to canonical slugs used in CSS
+        if (/repar/.test(estadoSlug)) {
+          estadoSlug = 'reparacion';
+        } else if (/pend/.test(estadoSlug)) {
+          estadoSlug = 'pendiente';
+        } else if (/final/.test(estadoSlug)) {
+          estadoSlug = 'finalizado';
+        } else if (/esper/.test(estadoSlug)) {
+          estadoSlug = 'espera';
+        }
         html += `
           <div class="car-card">
             <img class="car-photo" src="${fotoSrc}" alt="Foto del coche">
             <p><strong>Matrícula:</strong> ${vehiculo.matricula || 'N/A'}</p>
             <div class="card-actions" style="align-items:center;">
               <button type="button" class="btn-ver-mas" data-id="${vehiculo.idVehiculo || ''}">Ver más</button>
-              <span class="estado-revision" style="margin-left:16px;font-size:14px;color:#1976d2;font-weight:600;">${vehiculo.estadoRevision ? vehiculo.estadoRevision : ''}</span>
+              <span class="estado-revision ${estadoSlug ? 'estado-'+estadoSlug : ''}" aria-hidden="false">${escapeHTML(estadoRaw)}</span>
             </div>
           </div>
         `;

@@ -424,6 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const dataMat = (vehiculo.matricula || '').toString().replace(/\s+/g, '').toLowerCase();
         const dataEmail = (vehiculo.emailCliente || '').toString().toLowerCase();
         const estadoRaw = (vehiculo.estadoRevision || '').toString();
+<<<<<<< HEAD
         const estadoSlug = estadoRaw.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
         let cardBtns = '';
         if (estadoRaw.toLowerCase() === 'finalizado') {
@@ -443,6 +444,24 @@ document.addEventListener("DOMContentLoaded", () => {
             <button type="button" class="btn-editar" data-id="${vehiculo.idVehiculo || ''}">Editar</button>
             <button type="button" class="btn-finalizar" data-id="${vehiculo.idVehiculo || ''}">Finalizar</button>
           `;
+=======
+        let estadoSlug = estadoRaw
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLowerCase()
+          .replace(/\s+/g,'-')
+          .replace(/[^a-z0-9\-]/g,'');
+
+        // Map common variations to canonical slugs used in CSS
+        if (/repar/.test(estadoSlug)) {
+          estadoSlug = 'reparacion';
+        } else if (/pend/.test(estadoSlug)) {
+          estadoSlug = 'pendiente';
+        } else if (/final/.test(estadoSlug)) {
+          estadoSlug = 'finalizado';
+        } else if (/esper/.test(estadoSlug)) {
+          estadoSlug = 'espera';
+>>>>>>> 2b634fc5b2332c40ae9756d2cb47b34b967beb27
         }
         html += `
           <div class="car-card" data-matricula="${escapeHTML(dataMat)}" data-email="${escapeHTML(dataEmail)}">

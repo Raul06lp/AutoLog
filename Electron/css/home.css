@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Filtros y buscador barra principal */
 #filters-bar {
   display: flex;
@@ -55,6 +56,8 @@
   border-color: var(--blue-400);
   box-shadow: 0 4px 16px rgba(59,130,246,0.13);
 }
+=======
+>>>>>>> 2b634fc5b2332c40ae9756d2cb47b34b967beb27
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 
