@@ -12,11 +12,11 @@ val Pink40 = Color(0xFF7D5260)
 
 
 //Colores de la app
-val Fondo= Color(0xFFCAF0F8)
+val Fondo= Color(0xFFFAFCFF)
 
-val Carta =Color(0xFFF2FDFF)
+val Carta =Color(0xFFEBF4FF)
 
-val Texto= Color(0xFF0077B6)
+val Texto= Color(0xFF03045E)
 
 val Botones = Color(0xFF03045E)
 
