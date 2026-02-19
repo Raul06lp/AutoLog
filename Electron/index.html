@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>AutoLog</title>
+</head>
+<body>
+    <header>
+        <h1>AutoLog</h1>
+        <p class="subtitulo">Bienvenido a AutoLog tu app de confianza para el control de tu vehículo</p>
+    </header>
+
+    <div id="content">
+        <h2 class="form_title">Login</h2>
+        <form action="login" method="post">
+            <label for="email" class="log_label">Correo electrónico:</label>
+            <input class="inputlogin" type="email" id="email" name="email" required>
+            <br><br>
+            <label for="password" class="log_label">Contraseña:</label>
+            <input class="inputlogin" type="password" id="password" name="password" required>
+            <br><br>
+            <p id="error-message" style="color: red; display: none;"></p>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+        <p class="link">No tienes cuenta? <a href="screensMecanico/register.html">Regístrate aquí</a></p>
+    </div>
+
+    <script type="module" src="js/firebase.js"></script>
+    <script type="module" src="js/login.js"></script>
+</body>
+</html>
