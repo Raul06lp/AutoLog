@@ -325,8 +325,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const fotoSrc = vehiculo.imagenBase64
           ? `data:image/jpeg;base64,${vehiculo.imagenBase64}`
           : '../icons/coche.svg';
+        const dataMat = (vehiculo.matricula || '').toString().replace(/\s+/g, '').toLowerCase();
+        const dataEmail = (vehiculo.emailCliente || '').toString().toLowerCase();
+        const estadoRaw = (vehiculo.estadoRevision || '').toString();
+        const estadoSlug = estadoRaw.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
         html += `
-          <div class="car-card">
+          <div class="car-card" data-matricula="${escapeHTML(dataMat)}" data-email="${escapeHTML(dataEmail)}">
             <img class="car-photo" src="${fotoSrc}" alt="Foto del coche">
             <p><strong>Correo cliente:</strong> ${vehiculo.emailCliente || 'N/A'}</p>
             <p><strong>Matrícula:</strong> ${vehiculo.matricula || 'N/A'}</p>
@@ -334,16 +338,47 @@ document.addEventListener("DOMContentLoaded", () => {
               <button type="button" class="btn-ver-mas" data-id="${vehiculo.idVehiculo || ''}">Ver más</button>
               <button type="button" class="btn-editar" data-id="${vehiculo.idVehiculo || ''}">Editar</button>
               <button type="button" class="btn-finalizar" data-id="${vehiculo.idVehiculo || ''}">Finalizar</button>
+              <span class="estado-revision ${estadoSlug ? 'estado-'+estadoSlug : ''}" aria-hidden="false">${escapeHTML(estadoRaw)}</span>
             </div>
           </div>
         `;
       });
 
       wrapper.innerHTML = html || '<p>No hay vehículos registrados.</p>';
+      // apply current filter if any
+      const searchEl = document.getElementById('search-input');
+      if (searchEl && searchEl.value.trim() !== '') applyFilter(searchEl.value);
     } catch (error) {
       console.error("Error al obtener vehículos:", error);
       wrapper.innerHTML = '<p>Error al cargar los vehículos</p>';
     }
+  }
+
+  // Filter function: checks data attributes for quick matching
+  function applyFilter(q) {
+    const query = (q || '').toString().trim().toLowerCase().replace(/\s+/g, '');
+    const cards = Array.from(document.querySelectorAll('.car-card'));
+    if (!query) {
+      cards.forEach(c => c.style.display = 'flex');
+      return;
+    }
+    cards.forEach(c => {
+      const mat = (c.dataset.matricula || '').toString();
+      const email = (c.dataset.email || '').toString();
+      if (mat.includes(query) || email.includes(query)) {
+        c.style.display = 'flex';
+      } else {
+        c.style.display = 'none';
+      }
+    });
+  }
+
+  // Wire up search input
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      applyFilter(e.target.value);
+    });
   }
 
 

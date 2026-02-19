@@ -10,6 +10,25 @@ const password = document.getElementById('password');
 const confirmPassword = document.getElementById('confirm_password');
 const tipoCheckbox = document.getElementById('tipo');
 
+// Toggle visibility for password fields (eye icon)
+document.addEventListener('click', (e) => {
+    if (e.target.closest && e.target.closest('.toggle-pass')) {
+        const btn = e.target.closest('.toggle-pass');
+        const wrapper = btn.parentElement;
+        const input = wrapper.querySelector('input');
+        if (!input) return;
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.classList.add('active');
+            btn.setAttribute('aria-label', 'Ocultar contraseña');
+        } else {
+            input.type = 'password';
+            btn.classList.remove('active');
+            btn.setAttribute('aria-label', 'Mostrar contraseña');
+        }
+    }
+});
+
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();

@@ -1,4 +1,182 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+body{
+    background: linear-gradient(135deg,#E6F7FB 0%, #CAF0F8 100%);
+}
+
+
+#title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 18px auto 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+#title-bar #title h1 {
+    margin: 6px 0;
+    font-size: 56px;
+    color: var(--accent);
+}
+
+#search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+#search-input {
+    width: 320px;
+    max-width: 45vw;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: #fff;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: var(--primary-light);
+}
+
+.edit-row {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 0;
+}
+.edit-block {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+.edit-block label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #133;
+    margin-bottom: 2px;
+}
+.edit-block input {
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    font-size: 15px;
+    padding: 0 12px;
+    background: #fff;
+    box-sizing: border-box;
+    margin-bottom: 0;
+}
+.modal-edit-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+.modal-edit-actions .btn-submit,
+
+/* Modal Edit Form - mimic styles from css/form.css */
+#modalEditBody form {
+    background: linear-gradient(180deg,#ffffff 0%, #f7fbff 100%);
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(2,12,27,0.04);
+    border-left: 6px solid rgba(21,101,192,0.06);
+}
+
+#modalEditBody .edit-row {
+    gap: 12px;
+}
+
+#modalEditBody .edit-block {
+    flex: 1 1 220px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    background: transparent;
+    padding: 6px 4px;
+}
+
+#modalEditBody label,
+#modalEditBody .edit-block label {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #3e556a;
+    font-weight: 600;
+}
+
+#modalEditBody input,
+#modalEditBody textarea,
+#modalEditBody select {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #d7e6f3;
+    font-size: 13px;
+    background: #ffffff;
+    box-shadow: inset 0 1px 2px rgba(16,24,40,0.03);
+    transition: box-shadow 0.18s ease, border-color 0.12s ease;
+}
+
+#modalEditBody input:focus,
+#modalEditBody textarea:focus,
+#modalEditBody select:focus {
+    outline: none;
+    border-color: #1976d2;
+    box-shadow: 0 12px 30px rgba(25,118,210,0.06);
+}
+
+/* Buttons inside edit modal */
+#modalEditBody .modal-edit-actions .btn-submit {
+    background: #0077B6;
+    color: white;
+    box-shadow: 0 12px 28px rgba(15,95,168,0.12);
+    padding: 8px 14px;
+    font-size: 13px;
+    border-radius: 12px;
+}
+
+#modalEditBody .modal-edit-actions .btn-reset {
+    background: rgb(212,88,88) !important;
+    color: #fff !important;
+    box-shadow: 0 8px 18px rgba(196,70,70,0.12);
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 12px;
+}
+
+/* make form compact to better fit modal */
+#modalEditBody {
+    font-size: 13px;
+}
+.modal-edit-actions .btn-reset {
+    font-size: 14px;
+    padding: 8px 18px;
+    border-radius: 15px;
+    height: 40px;
+    min-width: 90px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal-edit-actions .btn-reset {
+    background: rgb(212, 88, 88) !important;
+    color: #fff !important;
+    border: none;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(196, 70, 70, 0.3);
+}
+.modal-edit-actions .btn-reset:hover {
+    background: rgb(170, 50, 50) !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(196, 70, 70, 0.5);
+}
+
 
 :root {
   --bg:          #f4f6fb;
@@ -241,17 +419,17 @@ nav ul li:last-child {
 .pane { width: 100%; }
 
 .wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  gap: 22px;
-}
-
-.wrapper > p {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 80px 0;
-  color: var(--text-muted);
-  font-size: 0.95rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 24px;
+    padding: 30px;
+background: linear-gradient(180deg, #77b5d7, #dae7f5);    backdrop-filter: blur(10px);
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 40px;
+    border-radius: 30px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+    min-height: calc(100vh - 160px);
 }
 
 .car-card {
@@ -362,40 +540,53 @@ nav ul li:last-child {
   transition: transform var(--ease), box-shadow var(--ease), background var(--ease);
 }
 
-.card-actions button:hover  { transform: translateY(-2px); }
-.card-actions button:active { transform: scale(0.96); }
-
-.btn-ver-mas {
-  background: var(--blue-500);
-  color: #fff;
-  box-shadow: 0 2px 10px var(--glow);
+/* Colored buttons for card actions */
+.card-actions .btn-ver-mas {
+    background: linear-gradient(180deg,#0077B6,#0067A0);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,103,160,0.12);
 }
-.btn-ver-mas:hover {
-  background: var(--blue-600);
-  box-shadow: 0 6px 20px rgba(37,99,235,0.35);
+.card-actions .btn-editar {
+    background: linear-gradient(180deg,#e9f6ff,#d7efff);
+    color: #085a9c;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 12px;
+    box-shadow: 0 6px 14px rgba(13,93,153,0.06);
 }
-
-.btn-editar {
-  background: var(--surface);
-  color: var(--blue-600);
-  border: 1.5px solid var(--blue-400) !important;
-}
-.btn-editar:hover {
-  background: var(--blue-50);
-  box-shadow: 0 4px 12px var(--glow);
-}
-
-.btn-finalizar {
-  background: var(--surface);
-  color: #16a34a;
-  border: 1.5px solid #86efac !important;
-}
-.btn-finalizar:hover {
-  background: #f0fdf4;
-  box-shadow: 0 4px 12px rgba(34,197,94,0.18);
+.card-actions .btn-finalizar {
+    background: linear-gradient(180deg,#ffefef,#ffdede);
+    color: #b12b2b;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 12px;
+    box-shadow: 0 6px 14px rgba(180,60,60,0.06);
 }
 
+/* Estado badge in cards */
+.estado-revision {
+    margin-left: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 14px;
+    background: rgba(3,105,161,0.06);
+    color: var(--primary-dark);
+    display: inline-flex;
+    align-items: center;
+}
 
+/* Variants based on estado text slug */
+.estado-en-proceso { background: rgba(3,105,161,0.12); color: #034f86; }
+.estado-pendiente { background: rgba(3,105,161,0.06); color: #0a66a3; }
+.estado-finalizado { background: rgba(2,150,100,0.10); color: #0b6b3a; }
+.estado-reparado { background: rgba(2,150,100,0.10); color: #0b6b3a; }
+.estado-cancelado { background: rgba(200,50,50,0.08); color: #a12b2b; }
+
+/* MODAL DETALLE VEHÍCULO */
 .modal {
   position: fixed;
   inset: 0;
