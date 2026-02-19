@@ -15,7 +15,7 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { font-size: 15px; -webkit-font-smoothing: antialiased; }
+html { font-size: 14.5px; -webkit-font-smoothing: antialiased; }
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -23,101 +23,82 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 48px 24px;
-}
-
-
-body > * {
-  width: 100%;
-  max-width: 760px;
-}
-
-body {
   flex-direction: column;
   align-items: center;
+  padding: 32px 24px;
 }
 
-body::before {
-  content: '';
-  display: none;
-}
-
-header,
-section,
-#firmas {
+header, section, #firmas {
   background: #fff;
   width: 100%;
-  max-width: 760px;
+  max-width: 720px;
 }
 
-header { border-radius: 16px 16px 0 0; }
-section:last-of-type,
-#firmas { border-radius: 0 0 16px 16px; }
+header { border-radius: 12px 12px 0 0; }
+#firmas { border-radius: 0 0 12px 12px; }
+
 
 header {
   background: var(--blue-900);
-  padding: 32px 44px;
+  padding: 18px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 4px solid var(--blue-500);
+  border-bottom: 3px solid var(--blue-500);
 }
 
 header h1 {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: #fff;
   letter-spacing: 0.04em;
 }
 
 header p {
-  font-size: 0.78rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.45);
 }
 
 
 section {
-  padding: 28px 44px;
+  padding: 16px 32px;
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
 
 section h2 {
-  font-size: 0.65rem;
+  font-size: 0.58rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--blue-500);
-  margin-bottom: 16px;
-  padding-bottom: 10px;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 section h2::before {
   content: '';
   display: inline-block;
-  width: 3px;
-  height: 13px;
+  width: 2px;
+  height: 10px;
   background: var(--blue-500);
   border-radius: 2px;
 }
 
-/* Pares clave–valor */
 section > p {
   display: flex;
-  gap: 8px;
-  font-size: 0.88rem;
+  gap: 6px;
+  font-size: 0.78rem;
   color: var(--text-secondary);
-  padding: 6px 0;
+  padding: 4px 0;
   border-bottom: 1px dashed var(--border);
   align-items: baseline;
 }
@@ -125,12 +106,12 @@ section > p {
 section > p:last-of-type { border-bottom: none; }
 
 section > p strong {
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   color: var(--text-muted);
-  min-width: 120px;
+  min-width: 90px;
   flex-shrink: 0;
 }
 
@@ -139,32 +120,30 @@ section > p span {
   color: var(--text-primary);
 }
 
-/* Total — destacado */
 section > p:has(#total) strong,
 section > p:has(#total) span {
   color: var(--blue-600);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
+
 
 #tablaTrabajos {
   width: 100%;
   border-collapse: collapse;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
-  margin: 16px 0 20px;
-  font-size: 0.88rem;
+  margin: 8px 0 10px;
+  font-size: 0.78rem;
 }
 
-#tablaTrabajos thead {
-  background: var(--surface-2);
-}
+#tablaTrabajos thead { background: var(--surface-2); }
 
 #tablaTrabajos thead th {
-  padding: 10px 16px;
+  padding: 6px 12px;
   text-align: left;
-  font-size: 0.67rem;
+  font-size: 0.6rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -172,22 +151,14 @@ section > p:has(#total) span {
   border-bottom: 1px solid var(--border);
 }
 
-#tablaTrabajos thead th:last-child {
-  text-align: right;
-}
+#tablaTrabajos thead th:last-child { text-align: right; }
 
-#tablaTrabajos tbody tr {
-  border-bottom: 1px solid var(--border);
-}
-
+#tablaTrabajos tbody tr { border-bottom: 1px solid var(--border); }
 #tablaTrabajos tbody tr:last-child { border-bottom: none; }
-
-#tablaTrabajos tbody tr:nth-child(even) {
-  background: #fafbff;
-}
+#tablaTrabajos tbody tr:nth-child(even) { background: #fafbff; }
 
 #tablaTrabajos tbody td {
-  padding: 10px 16px;
+  padding: 5px 12px;
   color: var(--text-secondary);
   font-weight: 400;
 }
@@ -200,37 +171,38 @@ section > p:has(#total) span {
 
 
 #firmas {
-  padding: 32px 44px;
+  padding: 16px 32px;
   border: 1px solid var(--border);
   border-top: none;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  gap: 24px;
 }
 
 #firmas h2 {
-  font-size: 0.65rem;
+  font-size: 0.58rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--text-muted);
-  margin-bottom: 48px; /* espacio para la firma */
+  margin-bottom: 36px;
 }
 
 #firmas p {
   border-top: 1px solid var(--text-muted);
-  padding-top: 8px;
-  font-size: 0.78rem;
+  padding-top: 6px;
+  font-size: 0.7rem;
   color: var(--text-muted);
-  min-height: 24px;
+  min-height: 18px;
 }
-
 
 @media print {
   @page {
     size: A4;
-    margin: 16mm 18mm;
+    margin: 10mm 14mm;
   }
+
+  html { font-size: 12px; }
 
   body {
     background: none;
@@ -238,9 +210,7 @@ section > p:has(#total) span {
     display: block;
   }
 
-  header,
-  section,
-  #firmas {
+  header, section, #firmas {
     max-width: 100%;
     border-radius: 0 !important;
     box-shadow: none !important;
@@ -248,32 +218,18 @@ section > p:has(#total) span {
     print-color-adjust: exact;
   }
 
-  header { border-radius: 0 !important; }
-
   section { page-break-inside: avoid; }
-  #firmas { page-break-inside: avoid; }
+  #firmas  { page-break-inside: avoid; }
 
-  /* Forzar colores en impresión */
   header { background: var(--blue-900) !important; }
   #tablaTrabajos thead { background: var(--surface-2) !important; }
   #tablaTrabajos tbody tr:nth-child(even) { background: #fafbff !important; }
 }
 
 
-
 @media (max-width: 600px) {
   body { padding: 0; }
-
-  header,
-  section,
-  #firmas {
-    border-radius: 0 !important;
-    padding: 24px 20px;
-  }
-
+  header, section, #firmas { border-radius: 0 !important; padding: 14px 16px; }
   header { flex-direction: column; align-items: flex-start; gap: 4px; }
-
   #firmas { grid-template-columns: 1fr; }
-
-  section > p strong { min-width: 90px; }
 }

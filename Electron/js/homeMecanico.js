@@ -328,7 +328,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const dataMat = (vehiculo.matricula || '').toString().replace(/\s+/g, '').toLowerCase();
         const dataEmail = (vehiculo.emailCliente || '').toString().toLowerCase();
         const estadoRaw = (vehiculo.estadoRevision || '').toString();
-        const estadoSlug = estadoRaw.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
+        let estadoSlug = estadoRaw
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLowerCase()
+          .replace(/\s+/g,'-')
+          .replace(/[^a-z0-9\-]/g,'');
+
+        // Map common variations to canonical slugs used in CSS
+        if (/repar/.test(estadoSlug)) {
+          estadoSlug = 'reparacion';
+        } else if (/pend/.test(estadoSlug)) {
+          estadoSlug = 'pendiente';
+        } else if (/final/.test(estadoSlug)) {
+          estadoSlug = 'finalizado';
+        } else if (/esper/.test(estadoSlug)) {
+          estadoSlug = 'espera';
+        }
         html += `
           <div class="car-card" data-matricula="${escapeHTML(dataMat)}" data-email="${escapeHTML(dataEmail)}">
             <img class="car-photo" src="${fotoSrc}" alt="Foto del coche">
