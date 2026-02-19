@@ -45,6 +45,10 @@ fun AddScreen(
         onEvent(AddEvent.ImagenSeleccionada(uri))
     }
 
+    LaunchedEffect(Unit) {
+        onEvent(AddEvent.LimpiarFormulario)
+    }
+
     LaunchedEffect(state.guardadoOk) {
         if (state.guardadoOk) {
             onEvent(AddEvent.ResetGuardado)

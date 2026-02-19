@@ -57,17 +57,19 @@ class DetailViewModel(
 
     private fun cambiarEstado() {
         val vehiculo = _state.value.vehiculo ?: return
-        val nuevoEstado = when (vehiculo.estadoRevision) {
+        val estadoActual = vehiculo.estadoRevision?.lowercase() ?: "pendiente"
+        
+        val nuevoEstado = when (estadoActual) {
             "pendiente" -> "en_revision"
             "en_revision" -> "finalizado"
-            else -> return // Si ya está finalizado, no hacer nada
+            else -> return 
         }
 
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             try {
                 repository.cambiarEstado(vehiculoId, nuevoEstado)
-                loadVehiculo() // Recargar para mostrar el nuevo estado
+                loadVehiculo()
             } catch (e: Exception) {
                 _state.update { it.copy(error = "Error al cambiar el estado", isLoading = false) }
             }

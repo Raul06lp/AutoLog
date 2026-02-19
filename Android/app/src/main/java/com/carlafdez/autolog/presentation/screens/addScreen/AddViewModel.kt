@@ -34,6 +34,10 @@ class AddViewModel(
             is AddEvent.ObservacionesChanged -> _state.update { it.copy(observaciones = event.value) }
             is AddEvent.ClienteSeleccionado -> _state.update { it.copy(clienteSeleccionado = event.cliente) }
             is AddEvent.ImagenSeleccionada -> _state.update { it.copy(imagenUri = event.uri) }
+            is AddEvent.LimpiarFormulario -> {
+                _state.update { AddUiState() }
+                loadClientes()
+            }
             AddEvent.GuardarClick -> guardar()
             AddEvent.ErrorDismissed -> _state.update { it.copy(error = null) }
             AddEvent.ResetGuardado -> _state.update { it.copy(guardadoOk = false) }

@@ -16,4 +16,5 @@ sealed interface AddEvent {
     data object GuardarClick : AddEvent
     data object ErrorDismissed : AddEvent
     data object ResetGuardado : AddEvent
+    data object LimpiarFormulario : AddEvent
 }
