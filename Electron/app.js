@@ -1,8 +1,18 @@
 const fs = require('fs');
 
-const data = fs.readFileSync('ejemplo.json', 'utf-8');
-
-const entries = JSON.parse(data);
+let entries = [];
+try {
+    if (fs.existsSync('ejemplo.json')) {
+        const data = fs.readFileSync('ejemplo.json', 'utf-8');
+        entries = JSON.parse(data);
+    } else {
+        console.warn('ejemplo.json no encontrado — usando lista vacía');
+        entries = [];
+    }
+} catch (err) {
+    console.error('Error leyendo ejemplo.json:', err);
+    entries = [];
+}
 
 //mostrar cada entrada en una tarjeta
 let mostrarentradas = () => {

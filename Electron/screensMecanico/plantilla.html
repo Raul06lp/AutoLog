@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Informe de Reparación</title>
+    <link rel="stylesheet" href="../css/plantilla.css">
+</head>
+<body>
+
+    <header>
+        <h1>Informe de Reparación</h1>
+        <p>AutoLog</p>
+      </header>
+
+      <section>
+        <h2>Datos del Cliente</h2>
+        <p><strong>Nombre:</strong> <span id="nombreCliente"></span></p>
+        <p><strong>Teléfono:</strong> <span id="telefono"></span></p>
+      </section>
+
+      <section>
+        <h2>Datos del Vehículo</h2>
+        <p><strong>Marca:</strong> <span id="marca"></span></p>
+        <p><strong>Modelo:</strong> <span id="modelo"></span></p>
+        <p><strong>Matrícula:</strong> <span id="matricula"></span></p>
+        <p><strong>Kilometraje:</strong> <span id="kilometraje"></span></p>
+      </section>
+
+      <section>
+        <h2>Detalles de la Reparación</h2>
+        <p><strong>Fecha:</strong> <span id="fecha"></span></p>
+
+        <table id="tablaTrabajos">
+          <thead>
+            <tr>
+              <th>Trabajo</th>
+              <th>Precio (€)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Se inyectarán los trabajos aquí -->
+          </tbody>
+        </table>
+
+        <p><strong>Observaciones:</strong> <span id="observaciones"></span></p>
+        <p><strong>Total:</strong> <span id="total"></span></p>
+        <p><strong>Estado del Pago:</strong> <span id="estadoPago"></span></p>
+      </section>
+
+      <seaction id="firmas">
+        <h2>Firma del Cliente</h2>
+        <p><span id="firmaCliente"></span></p>
+        <h2>Firma del Mecánico</h2>
+        <p><span id="firmaMecanico"></span></p>
+      </seaction>
+    </div>
+  </body>
+</html>

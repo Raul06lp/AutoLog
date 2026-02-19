@@ -4,10 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informe de Reparación</title>
+    <title>Registrar Vehículo</title>
     <link rel="stylesheet" href="../css/forms.css">
-    
-
 </head>
 
 <body>
@@ -21,31 +19,19 @@
         </ul>
     </nav>
     <div id="content">
-        <!-- <div id="backButton">
-            <a href="home.html">
-                <img src="../icons/close.png" alt="Back">
-            </a>
-        </div> -->
-
         <header class="header">
-            <h1>Informe de Reparación</h1>
+            <h1>Registrar Nuevo Vehículo</h1>
             <p>AutoLog</p>
         </header>
-
         <div class="form-content">
             <form id="formularioTaller">
-
                 <!-- Datos del Cliente -->
                 <section class="form-section">
                     <h2 class="section-title">Datos del Cliente</h2>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="nombreCliente">Nombre del Cliente</label>
-                            <input type="text" id="nombreCliente" name="nombreCliente" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="telefono">Teléfono</label>
-                            <input type="text" id="telefono" name="telefono">
+                            <label for="correoCliente">Correo del Cliente</label>
+                            <input type="email" id="correoCliente" name="correoCliente" required>
                         </div>
                     </div>
                 </section>
@@ -69,59 +55,58 @@
                             <input type="text" id="matricula" name="matricula">
                         </div>
                         <div class="form-group">
+                            <label for="anyo">Año</label>
+                            <input type="number" id="anyo" name="anyo" min="1900" max="2030">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Detalles del Vehículo -->
+                <section class="form-section">
+                    <h2 class="section-title">Detalles del Vehículo</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="color">Color</label>
+                            <input type="text" id="color" name="color">
+                        </div>
+                        <div class="form-group">
                             <label for="kilometraje">Kilometraje</label>
                             <input type="number" id="kilometraje" name="kilometraje">
                         </div>
                     </div>
-                </section>
-
-                <!-- Detalles de la Reparación -->
-                <section class="form-section">
-                    <h2 class="section-title">Detalles de la Reparación</h2>
-                    <div class="form-group">
-                        <label for="fecha">Fecha de Reparación</label>
-                        <input type="date" id="fecha" name="fecha" required>
-                    </div>
-                    <label>Trabajos realizados</label>
-                    <table id="tablaFormTrabajos" class="tabla-trabajos-form">
-                        <thead>
-                            <tr>
-                                <th>Trabajo</th>
-                                <th>Precio (€)</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                    <button type="button" id="btnAddTrabajo">+ Añadir trabajo</button>
-                    <div class="form-group">
-                        <label for="observaciones">Observaciones</label>
-                        <textarea id="observaciones" name="observaciones" placeholder="Notas adicionales"></textarea>
-                    </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="estadoPago">Estado del Pago</label>
-                            <select id="estadoPago" name="estadoPago">
-                                <option value="pendiente">Pendiente</option>
-                                <option value="pagado">Pagado</option>
-                                <option value="parcial">Pago Parcial</option>
+                            <label for="estadoRevision">Estado General de Revisión</label>
+                            <select id="estadoRevision" name="estadoRevision" required>
+                                <option value="">Selecciona un estado</option>
+                                <option value="espera">En Espera</option>
+                                <option value="reparacion">En Reparación</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="foto">Foto del vehículo</label>
+                            <input type="file" id="foto" name="foto" accept="image/*">
                         </div>
                     </div>
                 </section>
 
+                <!-- Observaciones -->
+                <section class="form-section">
+                    <h2 class="section-title">Observaciones</h2>
+                    <div class="form-group">
+                        <label for="observaciones">Observaciones Adicionales</label>
+                        <textarea id="observaciones" name="observaciones" rows="3"></textarea>
+                    </div>
+                </section>
+
                 <div class="btn-container">
-                    <button type="button" id="btnGenerar" class="btn-submit">
-                        Generar Informe
-                    </button>
+                    <button type="submit" class="btn-submit">Registrar Vehículo</button>
                     <button type="reset" class="btn-reset">Limpiar Formulario</button>
                 </div>
-
             </form>
-
         </div>
     </div>
-    <script  src="../js/folder.js"></script>
+    <script type="module" src="../js/add.js"></script>
 </body>
 
 </html>

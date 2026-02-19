@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/registro.css">
     <title>AutoLog</title>
 </head>
-<body>
+<body class="register-page">
     <header>
+        <img src="../icons/logo_sin_titulo.png" alt="Logo de AutoLog">
         <h1>AutoLog</h1>
         <p class="subtitulo">Bienvenido a AutoLog tu app de confianza para el control de tu vehículo</p>
     </header>
@@ -16,25 +17,37 @@
         <h2 class="form_title">Registro</h2>
         <form action="register" method="post">
             <label for="email" class="log_label">Correo electronico:</label>
-            <input class="inputlogin" type="text" id="email" name="email" required>
-            <br><br>
+            <input class="inputregister" type="text" id="email" name="email" required>
+            <br>
             <label for="username" class="log_label">Usuario:</label>
-            <input class="inputlogin" type="text" id="username" name="username" required>
-            <br><br>
+            <input class="inputregister" type="text" id="username" name="username" required>
+            <br>
             <label for="password" class="log_label">Contraseña:</label>
-            <input class="inputlogin" type="password" id="password" name="password" required>
-            <br><br>
+            <div class="password-field">
+                <input class="inputregister" type="password" id="password" name="password" required>
+                <button type="button" class="toggle-pass" aria-label="Mostrar contraseña">
+                    <svg class="eye" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f4b7a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg class="eye-off" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f4b7a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a21.17 21.17 0 0 1 5.06-6.94"/><path d="M1 1l22 22"/></svg>
+                </button>
+            </div>
+            <br>
             <label for="confirm_password" class="log_label">Confirmar Contraseña:</label>
-            <input class="inputlogin" type="password" id="confirm_password" name="confirm_password" required>
-            <br><br>
+            <div class="password-field">
+                <input class="inputregister" type="password" id="confirm_password" name="confirm_password" required>
+                <button type="button" class="toggle-pass" aria-label="Mostrar contraseña">
+                    <svg class="eye" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f4b7a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg class="eye-off" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f4b7a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a21.17 21.17 0 0 1 5.06-6.94"/><path d="M1 1l22 22"/></svg>
+                </button>
+            </div>
+            <br>
             <div class="switch-container">
                 <label class="switch">
                     <input type="checkbox" id="tipo">
                     <span class="slider"></span>
                 </label>
-                <span class="switch-label" id="switch-label">Cliente</span>
+                <span class="switch-label" id="switch-label">Mecanico</span>
             </div>
-            <br><br>
+            <br>
             <p id="error-message" style="color: red; display: none;"></p>
             <button type="submit">Registrarse</button>
         </form>

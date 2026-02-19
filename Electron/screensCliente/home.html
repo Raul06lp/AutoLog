@@ -6,24 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AUTOLOG</title>
     <link rel="stylesheet" href="../css/home.css">
+
 </head>
 
 <body>
 
-    <div id="title-bar">
-        <div id="title">
-            <h1>AUTOLOG</h1>
-        </div>
-        <div id="search-container">
-            <input id="search-input" type="search" placeholder="Buscar matrícula o correo" aria-label="Buscar" />
-        </div>
+    <div id="title">
+        <h1>AUTOLOG</h1>
     </div>
     <nav>
         <ul>
             <li><img id="logo" src="../icons/logo_sin_titulo.png" alt="Logo"></li>
             <li><div id="navButton"><a href="home.html"><img src="../icons/car.svg" alt="Home"></a></div></li>
-            <li><div id="navButton"><a href="add.html"><img src="../icons/add.svg" alt="add"></a></div></li>
-            <li><div id="navButton"><a href="folder.html"><img src="../icons/folder.svg" alt="folder"></a></div></li>
+            <!-- <li><div id="navButton"><a href="report.html"><img src="../icons/folder.svg" alt="folder"></a></div></li> -->
             <li><div id="logOut"><a href="../index.html"><img src="../icons/logOut.svg" alt="logOut"></a></div></li>
         </ul>
     </nav>
@@ -31,7 +26,7 @@
         <div class="pane-group">
             <div class="pane">
                 <div class="wrapper" id="wrapper">
-                    <!-- Las cards se cargarán aquí -->
+                    <!-- Las entradas se cargarán aquí -->
                 </div>
             </div>
         </div>
@@ -43,15 +38,8 @@
             <div id="modalBody"></div>
         </div>
     </div>
-    <!-- Modal editar vehículo -->
-    <div id="modalEditar" class="modal hidden">
-        <div class="modal-content">
-            <button class="modal-close" id="modalEditClose">&times;</button>
-            <div id="modalEditBody"></div>
-        </div>
-    </div>
     <script src="../app.js"></script>
-    <script type="module" src="./../js/homeMecanico.js"></script>
+    <script type="module" src="./../js/homeCliente.js"></script>
 </body>
 
 </html>

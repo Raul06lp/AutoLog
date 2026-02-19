@@ -1,0 +1,41 @@
+-------------------------------------------------------
+	         URL API RENDERER:
+	https://autolog-0mnd.onrender.com
+-------------------------------------------------------
+
+CLIENTES
+GET /api/clientes -> devuelve todos los clientes
+GET /api/clientes/{id} -> busca por id
+GET /api/clientes/email/{email} -> busca por email
+POST /api/clientes/registro -> crear nuevo
+POST /api/clientes/login -> devuelve OK si el login es valido y devuelve el usuario en dto
+PUT /api/clientes/{id} -> actualizar cliente
+DELETE /api/clientes/{id} -> eliminar cliente
+
+MECANICOS
+GET /api/mecanicos -> devuelve todos los mecanicos
+GET /api/mecanicos/{id} -> busca por id
+GET /api/mecanicos/email/{email} -> busca por email
+POST /api/mecanicos/registro -> crear nuevo
+POST /api/mecanicos/login -> devuelve OK si el login es valido y devuelve el usuario en dto
+PUT /api/mecanicos/{id} -> actualizar mecanico
+DELETE /api/mecanicos/{id} -> eliminar mecanico
+
+VEHICULOS
+GET /api/vehículos -> devuelve todos los vehículos
+GET /api/vehículos/{id} -> busca por id
+GET /api/vehículos/{id}/imagen -> busca la imagen de un vehiculo por id
+GET /api/vehículos/matricula/{matricula} -> busca por matricula
+GET /api/vehículos/cliente/{idCliente} -> busca por id de cliente asociado
+GET /api/vehículos/mecanico/{idMecanico} -> busca por id de mecanico asociado
+GET /api/vehículos/estado/{estado} -> busca por estado del vehiculo
+GET /api/vehículos/cliente/{idCliente}/estado/{estado} -> busca por id de cliente asociado y por estado (por si un cliente quiere ver los que tiene pendientes, en reparación, terminados...)
+GET /api/vehículos/mecanico/{idMecanico}/estado/{estado} -> busca por id de mecanico asociado y por estado
+POST /api/vehículos -> crea un vehiculo
+POST /api/vehículos/con-imagen -> crea un vehiculo con imagen (en blob!!!)
+PUT /api/vehículos/{id}/imagen -> añadir imagen a un vehiculo mediante un json por id (mas especifico de postman)
+PUT /api/vehículos/{id} -> actualizas vehiculo
+PUT /api/vehículos/{id}/imagen-file -> añadir imagen a un vehiculo mediante un archivo por id (mas eficiente para las aplicaciones, donde el usuario sube una imagen)
+PATCH /api/vehículos/{id}/mecanico -> asigna un mecanico al coche (en el body se le pasa un json con el id: {"idMecanico": 1})
+PATCH /api/vehículos/{id}/estado-> actualiza el estado del coche (en el body se le pasa un json con el id: {"estadoRevision": "en espera"})
+DELETE /api/vehículos/{id} -> elimina un vehiculo

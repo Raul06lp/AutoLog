@@ -1,9 +1,44 @@
 const electron = require('electron');
-const { app, BrowserWindow } = electron;
+const { app, BrowserWindow, Menu } = electron;
+const remoteMain = require('@electron/remote/main');
+
+remoteMain.initialize();
+
+const templateMenu = [
+  {
+    label: 'Opciones',
+    submenu: [
+      {
+        label: 'Abrir DevTools',
+        accelerator: 'Ctrl+Shift+I', // Atajo de teclado
+        click(item, focusedWindow) {
+          focusedWindow.toggleDevTools(); // Abre/Cierra las herramientas
+        }
+      },
+      { type: 'separator' },
+      { label: 'Salir', role: 'quit' }
+    ]
+  },
+  {
+    label: 'Ver',
+    submenu: [
+      { role: 'reload' },
+      { role: 'forceReload' }
+    ]
+  }
+];
+
+try {
+  require('electron-reloader')(module);
+} catch (_) {}
+
+const mainMenu = Menu.buildFromTemplate(templateMenu);
+Menu.setApplicationMenu(mainMenu);
 
 function createWindow() {
     const win = new BrowserWindow({
         show: false,
+        icon: './icons/logo_sin_titulo.png',
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
@@ -11,7 +46,6 @@ function createWindow() {
     });
 
     win.loadFile('index.html');
-    win.setMenu(null);
 
     // Pantalla Completa
     win.maximize(); 
@@ -20,8 +54,10 @@ function createWindow() {
     // Mostramos la ventana cuando esté lista
     win.once('ready-to-show', () => {
         win.show();
-        win.webContents.openDevTools();
+        // win.webContents.openDevTools();
     });
+    //remote 
+    remoteMain.enable(win.webContents);
 }
 
 app.on('ready', createWindow);

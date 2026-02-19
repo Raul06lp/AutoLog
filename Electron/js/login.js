@@ -1,56 +1,144 @@
-import { auth, db } from './firebase.js';
-import { signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js';
-import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js';
+// Credenciales de autenticación para la API
+const APP_USER = "autolog";
+const APP_PASS = "X9#mK2$vQpL7@nRw";
+const AUTH = 'Basic ' + btoa(`${APP_USER}:${APP_PASS}`);
 
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const form = document.querySelector('form');
 
-form.addEventListener('submit', (e) => {
+// Toggle visibility for password field (eye icon)
+document.addEventListener('click', (e) => {
+    if (e.target.closest && e.target.closest('.toggle-pass')) {
+        const btn = e.target.closest('.toggle-pass');
+        const wrapper = btn.parentElement;
+        const input = wrapper.querySelector('input');
+        if (!input) return;
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.classList.add('active');
+            btn.setAttribute('aria-label', 'Ocultar contraseña');
+        } else {
+            input.type = 'password';
+            btn.classList.remove('active');
+            btn.setAttribute('aria-label', 'Mostrar contraseña');
+        }
+    }
+});
+
+const tryLogin = async (endpoint, payload) => {
+    const resp = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 
+            'Authorization': AUTH,
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(payload)
+    });
+
+    const data = await resp.json().catch(() => ({}));
+    return { ok: resp.ok, data };
+};
+
+const extractUserId = (data) => {
+    if (!data) return null;
+    return (
+        data.id ??
+        data.idMecanico ??
+        data.idCliente ??
+        data.mecanico?.id ??
+        data.cliente?.id ??
+        data.user?.id ??
+        null
+    );
+};
+
+const extractUserName = (data) => {
+    if (!data) return null;
+    return (
+        data.nombre ??
+        data.name ??
+        data.nombreMecanico ??
+        data.nombreCliente ??
+        data.mecanico?.nombre ??
+        data.cliente?.nombre ??
+        data.user?.nombre ??
+        data.user?.name ??
+        null
+    );
+};
+
+form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     // Limpiar mensaje de error anterior
-    document.getElementById('error-message').style.display = 'none';
+    const errorElement = document.getElementById('error-message');
+    if (errorElement) errorElement.style.display = 'none';
 
-    signInWithEmailAndPassword(auth, email.value, password.value)
-    .then(async (userCredential) => {
-        const user = userCredential.user;
-
-        // Obtener datos del usuario desde Firestore
-        const userDoc = await getDoc(doc(db, "usuario", user.uid));
-        if (userDoc.exists()) {
-            const userData = userDoc.data();
-            const tipo = userData.tipo;
-
-            console.log('Usuario logueado:', user.email);
-            console.log('tipo:', tipo);
-
-            // Redirigir según el tipo de usuario
-            if (tipo === 'cliente') {
-                window.location.href = 'screensCliente/home.html';
-            } else {
-                window.location.href = 'screensMecanico/home.html';
+    try {
+        if (!email.value || !password.value) {
+            if (errorElement) {
+                errorElement.textContent = 'Por favor, completa todos los campos.';
+                errorElement.style.display = 'block';
             }
-        } else {
-            console.error('No se encontraron datos del usuario en Firestore');
-            errorElement.textContent = 'No se pudieron obtener los datos del usuario.';
+            return;
         }
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error('Error en login:', errorCode, errorMessage);
-        const errorElement = document.getElementById('error-message');
-        if (errorCode === 'auth/user-not-found') {
-            errorElement.textContent = 'Usuario no encontrado.';
-            errorElement.style.display = 'block';
-        } else if (errorCode === 'auth/wrong-password') {
-            errorElement.textContent = 'Contraseña incorrecta.';
-            errorElement.style.display = 'block';
-        } else {
-            console.error('Error en login:', errorCode, errorMessage);
-            errorElement.textContent = 'El usuario o la contraseña son incorrectos.';
+
+        const payload = {
+            email: email.value,
+            contrasena: password.value
+        };
+
+        // Intentar login como mecánico
+        const mecanicoEndpoint = 'https://autolog-0mnd.onrender.com/api/mecanicos/login';
+        const mecanicoResp = await tryLogin(mecanicoEndpoint, payload);
+
+        if (mecanicoResp.ok) {
+            const mecanicoId = extractUserId(mecanicoResp.data);
+            const mecanicoNombre = extractUserName(mecanicoResp.data);
+            if (mecanicoId) {
+                localStorage.setItem(
+                    'autolog_user',
+                    JSON.stringify({ role: 'mecanico', id: mecanicoId, nombre: mecanicoNombre })
+                );
+            }
+            window.location.href = 'screensMecanico/home.html';
+            return;
+        }
+
+        // Si falla, intentar login como cliente
+        const clienteEndpoint = 'https://autolog-0mnd.onrender.com/api/clientes/login';
+        const clienteResp = await tryLogin(clienteEndpoint, payload);
+
+        if (clienteResp.ok) {
+            const clienteId = extractUserId(clienteResp.data);
+            const clienteNombre = extractUserName(clienteResp.data);
+            if (clienteId) {
+                localStorage.setItem(
+                    'autolog_user',
+                    JSON.stringify({ role: 'cliente', id: clienteId, nombre: clienteNombre })
+                );
+            }
+            window.location.href = 'screensCliente/home.html';
+            return;
+        }
+
+        const msg =
+            clienteResp.data?.message ||
+            clienteResp.data?.error ||
+            mecanicoResp.data?.message ||
+            mecanicoResp.data?.error ||
+            'El usuario o la contraseña son incorrectos.';
+
+        if (errorElement) {
+            errorElement.textContent = msg;
             errorElement.style.display = 'block';
         }
-    });
+    } catch (error) {
+        console.error('Error en login:', error);
+        if (errorElement) {
+            errorElement.textContent = 'No se pudo conectar con el servidor.';
+            errorElement.style.display = 'block';
+        }
+    }
 });
