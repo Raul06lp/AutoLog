@@ -2,6 +2,8 @@ package com.carlafdez.autolog.presentation.screens.homeScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.carlafdez.autolog.domain.model.TipoUsuario
+import com.carlafdez.autolog.domain.model.Usuario
 import com.carlafdez.autolog.domain.repository.AuthRepository
 import com.carlafdez.autolog.domain.repository.VehiculoRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,15 +35,24 @@ class HomeViewModel(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             try {
-                val mecanicoId = authRepository.getMecanicoId().first()
-                if (mecanicoId == null) {
+                val usuario = authRepository.getUsuario().first()
+                if (usuario == null) {
                     _state.update { it.copy(error = "Sesión no encontrada", isLoading = false) }
                     return@launch
                 }
-                val allVehicles = repository.getVehiclesByMecanico(mecanicoId)
-                // Filtrar vehículos finalizados
-                val vehicles = allVehicles.filter { it.estadoRevision != "finalizado" }
-                _state.update { it.copy(vehicles = vehicles, isLoading = false) }
+
+                val allVehicles = when (usuario) {
+                    is Usuario.MecanicoUsuario -> repository.getVehiclesByMecanico(usuario.id)
+                    is Usuario.ClienteUsuario -> repository.getVehiclesByCliente(usuario.id)
+                }
+
+                // Filtrar según el tipo de usuario
+                val vehicles = when (usuario.tipo) {
+                    TipoUsuario.MECANICO -> allVehicles.filter { it.estadoRevision != "finalizado" }
+                    TipoUsuario.CLIENTE -> allVehicles // Clientes ven TODOS sus vehículos
+                }
+
+                _state.update { it.copy(vehicles = vehicles, isLoading = false, usuario = usuario) }
             } catch (e: Exception) {
                 _state.update { it.copy(error = "Error al cargar los vehículos", isLoading = false) }
             }

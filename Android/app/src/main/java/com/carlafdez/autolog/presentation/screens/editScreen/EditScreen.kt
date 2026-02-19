@@ -38,8 +38,12 @@ fun EditScreen(
         onEvent(EditEvent.ImagenSeleccionada(uri))
     }
 
+    // Efecto que reacciona al guardado exitoso
     LaunchedEffect(state.guardadoOk) {
-        if (state.guardadoOk) onBack()
+        if (state.guardadoOk) {
+            onEvent(EditEvent.ResetGuardado) // Consumir el evento inmediatamente
+            onBack()
+        }
     }
 
     Scaffold(
@@ -204,41 +208,6 @@ fun EditScreen(
                     Text("OK")
                 }
             }
-        )
-    }
-}
-
-
-// ---- PREVIEWS ----
-
-@Preview(showSystemUi = true)
-@Composable
-fun EditScreenPreview() {
-    MaterialTheme {
-        EditScreen(
-            state = EditUiState(
-                matricula = "1234ABC",
-                marca = "Toyota",
-                modelo = "Corolla",
-                anio = "2021",
-                color = "Rojo",
-                kilometraje = "45000",
-                observaciones = "Revisión de frenos"
-            ),
-            onEvent = {},
-            onBack = {}
-        )
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun EditScreenLoadingPreview() {
-    MaterialTheme {
-        EditScreen(
-            state = EditUiState(isLoading = true),
-            onEvent = {},
-            onBack = {}
         )
     }
 }

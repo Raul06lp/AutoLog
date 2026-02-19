@@ -19,6 +19,7 @@ class LoginViewModel(
         when (event) {
             is LoginEvent.OnEmailChanged -> _state.update { it.copy(email = event.email, error = null) }
             is LoginEvent.OnPasswordChanged -> _state.update { it.copy(password = event.password, error = null) }
+            is LoginEvent.OnTipoUsuarioChanged -> _state.update { it.copy(tipoUsuario = event.tipo, error = null) }
             LoginEvent.OnLoginClick -> login()
         }
     }
@@ -28,7 +29,8 @@ class LoginViewModel(
             _state.update { it.copy(isLoading = true, error = null) }
             authRepository.login(
                 email = _state.value.email.trim(),
-                contrasena = _state.value.password
+                contrasena = _state.value.password,
+                tipo = _state.value.tipoUsuario
             ).onSuccess {
                 _state.update { it.copy(isLoading = false, isLoginSuccessful = true) }
             }.onFailure {

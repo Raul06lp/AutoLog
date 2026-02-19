@@ -52,18 +52,18 @@ fun HomeScreen(
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold
                         )
-                        if (state.userName.isNotEmpty()) {
+                        state.usuario?.let { usuario ->
                             Text(
-                                text = state.userName,
+                                text = usuario.nombre,
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
+                            Text(
+                                text = usuario.email,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
                         }
-                        Text(
-                            text = "mecanico@gmail.com",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
                     }
                 },colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Texto,
@@ -72,8 +72,11 @@ fun HomeScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = onAddClick,containerColor = Botones) {
-                Icon(Icons.Default.Add, contentDescription = "Añadir vehículo")
+            // Solo mecánicos pueden agregar vehículos
+            if (state.usuario is com.carlafdez.autolog.domain.model.Usuario.MecanicoUsuario) {
+                FloatingActionButton(onClick = onAddClick, containerColor = Botones) {
+                    Icon(Icons.Default.Add, contentDescription = "Añadir vehículo")
+                }
             }
         }
     ) { padding ->
@@ -150,46 +153,5 @@ fun HomeScreen(
                 }
             }
         }
-    }
-}
-
-// ---- PREVIEWS ----
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun HomeScreenPreview() {
-    PruebaKotlinTheme {
-        HomeScreen(
-            state = HomeUiState(
-                userName = "mecanico@gmail.com",
-                vehicles = vehiclePreviews
-            ),
-            onEvent = {},
-            onAddClick = {}
-        )
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun HomeLoadingPreview() {
-    PruebaKotlinTheme {
-        HomeScreen(
-            state = HomeUiState(isLoading = true),
-            onEvent = {},
-            onAddClick = {}
-        )
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun HomeEmptyPreview() {
-    PruebaKotlinTheme {
-        HomeScreen(
-            state = HomeUiState(),
-            onEvent = {},
-            onAddClick = {}
-        )
     }
 }

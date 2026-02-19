@@ -23,9 +23,6 @@ import com.carlafdez.autolog.presentation.screens.addScreen.components.ClienteSe
 import com.carlafdez.autolog.presentation.components.FormField
 import com.carlafdez.autolog.presentation.screens.addScreen.components.ImagePicker
 import com.carlafdez.autolog.presentation.components.SectionTitle
-import com.carlafdez.autolog.presentation.screens.addScreen.components.FormField
-import com.carlafdez.autolog.presentation.screens.addScreen.components.ImagePicker
-import com.carlafdez.autolog.presentation.screens.addScreen.components.SectionTitle
 import com.carlafdez.autolog.ui.theme.Carta
 import com.carlafdez.autolog.ui.theme.PruebaKotlinTheme
 import com.carlafdez.autolog.ui.theme.Texto
@@ -49,7 +46,10 @@ fun AddScreen(
     }
 
     LaunchedEffect(state.guardadoOk) {
-        if (state.guardadoOk) onBack()
+        if (state.guardadoOk) {
+            onEvent(AddEvent.ResetGuardado)
+            onBack()
+        }
     }
 
     Scaffold(

@@ -1,6 +1,8 @@
 package com.carlafdez.autolog.presentation.screens.detailScreen
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Build
@@ -15,21 +17,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.carlafdez.autolog.presentation.screens.detailScreen.components.VehicleDetailContent
-import com.carlafdez.autolog.presentation.screens.homeScreen.components.vehiclePreviews
 import androidx.compose.ui.unit.sp
 import com.carlafdez.autolog.domain.model.Vehiculo
-import com.carlafdez.autolog.presentation.components.vehiclePreviews
+import com.carlafdez.autolog.presentation.screens.homeScreen.components.vehiclePreviews
 import com.carlafdez.autolog.presentation.screens.detailScreen.components.DetailRow
 import com.carlafdez.autolog.presentation.screens.detailScreen.components.DetailSection
 import com.carlafdez.autolog.presentation.screens.detailScreen.components.EstadoChip
 import com.carlafdez.autolog.presentation.screens.detailScreen.components.VehicleHeaderImage
->>>>>>> Stashed changes
 import com.carlafdez.autolog.ui.theme.Botones
 import com.carlafdez.autolog.ui.theme.PruebaKotlinTheme
 import com.carlafdez.autolog.ui.theme.Texto
 
 val NavyBlue = Color(0xFF1E3A5F)
-private val NavyBlue = Color(0xFF1E3A5F)
 val AccentBlue = Color(0xFF1976D2)
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,7 +62,8 @@ fun VehicleDetailScreen(
             )
         },
         floatingActionButton = {
-            if (state.vehiculo != null) {
+            // Solo mostrar FABs si hay vehículo Y el usuario es mecánico
+            if (state.vehiculo != null && state.usuario is com.carlafdez.autolog.domain.model.Usuario.MecanicoUsuario) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -229,35 +229,5 @@ private fun VehicleDetailContent(
             // Espacio para que el FAB no tape el contenido
             Spacer(modifier = Modifier.height(72.dp))
         }
-    }
-}
-
-
-
-// ---- PREVIEWS ----
-
-@Preview(showSystemUi = true)
-@Composable
-fun VehicleDetailScreenPreview() {
-    PruebaKotlinTheme {
-        VehicleDetailScreen(
-            state = VehicleDetailUiState(vehiculo = vehiclePreviews[0]),
-            onEvent = {},
-            onBack = {},
-            onEditClick = {}
-        )
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun VehicleDetailLoadingPreview() {
-    PruebaKotlinTheme {
-        VehicleDetailScreen(
-            state = VehicleDetailUiState(isLoading = true),
-            onEvent = {},
-            onBack = {},
-            onEditClick = {}
-        )
     }
 }

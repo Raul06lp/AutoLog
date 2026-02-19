@@ -12,6 +12,9 @@ interface VehiculoApi {
     @GET("api/vehiculos/mecanico/{idMecanico}")
     suspend fun getVehiculosByMecanico(@Path("idMecanico") idMecanico: Long): List<VehiculoDTO>
 
+    @GET("api/vehiculos/cliente/{idCliente}")
+    suspend fun getVehiculosByCliente(@Path("idCliente") idCliente: Long): List<VehiculoDTO>
+
     @GET("api/vehiculos/{id}")
     suspend fun getVehiculoById(@Path("id") id: Long): VehiculoDTO
 
@@ -28,6 +31,7 @@ interface VehiculoApi {
         @Part("color") color: RequestBody?,
         @Part("kilometraje") kilometraje: RequestBody?,
         @Part("observaciones") observaciones: RequestBody?,
+        @Part("estadoRevision") estadoRevision: RequestBody,
         @Part("idCliente") idCliente: RequestBody,
         @Part("idMecanico") idMecanico: RequestBody,
         @Part imagen: MultipartBody.Part?

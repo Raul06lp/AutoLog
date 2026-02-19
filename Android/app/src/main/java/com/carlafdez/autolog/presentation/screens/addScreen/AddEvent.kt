@@ -15,4 +15,5 @@ sealed interface AddEvent {
     data class ImagenSeleccionada(val uri: Uri?) : AddEvent
     data object GuardarClick : AddEvent
     data object ErrorDismissed : AddEvent
+    data object ResetGuardado : AddEvent
 }

@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carlafdez.autolog.presentation.components.AuthTextField
+import com.carlafdez.autolog.presentation.components.TipoUsuarioSelector
 import com.carlafdez.autolog.ui.theme.Botones
 import com.carlafdez.autolog.ui.theme.Fondo
 import com.carlafdez.autolog.ui.theme.PruebaKotlinTheme
@@ -74,6 +75,11 @@ fun RegisterScreen(
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
+                )
+
+                TipoUsuarioSelector(
+                    tipoSeleccionado = state.tipoUsuario,
+                    onTipoChange = { onEvent(RegisterEvent.OnTipoUsuarioChanged(it)) }
                 )
 
                 AuthTextField(
@@ -148,18 +154,5 @@ fun RegisterScreen(
                 }
             }
         }
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun RegisterScreenPreview() {
-    PruebaKotlinTheme {
-        RegisterScreen(
-            state = RegisterUiState(),
-            onEvent = {},
-            onRegisterSuccess = {},
-            onNavigateToLogin = {}
-        )
     }
 }

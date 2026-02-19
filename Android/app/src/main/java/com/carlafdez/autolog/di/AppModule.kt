@@ -59,8 +59,8 @@ val appModule = module {
     single<AuthRepository> { AuthRepositoryImpl(get<AuthApi>(), get<SessionManager>()) }
 
     viewModel { HomeViewModel(get<VehiculoRepository>(), get<AuthRepository>()) }
-    viewModel { (vehiculoId: Long) -> VehicleDetailViewModel(vehiculoId, get<VehiculoRepository>()) }
-    viewModel { AddViewModel(get<VehiculoRepository>()) }
+    viewModel { (vehiculoId: Long) -> VehicleDetailViewModel(vehiculoId, get<VehiculoRepository>(), get<AuthRepository>()) }
+    viewModel { AddViewModel(get<VehiculoRepository>(), get<AuthRepository>()) }
     viewModel { (vehiculoId: Long) -> EditViewModel(vehiculoId, get<VehiculoRepository>()) }
     viewModel { LoginViewModel(get<AuthRepository>()) }
     viewModel { RegisterViewModel(get<AuthRepository>()) }

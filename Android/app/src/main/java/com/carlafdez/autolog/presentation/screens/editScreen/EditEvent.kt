@@ -14,4 +14,5 @@ sealed interface EditEvent {
     data class ImagenSeleccionada(val uri: Uri?) : EditEvent
     data object GuardarClick : EditEvent
     data object ErrorDismissed : EditEvent
+    data object ResetGuardado : EditEvent // Nuevo evento
 }

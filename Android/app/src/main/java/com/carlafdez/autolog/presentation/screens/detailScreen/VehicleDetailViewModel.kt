@@ -2,15 +2,18 @@ package com.carlafdez.autolog.presentation.screens.detailScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.carlafdez.autolog.domain.repository.AuthRepository
 import com.carlafdez.autolog.domain.repository.VehiculoRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class VehicleDetailViewModel(
     private val vehiculoId: Long,
-    private val repository: VehiculoRepository
+    private val repository: VehiculoRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(VehicleDetailUiState())
@@ -18,6 +21,7 @@ class VehicleDetailViewModel(
 
     init {
         loadVehiculo()
+        loadUsuario()
     }
 
     fun onEvent(event: VehicleDetailEvent) {
@@ -25,6 +29,13 @@ class VehicleDetailViewModel(
             VehicleDetailEvent.Retry -> loadVehiculo()
             VehicleDetailEvent.Refresh -> loadVehiculo()
             VehicleDetailEvent.CambiarEstado -> cambiarEstado()
+        }
+    }
+
+    private fun loadUsuario() {
+        viewModelScope.launch {
+            val usuario = authRepository.getUsuario().first()
+            _state.update { it.copy(usuario = usuario) }
         }
     }
 

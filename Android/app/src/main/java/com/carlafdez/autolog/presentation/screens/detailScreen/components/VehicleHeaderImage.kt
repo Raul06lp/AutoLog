@@ -25,7 +25,6 @@ fun VehicleHeaderImage(
     imagenBase64: String?,
     modifier: Modifier = Modifier
 ) {
-fun VehicleHeaderImage(imagenBase64: String?, modifier: Modifier = Modifier) {
     if (imagenBase64 != null) {
         val bitmap = remember(imagenBase64) {
             runCatching {
@@ -40,11 +39,16 @@ fun VehicleHeaderImage(imagenBase64: String?, modifier: Modifier = Modifier) {
                 modifier = modifier,
                 contentScale = ContentScale.Crop
             )
-            return
+        } else {
+            DefaultPlaceholder(modifier)
         }
+    } else {
+        DefaultPlaceholder(modifier)
     }
+}
 
-    // Placeholder
+@Composable
+private fun DefaultPlaceholder(modifier: Modifier) {
     Box(
         modifier = modifier.background(Carta),
         contentAlignment = Alignment.Center

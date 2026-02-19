@@ -13,12 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.carlafdez.autolog.domain.model.Cliente
-import com.carlafdez.autolog.ui.theme.Carta
-
 import androidx.compose.ui.tooling.preview.Preview
 import com.carlafdez.autolog.domain.model.Cliente
 import com.carlafdez.autolog.ui.theme.Carta
+
 @Composable
 fun ClienteSelector(
     clienteSeleccionado: Cliente?,

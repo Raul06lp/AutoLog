@@ -2,21 +2,22 @@ package com.carlafdez.autolog.presentation.screens.addScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.carlafdez.autolog.domain.model.Usuario
+import com.carlafdez.autolog.domain.repository.AuthRepository
 import com.carlafdez.autolog.domain.repository.VehiculoRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AddViewModel(
-    private val repository: VehiculoRepository
+    private val repository: VehiculoRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(AddUiState())
     val state = _state.asStateFlow()
-
-    // TODO: obtener del usuario logueado
-    private val mecanicoId = 2L
 
     init {
         loadClientes()
@@ -35,6 +36,7 @@ class AddViewModel(
             is AddEvent.ImagenSeleccionada -> _state.update { it.copy(imagenUri = event.uri) }
             AddEvent.GuardarClick -> guardar()
             AddEvent.ErrorDismissed -> _state.update { it.copy(error = null) }
+            AddEvent.ResetGuardado -> _state.update { it.copy(guardadoOk = false) }
         }
     }
 
@@ -69,6 +71,16 @@ class AddViewModel(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             try {
+                // Obtener el usuario logueado (debe ser mecánico)
+                val usuario = authRepository.getUsuario().first()
+                val mecanicoId = when (usuario) {
+                    is Usuario.MecanicoUsuario -> usuario.id
+                    else -> {
+                        _state.update { it.copy(isLoading = false, error = "Error: usuario no autorizado") }
+                        return@launch
+                    }
+                }
+
                 repository.crearVehiculo(
                     matricula = s.matricula.uppercase(),
                     marca = s.marca,
@@ -82,8 +94,10 @@ class AddViewModel(
                     imagenUri = s.imagenUri
                 )
                 _state.update { it.copy(isLoading = false, guardadoOk = true) }
+            } catch (e: com.carlafdez.autolog.data.remote.ApiException) {
+                _state.update { it.copy(isLoading = false, error = e.message) }
             } catch (e: Exception) {
-                _state.update { it.copy(isLoading = false, error = "Error al guardar el vehículo") }
+                _state.update { it.copy(isLoading = false, error = "Error al guardar: ${e.message}") }
             }
         }
     }

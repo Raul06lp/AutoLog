@@ -16,7 +16,9 @@ class EditViewModel(
     private val _state = MutableStateFlow(EditUiState())
     val state = _state.asStateFlow()
 
-    init { loadVehiculo() }
+    init {
+        loadVehiculo()
+    }
 
     fun onEvent(event: EditEvent) {
         when (event) {
@@ -31,6 +33,7 @@ class EditViewModel(
             is EditEvent.ImagenSeleccionada -> _state.update { it.copy(nuevaImagenUri = event.uri) }
             EditEvent.GuardarClick -> guardar()
             EditEvent.ErrorDismissed -> _state.update { it.copy(error = null) }
+            EditEvent.ResetGuardado -> _state.update { it.copy(guardadoOk = false) } // Manejar el reset
         }
     }
 
@@ -102,7 +105,7 @@ class EditViewModel(
                 )
                 _state.update { it.copy(isLoading = false, guardadoOk = true) }
             } catch (e: Exception) {
-                _state.update { it.copy(isLoading = false, error = "Error al guardar los cambios") }
+                _state.update { it.copy(isLoading = false, error = "Error al guardar: ${e.message}") }
             }
         }
     }

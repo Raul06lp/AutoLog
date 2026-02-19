@@ -6,6 +6,7 @@ import com.carlafdez.autolog.domain.model.Vehiculo
 
 interface VehiculoRepository {
     suspend fun getVehiclesByMecanico(idMecanico: Long): List<Vehiculo>
+    suspend fun getVehiclesByCliente(idCliente: Long): List<Vehiculo>
     suspend fun getVehiculoById(id: Long): Vehiculo?
     suspend fun crearVehiculo(
         matricula: String, marca: String, modelo: String, anio: Int,

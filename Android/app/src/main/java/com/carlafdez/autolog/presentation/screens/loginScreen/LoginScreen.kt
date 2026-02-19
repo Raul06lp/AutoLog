@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carlafdez.autolog.presentation.components.AuthTextField
+import com.carlafdez.autolog.presentation.components.TipoUsuarioSelector
 import com.carlafdez.autolog.ui.theme.Botones
 import com.carlafdez.autolog.ui.theme.Fondo
 import com.carlafdez.autolog.ui.theme.PruebaKotlinTheme
@@ -71,6 +72,11 @@ fun LoginScreen(
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
+                )
+
+                TipoUsuarioSelector(
+                    tipoSeleccionado = state.tipoUsuario,
+                    onTipoChange = { onEvent(LoginEvent.OnTipoUsuarioChanged(it)) }
                 )
 
                 AuthTextField(
@@ -128,31 +134,5 @@ fun LoginScreen(
                 }
             }
         }
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun LoginScreenPreview() {
-    PruebaKotlinTheme {
-        LoginScreen(
-            state = LoginUiState(),
-            onEvent = {},
-            onLoginSuccess = {},
-            onNavigateToRegister = {}
-        )
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun LoginErrorPreview() {
-    PruebaKotlinTheme {
-        LoginScreen(
-            state = LoginUiState(error = "Credenciales incorrectas"),
-            onEvent = {},
-            onLoginSuccess = {},
-            onNavigateToRegister = {}
-        )
     }
 }

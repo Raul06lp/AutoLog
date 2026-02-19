@@ -21,6 +21,7 @@ class RegisterViewModel(
             is RegisterEvent.OnEmailChanged -> _state.update { it.copy(email = event.value, error = null) }
             is RegisterEvent.OnPasswordChanged -> _state.update { it.copy(password = event.value, error = null) }
             is RegisterEvent.OnConfirmPasswordChanged -> _state.update { it.copy(confirmPassword = event.value, error = null) }
+            is RegisterEvent.OnTipoUsuarioChanged -> _state.update { it.copy(tipoUsuario = event.tipo, error = null) }
             RegisterEvent.OnRegisterClick -> register()
         }
     }
@@ -42,7 +43,8 @@ class RegisterViewModel(
                     authRepository.register(
                         nombre = s.nombre.trim(),
                         email = s.email.trim(),
-                        contrasena = s.password
+                        contrasena = s.password,
+                        tipo = s.tipoUsuario
                     ).onSuccess {
                         _state.update { it.copy(isLoading = false, isRegisterSuccessful = true) }
                     }.onFailure {
