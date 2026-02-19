@@ -2,7 +2,9 @@ package com.carlafdez.autolog.data.repository
 
 import com.carlafdez.autolog.data.local.SessionManager
 import com.carlafdez.autolog.data.remote.api.AuthApi
+import com.carlafdez.autolog.data.remote.dto.ClienteRequestDTO
 import com.carlafdez.autolog.data.remote.dto.LoginRequestDTO
+import com.carlafdez.autolog.data.remote.dto.MecanicoRequestDTO
 import com.carlafdez.autolog.data.remote.dto.RegisterRequestDTO
 import com.carlafdez.autolog.domain.model.TipoUsuario
 import com.carlafdez.autolog.domain.model.Usuario
@@ -43,6 +45,19 @@ class AuthRepositoryImpl(
         }
     }
 
+    // Verifica la contraseña llamando a la API pero SIN guardar sesión
+    override suspend fun verificarContrasena(email: String, contrasena: String, tipo: TipoUsuario): Result<Unit> {
+        return try {
+            when (tipo) {
+                TipoUsuario.MECANICO -> api.loginMecanico(LoginRequestDTO(email, contrasena))
+                TipoUsuario.CLIENTE -> api.loginCliente(LoginRequestDTO(email, contrasena))
+            }
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     override suspend fun register(nombre: String, email: String, contrasena: String, tipo: TipoUsuario): Result<Usuario> {
         return try {
             val usuario = when (tipo) {
@@ -57,6 +72,35 @@ class AuthRepositoryImpl(
                 }
                 TipoUsuario.CLIENTE -> {
                     val response = api.registerCliente(RegisterRequestDTO(nombre, email, contrasena))
+                    Usuario.ClienteUsuario(
+                        id = response.idCliente,
+                        nombre = response.nombre,
+                        email = response.email,
+                        cantidadVehiculos = response.cantidadVehiculos ?: 0
+                    )
+                }
+            }
+            sessionManager.saveSession(usuario.id, usuario.nombre, usuario.email, tipo)
+            Result.success(usuario)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun updateProfile(id: Long, nombre: String, email: String, contrasena: String, tipo: TipoUsuario): Result<Usuario> {
+        return try {
+            val usuario = when (tipo) {
+                TipoUsuario.MECANICO -> {
+                    val response = api.updateMecanico(id, MecanicoRequestDTO(nombre, email, contrasena))
+                    Usuario.MecanicoUsuario(
+                        id = response.idMecanico,
+                        nombre = response.nombre,
+                        email = response.email,
+                        cantidadVehiculos = response.cantidadVehiculos ?: 0
+                    )
+                }
+                TipoUsuario.CLIENTE -> {
+                    val response = api.updateCliente(id, ClienteRequestDTO(nombre, email, contrasena))
                     Usuario.ClienteUsuario(
                         id = response.idCliente,
                         nombre = response.nombre,

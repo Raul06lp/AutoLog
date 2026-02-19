@@ -20,3 +20,6 @@ object AddVehicleKey : NavKey
 
 @Serializable
 data class EditVehicleKey(val vehicleId: Long) : NavKey
+
+@Serializable
+object ProfileKey : NavKey

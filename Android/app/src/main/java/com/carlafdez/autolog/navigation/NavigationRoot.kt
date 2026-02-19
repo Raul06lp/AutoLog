@@ -10,6 +10,7 @@ import com.carlafdez.autolog.presentation.screens.detailScreen.DetailRoute
 import com.carlafdez.autolog.presentation.screens.editScreen.EditRoute
 import com.carlafdez.autolog.presentation.screens.homeScreen.HomeRoute
 import com.carlafdez.autolog.presentation.screens.loginScreen.LoginRoute
+import com.carlafdez.autolog.presentation.screens.profileScreen.ProfileRoute
 import com.carlafdez.autolog.presentation.screens.registerScreen.RegisterRoute
 
 @Composable
@@ -48,7 +49,8 @@ fun NavigationRoot() {
                     onLogout = {
                         backStack.clear()
                         backStack.add(LoginKey)
-                    }
+                    },
+                    onProfileClick = { backStack.add(ProfileKey) }
                 )
             }
 
@@ -69,6 +71,10 @@ fun NavigationRoot() {
                     vehiculoId = key.vehicleId,
                     onBack = { backStack.removeLastOrNull() }
                 )
+            }
+
+            entry<ProfileKey> {
+                ProfileRoute(onBack = { backStack.removeLastOrNull() })
             }
         }
     )

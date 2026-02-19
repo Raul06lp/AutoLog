@@ -12,6 +12,7 @@ import com.carlafdez.autolog.presentation.screens.detailScreen.DetailViewModel
 import com.carlafdez.autolog.presentation.screens.editScreen.EditViewModel
 import com.carlafdez.autolog.presentation.screens.homeScreen.HomeViewModel
 import com.carlafdez.autolog.presentation.screens.loginScreen.LoginViewModel
+import com.carlafdez.autolog.presentation.screens.profileScreen.ProfileViewModel
 import com.carlafdez.autolog.presentation.screens.registerScreen.RegisterViewModel
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
@@ -64,4 +65,5 @@ val appModule = module {
     viewModel { (vehiculoId: Long) -> EditViewModel(vehiculoId, get<VehiculoRepository>()) }
     viewModel { LoginViewModel(get<AuthRepository>()) }
     viewModel { RegisterViewModel(get<AuthRepository>()) }
+    viewModel { ProfileViewModel(get<AuthRepository>()) }
 }

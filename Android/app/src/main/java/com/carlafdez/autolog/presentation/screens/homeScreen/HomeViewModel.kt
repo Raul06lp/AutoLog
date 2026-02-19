@@ -29,6 +29,8 @@ class HomeViewModel(
             HomeEvent.Refresh -> loadVehicles()
             is HomeEvent.VehicleClicked -> { /* navegación en NavigationRoot */ }
             is HomeEvent.Logout -> logout()
+            is HomeEvent.OnAddClick -> { /* navegación en NavigationRoot */ }
+            is HomeEvent.OnProfileClick -> { /* navegación en NavigationRoot */ }
         }
     }
 
