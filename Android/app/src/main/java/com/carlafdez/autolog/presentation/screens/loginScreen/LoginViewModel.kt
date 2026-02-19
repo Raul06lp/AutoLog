@@ -21,6 +21,7 @@ class LoginViewModel(
             is LoginEvent.OnPasswordChanged -> _state.update { it.copy(password = event.password, error = null) }
             is LoginEvent.OnTipoUsuarioChanged -> _state.update { it.copy(tipoUsuario = event.tipo, error = null) }
             LoginEvent.OnLoginClick -> login()
+            LoginEvent.OnLoginSuccessHandled ->  _state.update { it.copy(isLoginSuccessful = false) }
         }
     }
 

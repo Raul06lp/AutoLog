@@ -28,6 +28,7 @@ class HomeViewModel(
         when (event) {
             HomeEvent.Refresh -> loadVehicles()
             is HomeEvent.VehicleClicked -> { /* navegación en NavigationRoot */ }
+            is HomeEvent.Logout -> logout()
         }
     }
 
@@ -46,16 +47,21 @@ class HomeViewModel(
                     is Usuario.ClienteUsuario -> repository.getVehiclesByCliente(usuario.id)
                 }
 
-                // Filtrar según el tipo de usuario
                 val vehicles = when (usuario.tipo) {
                     TipoUsuario.MECANICO -> allVehicles.filter { it.estadoRevision != "finalizado" }
-                    TipoUsuario.CLIENTE -> allVehicles // Clientes ven TODOS sus vehículos
+                    TipoUsuario.CLIENTE -> allVehicles
                 }
 
                 _state.update { it.copy(vehicles = vehicles, isLoading = false, usuario = usuario) }
             } catch (e: Exception) {
                 _state.update { it.copy(error = "Error al cargar los vehículos", isLoading = false) }
             }
+        }
+    }
+
+    private fun logout() {
+        viewModelScope.launch {
+            authRepository.logout()
         }
     }
 }

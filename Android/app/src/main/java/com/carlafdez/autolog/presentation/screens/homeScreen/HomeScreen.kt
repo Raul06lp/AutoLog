@@ -26,6 +26,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.DirectionsCar
 import androidx.compose.material.icons.outlined.WifiOff
@@ -33,6 +34,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -63,9 +65,7 @@ import androidx.compose.ui.unit.sp
 import com.carlafdez.autolog.domain.model.Usuario
 import com.carlafdez.autolog.presentation.screens.homeScreen.components.CarCard
 import com.carlafdez.autolog.presentation.screens.homeScreen.components.vehiclePreviews
-import com.carlafdez.autolog.ui.theme.Botones
 import com.carlafdez.autolog.ui.theme.PruebaKotlinTheme
-import com.carlafdez.autolog.ui.theme.Texto
 import kotlinx.coroutines.delay
 
 
@@ -122,7 +122,8 @@ fun HomeScreen(
                 item {
                     HomeHeroHeader(
                         usuario = state.usuario,
-                        vehicleCount = state.vehicles.size.takeIf { !state.isLoading }
+                        vehicleCount = state.vehicles.size.takeIf { !state.isLoading },
+                        onLogoutClick = { onEvent(HomeEvent.Logout) }
                     )
                 }
                 when {
@@ -173,7 +174,8 @@ fun HomeScreen(
 @Composable
 private fun HomeHeroHeader(
     usuario: Usuario?,
-    vehicleCount: Int?
+    vehicleCount: Int?,
+    onLogoutClick: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -184,8 +186,8 @@ private fun HomeHeroHeader(
                     start = Offset(0f, 0f),
                     end = Offset(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY)
                 )
-            ).height(120.dp)
-
+            )
+            .height(120.dp)
     ) {
 
         Box(
@@ -206,7 +208,8 @@ private fun HomeHeroHeader(
         Row(
             modifier = Modifier
                 .statusBarsPadding()
-                .padding(horizontal = 20.dp, vertical = 0.dp),
+                .padding(horizontal = 20.dp, vertical = 0.dp)
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
@@ -227,7 +230,10 @@ private fun HomeHeroHeader(
                     lineHeight = 26.sp
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
                     Text(
                         text = when (usuario) {
                             is Usuario.MecanicoUsuario -> "Panel de mecánico"
@@ -253,9 +259,25 @@ private fun HomeHeroHeader(
                     }
                 }
             }
+
+            IconButton(
+                onClick = onLogoutClick,
+                modifier = Modifier
+                    .size(40.dp)
+                    .background(
+                        color = Color.White.copy(alpha = 0.10f),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Outlined.Logout,
+                    contentDescription = "Cerrar sesión",
+                    tint = Color.White.copy(alpha = 0.80f),
+                    modifier = Modifier.size(20.dp)
+                )
+            }
         }
     }
-
 
     Box(
         modifier = Modifier

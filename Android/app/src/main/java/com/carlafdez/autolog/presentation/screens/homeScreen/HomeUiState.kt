@@ -3,7 +3,7 @@ package com.carlafdez.autolog.presentation.screens.homeScreen
 import com.carlafdez.autolog.domain.model.Usuario
 import com.carlafdez.autolog.domain.model.Vehiculo
 
-data class HomeUiState (
+data class HomeUiState(
     val usuario: Usuario? = null,
     val vehicles: List<Vehiculo> = emptyList(),
     val isLoading: Boolean = false,

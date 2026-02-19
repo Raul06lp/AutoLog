@@ -44,7 +44,11 @@ fun NavigationRoot() {
             entry<VehicleListKey> {
                 HomeRoute(
                     onVehicleClick = { id -> backStack.add(VehicleDetailKey(id)) },
-                    onAddClick = { backStack.add(AddVehicleKey) }
+                    onAddClick = { backStack.add(AddVehicleKey) },
+                    onLogout = {
+                        backStack.clear()
+                        backStack.add(LoginKey)
+                    }
                 )
             }
 

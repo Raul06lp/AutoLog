@@ -7,4 +7,6 @@ sealed interface LoginEvent {
     data class OnPasswordChanged(val password: String) : LoginEvent
     data class OnTipoUsuarioChanged(val tipo: TipoUsuario) : LoginEvent
     data object OnLoginClick : LoginEvent
+    data object OnLoginSuccessHandled : LoginEvent
+
 }

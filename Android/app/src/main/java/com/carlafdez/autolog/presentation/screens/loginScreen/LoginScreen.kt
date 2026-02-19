@@ -34,7 +34,10 @@ fun LoginScreen(
     onNavigateToRegister: () -> Unit
 ) {
     LaunchedEffect(state.isLoginSuccessful) {
-        if (state.isLoginSuccessful) onLoginSuccess()
+        if (state.isLoginSuccessful) {
+            onEvent(LoginEvent.OnLoginSuccessHandled)  // ← resetea el flag
+            onLoginSuccess()
+        }
     }
 
     Column(
