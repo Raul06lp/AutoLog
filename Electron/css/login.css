@@ -44,15 +44,14 @@ body.login-page #content {
     background: linear-gradient(135deg, #ffffff 0%, var(--bg-card) 100%);
     border-radius: 30px;
     padding: 40px 50px 50px;
-    margin: 20px auto;
+    margin: 45px auto;
     box-shadow: var(--shadow-lg);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.5);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    position: relative;
-}
+    position: relative;}
 
 /* TÍTULO DEL FORMULARIO */
 .form_title {
@@ -89,9 +88,9 @@ body.login-page #content form {
 /* INPUTS DEL LOGIN */
 .inputlogin {
     width: 80% !important;
-    padding: 14px 18px;
+    padding: 10px 12px;
     border: 2px solid var(--border);
-    border-radius: 12px;
+    border-radius: 10px;
     font-size: 15px;
     transition: var(--transition);
     font-family: inherit;
@@ -113,8 +112,7 @@ input[type="email"]:focus,
 input[type="password"]:focus {
     outline: none;
     border-color: var(--primary-light);
-    box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.1);
-    transform: translateY(-1px);
+    box-shadow: none !important;
 }
 
 /* BOTÓN DE LOGIN */
@@ -165,6 +163,89 @@ body.login-page button:hover {
 body.login-page button:active {
     transform: translateY(-1px);
 }
+
+/* Password field + toggle styling (matches register) */
+.password-field {
+    position: relative;
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.password-field .inputlogin {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    padding: 10px 12px !important;
+    border-radius: 10px 0 0 10px;
+    margin: 0;
+    border-right: none !important;
+}
+
+.toggle-pass {
+    width: 10px !important;
+    height: 41.5px !important;
+    padding: 0 6px !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: right !important;
+    justify-content: right !important;
+    border-radius: 0 10px 10px 0 !important;
+    background: #ffffff !important;
+    border-top: 2px solid var(--border) !important;
+    border-bottom: 2px solid var(--border) !important;
+    border-right: 2px solid var(--border) !important;
+    border-left: none !important;
+    cursor: pointer;
+    box-shadow: none !important;
+    padding-right: 10px !important;
+}
+
+.toggle-pass .eye,
+.toggle-pass .eye-off {
+    stroke: var(--primary) !important;
+    fill: none;
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+    margin-top: 7px;
+}
+
+/* mirror focus state */
+.password-field:focus-within .inputlogin { border-color: var(--primary-light) !important; }
+.password-field:focus-within .toggle-pass { border-top-color: var(--primary-light) !important; border-bottom-color: var(--primary-light) !important; border-right-color: var(--primary-light) !important; }
+
+/* Ensure the toggle shows the correct icon and active appearance (match register.css) */
+.toggle-pass svg { display: block; }
+.toggle-pass.active .eye { display: none; }
+.toggle-pass.active .eye-off { display: block !important; }
+.toggle-pass .eye-off { display: none; }
+
+/* Active state for toggle-pass (when password is visible) */
+.toggle-pass.active {
+    /* keep background white; do not change border colors here */
+    background: #ffffff !important;
+}
+.toggle-pass.active svg { stroke: var(--primary) !important; }
+
+/* Remove any shadows from inputs and the embedded password field */
+.inputlogin,
+.inputlogin:focus,
+.password-field .inputlogin,
+.password-field .inputlogin:focus {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
+
+/* Disable hover and active visual changes for the toggle button */
+.toggle-pass:hover,
+.toggle-pass:active {
+    background: #fbfeff !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
 
 /* LINK DE REGISTRO */
 body.login-page .link {

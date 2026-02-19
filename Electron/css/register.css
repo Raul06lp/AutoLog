@@ -38,16 +38,16 @@ body.register-page header .subtitulo {
 
 /* CONTENEDOR PRINCIPAL DE REGISTRO */
 body.register-page #content {
-    width: 90%;
-    max-width: 700px;
+    width: 92%;
+    max-width: 640px;
     min-height: auto;
     background: linear-gradient(135deg, #ffffff 0%, var(--bg-card) 100%);
-    border-radius: 30px;
-    padding: 40px 50px 50px;
-    margin: 20px auto;
-    box-shadow: var(--shadow-lg);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 18px;
+    padding: 20px 26px 26px;
+    margin: 30px auto;
+    box-shadow: 0 12px 36px rgba(2,12,27,0.09);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -58,9 +58,9 @@ body.register-page #content {
 .form_title {
     text-align: center;
     color: var(--accent);
-    font-size: 35px;
+    font-size: 24px;
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -75,25 +75,22 @@ body.register-page #content form {
 /* LABELS DEL REGISTRO */
 .log_label {
     display: block;
-    margin-bottom: 12px;
-    color: var(--accent);
-    font-weight: 600;
     margin-bottom: 8px;
     color: #03045E;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 13px;
     text-align: left;
     margin-left: 12%;
 }
 
 /* INPUTS DEL REGISTRO */
 .inputregister {
-    width: 80% !important;
-    padding: 12px 14px !important;
+    width: 78% !important;
+    padding: 8px 10px !important;
     border: 2px solid var(--border);
-    border-radius: 12px;
-    font-size: 15px;
-    transition: var(--transition);
+    border-radius: 10px;
+    font-size: 13px;
+    transition: none !important;
     font-family: inherit;
     background: #ffffff;
     color: var(--text-dark);
@@ -114,16 +111,62 @@ input[type="password"]:focus {
     outline: none;
     border-color: var(--primary-light);
     box-shadow: 0 0 0 4px rgba(0, 180, 216, 0.1);
-    transform: translateY(-1px);
 }
+
+/* Password field wrapper and toggle */
+.password-field {
+    position: relative;
+    width: 78%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.password-field .inputregister {
+    /* make input take remaining space and remove extra right padding */
+    flex: 1 1 auto !important;
+    width: auto !important;
+    padding: 8px 12px !important;
+    border-radius: 10px 0 0 10px;
+    margin: 0 !important;
+    border-right: none !important;
+}
+
+.toggle-pass {
+    /* make the toggle visually part of the input: same subtle background and shared borders */
+    position: relative;
+    right: 0;
+    background: #fbfeff !important;
+    border-left: none !important;
+    border-top: 2px solid var(--border) !important;
+    border-bottom: 2px solid var(--border) !important;
+    border-right: 2px solid var(--border) !important;
+    min-width: 36px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    border-radius: 0 10px 10px 0 !important;
+    padding: 0 8px !important;
+    box-shadow: none !important;
+    height: auto !important;
+    /* ensure fixed visual state: no hover/transform changes */
+    transition: none !important;
+}
+
+.toggle-pass svg { display: block; }
+.toggle-pass.active .eye { display: none; }
+.toggle-pass.active .eye-off { display: block !important; }
+.toggle-pass .eye-off { display: none; }
 
 /* BOTÓN DE REGISTRO */
 body.register-page button {
     flex: 1;
-    padding: 15px 30px;
+    padding: 10px 22px;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
@@ -138,6 +181,69 @@ body.register-page button {
     margin: 0 auto;
     display: block;
 }
+
+/* Asegurar que el botón toggle de contraseña no herede estilos del botón principal */
+.toggle-pass {
+    width: 10px !important;
+    height: 35px !important;
+    right: 6px !important;
+    top: 50% !important;
+    transform: translateY(-50%);
+    display: inline-flex !important;
+    align-items: right !important;
+    justify-content: right !important;
+    border-radius: 0 8px 8px 0 !important;
+    background: #fbfeff !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border-bottom: solid 2px #e0e0e0 !important;
+    border-top: solid 2px #e0e0e0 !important;
+    border-right: solid 2px #e0e0e0 !important;
+    padding: 0 4px !important;
+}
+
+/* Prevent the input focus from nudging this group */
+.password-field .inputregister:focus {
+    transform: none !important;
+}
+
+/* ensure toggle doesn't change on active/click */
+.toggle-pass:active {
+    background: #ffffff !important;
+    transform: none !important;
+}
+
+.toggle-pass svg { opacity: 0.95; }
+
+/* Ojos: fondo transparente y color acorde */
+.toggle-pass .eye,
+.toggle-pass .eye-off {
+    stroke: #0f4b7a;
+    fill: none;
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+/* ensure SVGs are sized correctly inside the small button */
+.toggle-pass svg { width: 18px; height: 18px; }
+
+/* Sync focus: when input inside .password-field is focused, style the eye container */
+.password-field:focus-within .inputregister {
+    border-color: var(--primary-light) !important;
+}
+
+.password-field:focus-within .toggle-pass {
+    border-top-color: var(--primary-light) !important;
+    border-bottom-color: var(--primary-light) !important;
+    border-right-color: var(--primary-light) !important;
+    background: #fbfeff !important;
+}
+
+.password-field:focus-within .toggle-pass svg {
+    stroke: var(--primary-light) !important;
+}
+
 
 body.register-page button::before {
     content: '';
@@ -164,6 +270,23 @@ body.register-page button:hover {
 
 body.register-page button:active {
     transform: translateY(-1px);
+}
+
+/* Remove all visual shadows on the register page */
+body.register-page * {
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+/* Explicitly ensure password inputs and the toggle do not show focus shadows */
+.password-field .inputregister:focus,
+.password-field:focus-within .inputregister,
+.password-field:focus-within .toggle-pass,
+.toggle-pass,
+.password-field .inputregister {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    filter: none !important;
 }
 
 /* LINK DE REGISTRO */
@@ -204,16 +327,16 @@ body.register-page #content p {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 15px;
-    margin: 20px 0;
-    margin-left: 20% !important;
+    gap: 12px;
+    margin: 8px 0;
+    margin-left: 12% !important;
 }
 
 .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 48px;
+    height: 28px;
 }
 
 .switch input {
@@ -237,10 +360,10 @@ body.register-page #content p {
 .slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
     background-color: white;
     transition: .4s;
     border-radius: 50%;
@@ -251,11 +374,11 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-    transform: translateX(26px);
+    transform: translateX(20px);
 }
 
 .switch-label {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--accent);
     transition: var(--transition);

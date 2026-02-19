@@ -21,7 +21,13 @@
             <input class="inputlogin" type="email" id="email" name="email" required>
             <br><br>
             <label for="password" class="log_label">Contraseña:</label>
-            <input class="inputlogin" type="password" id="password" name="password" required>
+            <div class="password-field">
+                <input class="inputlogin" type="password" id="password" name="password" required>
+                <button type="button" class="toggle-pass" aria-label="Mostrar contraseña">
+                    <svg class="eye" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f4b7a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg class="eye-off" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f4b7a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a21.17 21.17 0 0 1 5.06-6.94"/><path d="M1 1l22 22"/></svg>
+                </button>
+            </div>
             <br><br>
             <p id="error-message" style="color: red; display: none;"></p>
             <button type="submit">Iniciar Sesión</button>

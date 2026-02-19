@@ -7,6 +7,25 @@ const email = document.getElementById('email');
 const password = document.getElementById('password');
 const form = document.querySelector('form');
 
+// Toggle visibility for password field (eye icon)
+document.addEventListener('click', (e) => {
+    if (e.target.closest && e.target.closest('.toggle-pass')) {
+        const btn = e.target.closest('.toggle-pass');
+        const wrapper = btn.parentElement;
+        const input = wrapper.querySelector('input');
+        if (!input) return;
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.classList.add('active');
+            btn.setAttribute('aria-label', 'Ocultar contraseña');
+        } else {
+            input.type = 'password';
+            btn.classList.remove('active');
+            btn.setAttribute('aria-label', 'Mostrar contraseña');
+        }
+    }
+});
+
 const tryLogin = async (endpoint, payload) => {
     const resp = await fetch(endpoint, {
         method: 'POST',
