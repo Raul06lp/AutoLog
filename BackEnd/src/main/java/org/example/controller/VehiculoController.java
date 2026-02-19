@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
@@ -78,12 +78,14 @@ public class VehiculoController {
         }
     }
 
+    @Transactional(readOnly = true)
     @GetMapping
     public ResponseEntity<List<VehiculoDTO>> obtenerTodos() {
         List<VehiculoDTO> vehiculos = vehiculoService.obtenerTodos();
         return ResponseEntity.ok(vehiculos);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/{id}")
     public ResponseEntity<VehiculoDTO> obtenerPorId(@PathVariable Long id) {
         return vehiculoService.obtenerPorId(id)
@@ -91,6 +93,7 @@ public class VehiculoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @Transactional(readOnly = true)
     @GetMapping(value = "/{id}/imagen", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<byte[]> obtenerImagen(@PathVariable Long id) {
         return vehiculoService.obtenerImagen(id)
@@ -136,6 +139,7 @@ public class VehiculoController {
         }
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/matricula/{matricula}")
     public ResponseEntity<VehiculoDTO> obtenerPorMatricula(@PathVariable String matricula) {
         return vehiculoService.obtenerPorMatricula(matricula)
@@ -143,24 +147,28 @@ public class VehiculoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/cliente/{idCliente}")
     public ResponseEntity<List<VehiculoDTO>> obtenerPorCliente(@PathVariable Long idCliente) {
         List<VehiculoDTO> vehiculos = vehiculoService.obtenerPorCliente(idCliente);
         return ResponseEntity.ok(vehiculos);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/mecanico/{idMecanico}")
     public ResponseEntity<List<VehiculoDTO>> obtenerPorMecanico(@PathVariable Long idMecanico) {
         List<VehiculoDTO> vehiculos = vehiculoService.obtenerPorMecanico(idMecanico);
         return ResponseEntity.ok(vehiculos);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/estado/{estado}")
     public ResponseEntity<List<VehiculoDTO>> obtenerPorEstado(@PathVariable String estado) {
         List<VehiculoDTO> vehiculos = vehiculoService.obtenerPorEstado(estado);
         return ResponseEntity.ok(vehiculos);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/cliente/{idCliente}/estado/{estado}")
     public ResponseEntity<List<VehiculoDTO>> obtenerPorClienteYEstado(
             @PathVariable Long idCliente,
@@ -169,6 +177,7 @@ public class VehiculoController {
         return ResponseEntity.ok(vehiculos);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/mecanico/{idMecanico}/estado/{estado}")
     public ResponseEntity<List<VehiculoDTO>> obtenerPorMecanicoYEstado(
             @PathVariable Long idMecanico,
