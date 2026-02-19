@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/PruebaKotlin.iml" filepath="$PROJECT_DIR$/.idea/modules/PruebaKotlin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PruebaKotlin.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PruebaKotlin.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PruebaKotlin.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PruebaKotlin.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PruebaKotlin.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PruebaKotlin.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PruebaKotlin.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PruebaKotlin.app.unitTest.iml" />
