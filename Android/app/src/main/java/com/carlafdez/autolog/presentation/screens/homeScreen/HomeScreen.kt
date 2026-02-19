@@ -59,11 +59,6 @@ fun HomeScreen(
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onPrimary
                             )
-                            Text(
-                                text = usuario.email,
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onPrimary
-                            )
                         }
                     }
                 },colors = TopAppBarDefaults.topAppBarColors(
