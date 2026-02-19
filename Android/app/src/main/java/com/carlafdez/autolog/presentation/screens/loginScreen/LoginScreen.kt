@@ -136,3 +136,14 @@ fun LoginScreen(
         }
     }
 }
+
+@Preview
+@Composable
+fun LoginScreenPreview(){
+    LoginScreen(
+        state = LoginUiState(),
+        onEvent = {},
+        onLoginSuccess = {},
+        onNavigateToRegister = {}
+    )
+}

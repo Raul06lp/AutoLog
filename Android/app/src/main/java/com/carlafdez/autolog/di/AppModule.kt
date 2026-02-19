@@ -8,7 +8,7 @@ import com.carlafdez.autolog.data.repository.VehiculoRepositoryImpl
 import com.carlafdez.autolog.domain.repository.AuthRepository
 import com.carlafdez.autolog.domain.repository.VehiculoRepository
 import com.carlafdez.autolog.presentation.screens.addScreen.AddViewModel
-import com.carlafdez.autolog.presentation.screens.detailScreen.VehicleDetailViewModel
+import com.carlafdez.autolog.presentation.screens.detailScreen.DetailViewModel
 import com.carlafdez.autolog.presentation.screens.editScreen.EditViewModel
 import com.carlafdez.autolog.presentation.screens.homeScreen.HomeViewModel
 import com.carlafdez.autolog.presentation.screens.loginScreen.LoginViewModel
@@ -59,7 +59,7 @@ val appModule = module {
     single<AuthRepository> { AuthRepositoryImpl(get<AuthApi>(), get<SessionManager>()) }
 
     viewModel { HomeViewModel(get<VehiculoRepository>(), get<AuthRepository>()) }
-    viewModel { (vehiculoId: Long) -> VehicleDetailViewModel(vehiculoId, get<VehiculoRepository>(), get<AuthRepository>()) }
+    viewModel { (vehiculoId: Long) -> DetailViewModel(vehiculoId, get<VehiculoRepository>(), get<AuthRepository>()) }
     viewModel { AddViewModel(get<VehiculoRepository>(), get<AuthRepository>()) }
     viewModel { (vehiculoId: Long) -> EditViewModel(vehiculoId, get<VehiculoRepository>()) }
     viewModel { LoginViewModel(get<AuthRepository>()) }

@@ -8,23 +8,23 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 @Composable
-fun VehicleDetailRoute(
+fun DetailRoute(
     vehiculoId: Long,
     onBack: () -> Unit,
     onEditClick: () -> Unit,
-    viewModel: VehicleDetailViewModel = koinViewModel(
+    viewModel: DetailViewModel = koinViewModel(
         key = "vehicle_$vehiculoId",
         parameters = { parametersOf(vehiculoId) }
     )
 ) {
     // Recargar datos cada vez que se entra a esta pantalla
     LaunchedEffect(Unit) {
-        viewModel.onEvent(VehicleDetailEvent.Refresh)
+        viewModel.onEvent(DetailEvent.Refresh)
     }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    VehicleDetailScreen(
+    DetailScreen(
         state = state,
         onEvent = viewModel::onEvent,
         onBack = onBack,

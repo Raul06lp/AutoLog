@@ -6,7 +6,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.carlafdez.autolog.presentation.screens.addScreen.AddRoute
-import com.carlafdez.autolog.presentation.screens.detailScreen.VehicleDetailRoute
+import com.carlafdez.autolog.presentation.screens.detailScreen.DetailRoute
 import com.carlafdez.autolog.presentation.screens.editScreen.EditRoute
 import com.carlafdez.autolog.presentation.screens.homeScreen.HomeRoute
 import com.carlafdez.autolog.presentation.screens.loginScreen.LoginRoute
@@ -49,7 +49,7 @@ fun NavigationRoot() {
             }
 
             entry<VehicleDetailKey> { key ->
-                VehicleDetailRoute(
+                DetailRoute(
                     vehiculoId = key.vehicleId,
                     onBack = { backStack.removeLastOrNull() },
                     onEditClick = { backStack.add(EditVehicleKey(key.vehicleId)) }

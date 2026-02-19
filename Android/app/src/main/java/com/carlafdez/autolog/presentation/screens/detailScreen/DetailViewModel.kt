@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class VehicleDetailViewModel(
+class DetailViewModel(
     private val vehiculoId: Long,
     private val repository: VehiculoRepository,
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(VehicleDetailUiState())
+    private val _state = MutableStateFlow(DetailUiState())
     val state = _state.asStateFlow()
 
     init {
@@ -24,11 +24,11 @@ class VehicleDetailViewModel(
         loadUsuario()
     }
 
-    fun onEvent(event: VehicleDetailEvent) {
+    fun onEvent(event: DetailEvent) {
         when (event) {
-            VehicleDetailEvent.Retry -> loadVehiculo()
-            VehicleDetailEvent.Refresh -> loadVehiculo()
-            VehicleDetailEvent.CambiarEstado -> cambiarEstado()
+            DetailEvent.Retry -> loadVehiculo()
+            DetailEvent.Refresh -> loadVehiculo()
+            DetailEvent.CambiarEstado -> cambiarEstado()
         }
     }
 

@@ -18,14 +18,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.carlafdez.autolog.presentation.screens.detailScreen.components.VehicleDetailContent
 import androidx.compose.ui.unit.sp
+import com.carlafdez.autolog.domain.model.Usuario
 import com.carlafdez.autolog.domain.model.Vehiculo
-import com.carlafdez.autolog.presentation.screens.homeScreen.components.vehiclePreviews
 import com.carlafdez.autolog.presentation.screens.detailScreen.components.DetailRow
 import com.carlafdez.autolog.presentation.screens.detailScreen.components.DetailSection
 import com.carlafdez.autolog.presentation.screens.detailScreen.components.EstadoChip
 import com.carlafdez.autolog.presentation.screens.detailScreen.components.VehicleHeaderImage
 import com.carlafdez.autolog.ui.theme.Botones
-import com.carlafdez.autolog.ui.theme.PruebaKotlinTheme
 import com.carlafdez.autolog.ui.theme.Texto
 
 val NavyBlue = Color(0xFF1E3A5F)
@@ -33,9 +32,9 @@ val AccentBlue = Color(0xFF1976D2)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun VehicleDetailScreen(
-    state: VehicleDetailUiState,
-    onEvent: (VehicleDetailEvent) -> Unit,
+fun DetailScreen(
+    state: DetailUiState,
+    onEvent: (DetailEvent) -> Unit,
     onBack: () -> Unit,
     onEditClick: () -> Unit
 ) {
@@ -63,7 +62,7 @@ fun VehicleDetailScreen(
         },
         floatingActionButton = {
             // Solo mostrar FABs si hay vehículo Y el usuario es mecánico
-            if (state.vehiculo != null && state.usuario is com.carlafdez.autolog.domain.model.Usuario.MecanicoUsuario) {
+            if (state.vehiculo != null && state.usuario is Usuario.MecanicoUsuario) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -77,7 +76,7 @@ fun VehicleDetailScreen(
                         }
 
                         ExtendedFloatingActionButton(
-                            onClick = { onEvent(VehicleDetailEvent.CambiarEstado) },
+                            onClick = { onEvent(DetailEvent.CambiarEstado) },
                             containerColor = colorBoton,
                             contentColor = Color.White,
                             icon = { Icon(iconoBoton, contentDescription = null) },
@@ -116,7 +115,7 @@ fun VehicleDetailScreen(
                     Text(state.error, color = MaterialTheme.colorScheme.error)
                     Spacer(modifier = Modifier.height(12.dp))
                     Button(
-                        onClick = { onEvent(VehicleDetailEvent.Retry) },
+                        onClick = { onEvent(DetailEvent.Retry) },
                         colors = ButtonDefaults.buttonColors(containerColor = AccentBlue)
                     ) {
                         Text("Reintentar")
@@ -134,100 +133,37 @@ fun VehicleDetailScreen(
     }
 }
 
+@Preview(showSystemUi = true)
 @Composable
-private fun VehicleDetailContent(
-    vehiculo: Vehiculo,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
-        // Imagen arriba del todo
-        VehicleHeaderImage(
-            imagenBase64 = vehiculo.imagenBase64,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(260.dp)
-        )
-
-        // Contenido
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            // Título y estado
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column {
-                    Text(
-                        text = "${vehiculo.marca} ${vehiculo.modelo}",
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = NavyBlue
-                    )
-                    Text(
-                        text = vehiculo.matricula,
-                        fontSize = 14.sp,
-                        color = Color.Gray
-                    )
-                }
-                EstadoChip(estado = vehiculo.estadoRevision)
-            }
-
-            HorizontalDivider()
-
-            // Sección: Información general
-            DetailSection(title = "Información general") {
-                DetailRow(label = "Año", value = vehiculo.anio.toString())
-                DetailRow(label = "Color", value = vehiculo.color.ifBlank { "—" })
-                DetailRow(label = "Kilometraje", value = "${vehiculo.kilometraje} km")
-                DetailRow(label = "Fecha de ingreso", value = vehiculo.fechaIngreso.take(10))
-            }
-
-            HorizontalDivider()
-
-            // Sección: Cliente
-            DetailSection(title = "Cliente") {
-                DetailRow(label = "Nombre", value = vehiculo.nombreCliente)
-            }
-
-            HorizontalDivider()
-
-            // Sección: Observaciones
-            if (vehiculo.observaciones.isNotBlank()) {
-                DetailSection(title = "Observaciones") {
-                    Text(
-                        text = vehiculo.observaciones,
-                        fontSize = 14.sp,
-                        color = Color.DarkGray,
-                        lineHeight = 20.sp
-                    )
-                }
-                HorizontalDivider()
-            }
-
-            // Sección: Medidas
-            if (vehiculo.medidasTomadas.isNotBlank()) {
-                DetailSection(title = "Medidas tomadas") {
-                    Text(
-                        text = vehiculo.medidasTomadas,
-                        fontSize = 14.sp,
-                        color = Color.DarkGray,
-                        lineHeight = 20.sp
-                    )
-                }
-                HorizontalDivider()
-            }
-
-            // Espacio para que el FAB no tape el contenido
-            Spacer(modifier = Modifier.height(72.dp))
-        }
-    }
+fun DetailScreenPreview(){
+    DetailScreen(
+        state = DetailUiState(
+            Vehiculo(
+                id = 1,
+                matricula = "1234ABC",
+                marca = "Ford",
+                modelo = "Fiesta",
+                anio = 2016,
+                color = "Rojo",
+                kilometraje = 256202,
+                observaciones = "Peta",
+                medidasTomadas = "",
+                estadoRevision = "En revision",
+                imagenBase64 = null,
+                idCliente = 1,
+                nombreCliente = "Carla",
+                idMecanico = 1,
+                nombreMecanico = "Mecanico",
+                fechaIngreso = "23-12-2025",
+            ),
+            Usuario.ClienteUsuario(
+                id = 1,
+                nombre = "Carla",
+                email = "carla@gmail.com"
+            )
+        ),
+        onEvent = {},
+        onBack = {},
+        onEditClick = {}
+    )
 }

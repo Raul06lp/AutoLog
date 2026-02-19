@@ -156,3 +156,14 @@ fun RegisterScreen(
         }
     }
 }
+
+@Preview
+@Composable
+fun RegisterScreenPreview(){
+    RegisterScreen(
+        state = RegisterUiState(),
+        onEvent = {},
+        onRegisterSuccess = {},
+        onNavigateToLogin = {}
+    )
+}

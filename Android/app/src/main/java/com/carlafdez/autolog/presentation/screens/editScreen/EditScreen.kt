@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import com.carlafdez.autolog.presentation.components.FormField
 import com.carlafdez.autolog.presentation.components.SectionTitle
 import com.carlafdez.autolog.presentation.screens.editScreen.components.EditImagePicker
+import com.carlafdez.autolog.ui.theme.Carta
+import com.carlafdez.autolog.ui.theme.Texto
 
 private val NavyBlue = Color(0xFF1E3A5F)
 val AccentBlue = Color(0xFF1976D2)
@@ -65,7 +67,10 @@ fun EditScreen(
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = NavyBlue)
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Texto,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
         }
     ) { padding ->
@@ -153,7 +158,11 @@ fun EditScreen(
                             .fillMaxWidth()
                             .height(120.dp),
                         maxLines = 5,
-                        enabled = !state.isLoading
+                        enabled = !state.isLoading,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedContainerColor = Carta,
+                            focusedContainerColor = Carta
+                        )
                     )
 
                     // --- SECCIÓN: Medidas tomadas ---
@@ -168,7 +177,11 @@ fun EditScreen(
                             .fillMaxWidth()
                             .height(150.dp),
                         maxLines = 6,
-                        enabled = !state.isLoading
+                        enabled = !state.isLoading,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedContainerColor = Carta,
+                            focusedContainerColor = Carta
+                        )
                     )
 
                     // --- Botón guardar ---
@@ -210,4 +223,16 @@ fun EditScreen(
             }
         )
     }
+}
+
+@Preview
+@Composable
+fun EditScreenPreview() {
+    EditScreen(
+        state = EditUiState(
+
+        ),
+        onEvent = {},
+        onBack = {}
+    )
 }

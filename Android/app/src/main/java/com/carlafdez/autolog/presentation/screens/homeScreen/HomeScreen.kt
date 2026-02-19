@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.carlafdez.autolog.domain.model.Usuario
 import com.carlafdez.autolog.presentation.screens.homeScreen.components.CarCard
 import com.carlafdez.autolog.presentation.screens.homeScreen.components.vehiclePreviews
 import com.carlafdez.autolog.ui.theme.Botones
@@ -56,7 +57,7 @@ fun HomeScreen(
                             Text(
                                 text = usuario.nombre,
                                 style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = MaterialTheme.colorScheme.onPrimary
                             )
                             Text(
                                 text = usuario.email,
@@ -73,7 +74,7 @@ fun HomeScreen(
         },
         floatingActionButton = {
             // Solo mecánicos pueden agregar vehículos
-            if (state.usuario is com.carlafdez.autolog.domain.model.Usuario.MecanicoUsuario) {
+            if (state.usuario is Usuario.MecanicoUsuario) {
                 FloatingActionButton(onClick = onAddClick, containerColor = Botones) {
                     Icon(Icons.Default.Add, contentDescription = "Añadir vehículo")
                 }
@@ -154,4 +155,23 @@ fun HomeScreen(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun HomeScreenPreview() {
+    HomeScreen(
+        state = HomeUiState(
+            usuario = Usuario.MecanicoUsuario(
+                id = 1,
+                nombre = "Carlos López",
+                email = "carlos@email.com"
+            ),
+            vehicles = vehiclePreviews,
+            isLoading = false,
+            error = null
+            ),
+        onEvent = {} ,
+        onAddClick = {}
+    )
 }
