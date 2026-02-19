@@ -243,6 +243,7 @@ nav ul li:last-child {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   gap: 22px;
+  
 }
 
 .wrapper > p {
