@@ -30,7 +30,8 @@ btnAddTrabajo.addEventListener('click', () => {
 
 btnGenerar.addEventListener('click', async (e) => {
     e.preventDefault();
-
+    const errorElement = document.getElementById('error-message');
+    if (errorElement) errorElement.style.display = 'none';
 
     const trabajosRealizados = [];
     document.querySelectorAll('#tablaFormTrabajos tbody tr').forEach(row => {
@@ -39,6 +40,22 @@ btnGenerar.addEventListener('click', async (e) => {
         if (nombre) trabajosRealizados.push({ nombre, precio });
     });
 
+    // Validaciones básicas
+    if (!nombreCliente.value || !marca.value || !modelo.value || !fecha.value) {
+        if (errorElement) {
+            errorElement.textContent = 'Completa los campos obligatorios: cliente, marca, modelo y fecha.';
+            errorElement.style.display = 'block';
+        }
+        return;
+    }
+
+    if (trabajosRealizados.length === 0) {
+        if (errorElement) {
+            errorElement.textContent = 'Agrega al menos un trabajo realizado.';
+            errorElement.style.display = 'block';
+        }
+        return;
+    }
 
     const datos = {
         nombreCliente: nombreCliente.value,
@@ -53,11 +70,11 @@ btnGenerar.addEventListener('click', async (e) => {
         trabajosRealizados
     };
 
-    await generarPDF(datos);
+    await generarPDF(datos, errorElement);
 });
 
 
-async function generarPDF(datos) {
+async function generarPDF(datos, errorElement) {
     const pdfWindow = new BrowserWindow({ show: false });
 
     try {
@@ -104,12 +121,22 @@ async function generarPDF(datos) {
         if (!filePath) return;
 
         fs.writeFileSync(filePath, buffer);
-        alert('PDF guardado correctamente');
-
+        if (errorElement) {
+            errorElement.textContent = 'PDF guardado correctamente';
+            errorElement.style.display = 'block';
+            errorElement.style.color = '#198754';
+            errorElement.style.background = '#eafaf1';
+            errorElement.style.border = '1px solid #b6e2cd';
+        }
         pdfWindow.close();
-
     } catch (err) {
         pdfWindow.close();
-        alert('Error al generar PDF: ' + err.message);
+        if (errorElement) {
+            errorElement.textContent = 'Error al generar PDF: ' + (err.message || 'Error desconocido.');
+            errorElement.style.display = 'block';
+            errorElement.style.color = '#dc2626';
+            errorElement.style.background = '#fef2f2';
+            errorElement.style.border = '1px solid #fca5a5';
+        }
     }
 }

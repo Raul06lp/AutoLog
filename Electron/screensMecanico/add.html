@@ -31,7 +31,9 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="correoCliente">Correo del Cliente</label>
-                            <input type="email" id="correoCliente" name="correoCliente" required>
+                            <select id="correoCliente" name="correoCliente" required>
+                                <option value="">Selecciona un cliente</option>
+                            </select>
                         </div>
                     </div>
                 </section>
@@ -76,12 +78,12 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="estadoRevision">Estado General de Revisión</label>
-                            <select id="estadoRevision" name="estadoRevision" required>
-                                <option value="">Selecciona un estado</option>
-                                <option value="espera">En Espera</option>
-                                <option value="reparacion">En Reparación</option>
-                            </select>
+                                <label for="estado">Estado General de Revisión</label>
+                                <select id="estado" name="estado" required>
+                                    <option value="">Selecciona un estado</option>
+                                    <option value="pendiente">Pendiente</option>
+                                    <option value="en_revision">En Revisión</option>
+                                </select>
                         </div>
                         <div class="form-group">
                             <label for="foto">Foto del vehículo</label>
@@ -99,6 +101,7 @@
                     </div>
                 </section>
 
+                <div id="error-message" style="display:none;color:#dc2626;background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;margin-bottom:18px;font-size:0.92rem;font-weight:500;"></div>
                 <div class="btn-container">
                     <button type="submit" class="btn-submit">Registrar Vehículo</button>
                     <button type="reset" class="btn-reset">Limpiar Formulario</button>
