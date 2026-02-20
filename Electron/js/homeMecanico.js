@@ -376,6 +376,19 @@ document.addEventListener("DOMContentLoaded", () => {
     return slug;
   }
 
+  function getEstadoLabel(estadoSlug, estadoRaw) {
+    if (estadoSlug === 'pendiente') return 'Pendiente';
+    if (estadoSlug === 'reparacion') return 'En revisión';
+    if (estadoSlug === 'finalizado') return 'Finalizado';
+    if (estadoSlug === 'espera') return 'En espera';
+    const raw = (estadoRaw || '').toString().trim();
+    if (!raw) return '';
+    return raw
+      .replace(/_/g, ' ')
+      .replace(/\s+/g, ' ')
+      .replace(/^./, s => s.toUpperCase());
+  }
+
   // Wire up state filter buttons
   const filterBtns = Array.from(document.querySelectorAll('.filter-btn'));
   filterBtns.forEach(btn => {
@@ -479,7 +492,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <button type="button" class="btn-ver-mas" data-id="${vehiculo.idVehiculo || ''}">Ver más</button>
               ${editarHtml}
               ${actionBtnHtml}
-              <span class="estado-revision ${estadoSlug ? 'estado-'+estadoSlug : ''}" aria-hidden="false">${escapeHTML(estadoRaw)}</span>
+              <span class="estado-revision ${estadoSlug ? 'estado-'+estadoSlug : ''}" aria-hidden="false">${escapeHTML(getEstadoLabel(estadoSlug, estadoRaw))}</span>
             </div>
           </div>
         `;

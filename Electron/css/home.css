@@ -355,6 +355,16 @@ nav ul li:last-child {
   border-color: var(--blue-400);
 }
 
+.car-card.car-card-finalizado {
+  border: 2px solid #15803d;
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.16);
+}
+
+.car-card.car-card-finalizado:hover {
+  border-color: #166534;
+  box-shadow: 0 12px 28px rgba(22, 163, 74, 0.22);
+}
+
 /* Photo */
 .car-photo {
   width: 100%;
@@ -386,6 +396,11 @@ nav ul li:last-child {
   transition: opacity var(--ease);
 }
 .car-card:hover::after { opacity: 1; }
+
+.car-card.car-card-finalizado::after {
+  opacity: 1;
+  background: linear-gradient(90deg, #15803d, #22c55e);
+}
 
 .car-card > p {
   padding: 9px 20px;
@@ -500,7 +515,7 @@ nav ul li:last-child {
   text-transform: none;
   padding: 0;
   line-height: 1;
-  border-radius: 6px;
+  border-radius: 0;
   background: transparent !important;
   color: inherit;
   border: none !important;
@@ -513,20 +528,18 @@ nav ul li:last-child {
 /* State colors (text-only, darker tones) */
 .estado-pendiente {
   background: transparent !important;
-  color: #b45309 !important; /* dark orange */
+  color: #f97316 !important;
 }
 
 .estado-reparacion {
-  background-color: var(--blue-50) !important;
-  color: var(--blue-600) !important;
-  border: 1px solid rgba(59,130,246,0.18) !important;
-  padding: 1px 6px !important;
-  font-size: 0.55rem !important;
+  background: transparent !important;
+  color: #000 !important;
+  border: none !important;
+  padding: 0 !important;
+  font-size: 0.82rem !important;
 }
 .estado-reparacion::before {
-  background-color: var(--blue-400) !important;
-  width: 4px !important;
-  height: 4px !important;
+  display: none !important;
 }
 
 .estado-finalizado {
@@ -536,16 +549,14 @@ nav ul li:last-child {
 .estado-finalizado::before { background-color: #22c55e !important; }
 
 .estado-pendiente {
-  background-color: #fff7ed !important;
-  color: #c2410c !important;
-  border: 1px solid #fdba74 !important;
-  padding: 1px 6px !important;
-  font-size: 0.55rem !important;
+  background: transparent !important;
+  color: #f97316 !important;
+  border: none !important;
+  padding: 0 !important;
+  font-size: 0.82rem !important;
 }
 .estado-pendiente::before {
-  background-color: #f97316 !important;
-  width: 3px !important;
-  height: 3px !important;
+  display: none !important;
 }
 
 

@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
           estadoSlug = 'espera';
         }
         html += `
-          <div class="car-card">
+          <div class="car-card ${estadoSlug === 'finalizado' ? 'car-card-finalizado' : ''}">
             <img class="car-photo" src="${fotoSrc}" alt="Foto del coche">
             <p><strong>Matrícula:</strong> ${vehiculo.matricula || 'N/A'}</p>
             <div class="card-actions" style="align-items:center;">
