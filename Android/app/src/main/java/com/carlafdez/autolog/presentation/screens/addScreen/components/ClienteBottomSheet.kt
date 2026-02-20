@@ -103,17 +103,3 @@ fun ClienteBottomSheet(
         }
     }
 }
-
-@Preview
-@Composable
-fun ClienteBottomSheetPreview(){
-    ClienteBottomSheet(
-        clientes = listOf(
-            Cliente(1, "Carlos López", "carlos@email.com")
-        ),
-        isLoading = false,
-        clienteSeleccionado = null,
-        onClienteClick = {},
-        onDismiss = {}
-    )
-}

@@ -84,7 +84,6 @@ fun DetailScreen(
                         )
                     }
 
-                    // Botón de editar
                     FloatingActionButton(
                         onClick = onEditClick,
                         containerColor = Botones,

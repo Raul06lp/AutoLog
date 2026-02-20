@@ -35,7 +35,7 @@ fun LoginScreen(
 ) {
     LaunchedEffect(state.isLoginSuccessful) {
         if (state.isLoginSuccessful) {
-            onEvent(LoginEvent.OnLoginSuccessHandled)  // ← resetea el flag
+            onEvent(LoginEvent.OnLoginSuccessHandled)
             onLoginSuccess()
         }
     }

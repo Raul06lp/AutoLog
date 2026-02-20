@@ -8,7 +8,6 @@ import com.carlafdez.autolog.domain.repository.AuthRepository
 import com.carlafdez.autolog.domain.repository.VehiculoRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -21,42 +20,29 @@ class HomeViewModel(
     val state = _state.asStateFlow()
 
     init {
-        loadVehicles()
+        observeUsuario()
     }
 
     fun onEvent(event: HomeEvent) {
         when (event) {
-            HomeEvent.Refresh -> loadVehicles()
+            HomeEvent.Refresh -> {
+                _state.value.usuario?.let { loadVehicles(it) }
+            }
             is HomeEvent.VehicleClicked -> { /* navegación en NavigationRoot */ }
-            is HomeEvent.Logout -> logout()
-            is HomeEvent.OnAddClick -> { /* navegación en NavigationRoot */ }
-            is HomeEvent.OnProfileClick -> { /* navegación en NavigationRoot */ }
+            HomeEvent.Logout -> logout()
+            else -> Unit
         }
     }
 
-    private fun loadVehicles() {
+    private fun observeUsuario() {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true, error = null) }
-            try {
-                val usuario = authRepository.getUsuario().first()
-                if (usuario == null) {
-                    _state.update { it.copy(error = "Sesión no encontrada", isLoading = false) }
-                    return@launch
+            authRepository.getUsuario().collect { usuario ->
+                if (usuario != null) {
+                    _state.update { it.copy(usuario = usuario) }
+                    loadVehicles(usuario)
+                } else {
+                    _state.update { HomeUiState() }
                 }
-
-                val allVehicles = when (usuario) {
-                    is Usuario.MecanicoUsuario -> repository.getVehiclesByMecanico(usuario.id)
-                    is Usuario.ClienteUsuario -> repository.getVehiclesByCliente(usuario.id)
-                }
-
-                val vehicles = when (usuario.tipo) {
-                    TipoUsuario.MECANICO -> allVehicles.filter { it.estadoRevision != "finalizado" }
-                    TipoUsuario.CLIENTE -> allVehicles
-                }
-
-                _state.update { it.copy(vehicles = vehicles, isLoading = false, usuario = usuario) }
-            } catch (e: Exception) {
-                _state.update { it.copy(error = "Error al cargar los vehículos", isLoading = false) }
             }
         }
     }
@@ -64,6 +50,28 @@ class HomeViewModel(
     private fun logout() {
         viewModelScope.launch {
             authRepository.logout()
+        }
+    }
+
+    private fun loadVehicles(usuario: Usuario) {
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true, error = null) }
+            try {
+                val allVehicles = when (usuario) {
+                    is Usuario.MecanicoUsuario -> repository.getVehiclesByMecanico(usuario.id)
+                    is Usuario.ClienteUsuario -> repository.getVehiclesByCliente(usuario.id)
+                }
+
+                // Filtrar según el tipo de usuario
+                val vehicles = when (usuario.tipo) {
+                    TipoUsuario.MECANICO -> allVehicles.filter { it.estadoRevision != "finalizado" }
+                    TipoUsuario.CLIENTE -> allVehicles 
+                }
+
+                _state.update { it.copy(vehicles = vehicles, isLoading = false) }
+            } catch (e: Exception) {
+                _state.update { it.copy(error = "Error al cargar los vehículos", isLoading = false) }
+            }
         }
     }
 }

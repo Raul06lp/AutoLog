@@ -73,13 +73,3 @@ fun ImagePicker(
         }
     }
 }
-
-@Preview
-@Composable
-fun ImagePickerPreview(){
-    ImagePicker(
-        imagenUri = null,
-        onClick = {},
-        enabled = true
-    )
-}

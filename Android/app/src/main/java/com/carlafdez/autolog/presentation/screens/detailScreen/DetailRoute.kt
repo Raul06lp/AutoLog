@@ -17,7 +17,6 @@ fun DetailRoute(
         parameters = { parametersOf(vehiculoId) }
     )
 ) {
-    // Recargar datos cada vez que se entra a esta pantalla
     LaunchedEffect(Unit) {
         viewModel.onEvent(DetailEvent.Refresh)
     }

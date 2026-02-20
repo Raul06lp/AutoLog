@@ -40,10 +40,9 @@ fun EditScreen(
         onEvent(EditEvent.ImagenSeleccionada(uri))
     }
 
-    // Efecto que reacciona al guardado exitoso
     LaunchedEffect(state.guardadoOk) {
         if (state.guardadoOk) {
-            onEvent(EditEvent.ResetGuardado) // Consumir el evento inmediatamente
+            onEvent(EditEvent.ResetGuardado)
             onBack()
         }
     }
@@ -93,7 +92,6 @@ fun EditScreen(
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    // --- Selector de imagen ---
                     EditImagePicker(
                         imagenBase64Actual = state.imagenBase64Actual,
                         nuevaImagenUri = state.nuevaImagenUri,
@@ -101,7 +99,6 @@ fun EditScreen(
                         enabled = !state.isLoading
                     )
 
-                    // --- SECCIÓN: General ---
                     SectionTitle("Información general")
 
                     FormField(
@@ -123,7 +120,6 @@ fun EditScreen(
                         enabled = !state.isLoading
                     )
 
-                    // --- SECCIÓN: Especificaciones ---
                     SectionTitle("Especificaciones")
 
                     FormField(
@@ -147,7 +143,6 @@ fun EditScreen(
                         enabled = !state.isLoading
                     )
 
-                    // --- SECCIÓN: Observaciones ---
                     SectionTitle("Observaciones")
 
                     OutlinedTextField(
@@ -165,7 +160,6 @@ fun EditScreen(
                         )
                     )
 
-                    // --- SECCIÓN: Medidas tomadas ---
                     SectionTitle("Medidas tomadas")
 
                     OutlinedTextField(
@@ -184,7 +178,6 @@ fun EditScreen(
                         )
                     )
 
-                    // --- Botón guardar ---
                     Button(
                         onClick = { onEvent(EditEvent.GuardarClick) },
                         modifier = Modifier

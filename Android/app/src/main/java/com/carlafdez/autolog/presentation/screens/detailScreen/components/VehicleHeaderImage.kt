@@ -61,9 +61,3 @@ private fun DefaultPlaceholder(modifier: Modifier) {
         )
     }
 }
-
-@Preview
-@Composable
-fun VehicleHeaderImagePreview(){
-    VehicleHeaderImage(imagenBase64 = null)
-}

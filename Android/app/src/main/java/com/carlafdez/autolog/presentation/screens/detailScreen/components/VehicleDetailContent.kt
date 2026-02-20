@@ -40,14 +40,12 @@ fun VehicleDetailContent(
                 .height(260.dp)
         )
 
-        // Contenido
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Título y estado
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -71,7 +69,6 @@ fun VehicleDetailContent(
 
             HorizontalDivider()
 
-            // Sección: Información general
             DetailSection(title = "Información general") {
                 DetailRow(label = "Año", value = vehiculo.anio.toString())
                 DetailRow(label = "Color", value = vehiculo.color.ifBlank { "—" })
@@ -81,14 +78,12 @@ fun VehicleDetailContent(
 
             HorizontalDivider()
 
-            // Sección: Cliente
             DetailSection(title = "Cliente") {
                 DetailRow(label = "Nombre", value = vehiculo.nombreCliente)
             }
 
             HorizontalDivider()
 
-            // Sección: Observaciones
             if (vehiculo.observaciones.isNotBlank()) {
                 DetailSection(title = "Observaciones") {
                     Text(
@@ -101,7 +96,6 @@ fun VehicleDetailContent(
                 HorizontalDivider()
             }
 
-            // Sección: Medidas
             if (vehiculo.medidasTomadas.isNotBlank()) {
                 DetailSection(title = "Medidas tomadas") {
                     Text(
@@ -114,7 +108,6 @@ fun VehicleDetailContent(
                 HorizontalDivider()
             }
 
-            // Espacio para que el FAB no tape el contenido
             Spacer(modifier = Modifier.height(72.dp))
         }
     }

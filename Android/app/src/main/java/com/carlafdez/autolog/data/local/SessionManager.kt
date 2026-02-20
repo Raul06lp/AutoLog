@@ -18,7 +18,7 @@ class SessionManager(private val context: Context) {
         private val KEY_USUARIO_ID = longPreferencesKey("usuario_id")
         private val KEY_USUARIO_NOMBRE = stringPreferencesKey("usuario_nombre")
         private val KEY_USUARIO_EMAIL = stringPreferencesKey("usuario_email")
-        private val KEY_USUARIO_TIPO = stringPreferencesKey("usuario_tipo") // "CLIENTE" o "MECANICO"
+        private val KEY_USUARIO_TIPO = stringPreferencesKey("usuario_tipo")
     }
 
     val usuarioId: Flow<Long?> = context.dataStore.data

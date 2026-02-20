@@ -137,11 +137,9 @@ class VehiculoRepositoryImpl(
             val errorBody = exception.response()?.errorBody()?.string()
             if (errorBody != null) {
                 val errorResponse = Gson().fromJson(errorBody, ErrorResponseDTO::class.java)
-                // Spring Boot devuelve mensajes de validación en diferentes campos
                 when {
                     !errorResponse.message.isNullOrBlank() -> errorResponse.message
                     errorResponse.status == 400 -> {
-                        // Para errores de validación, intentamos extraer info del error
                         val anioPattern = "anio|año".toRegex(RegexOption.IGNORE_CASE)
                         if (errorBody.contains(anioPattern)) {
                             "El año debe estar entre 1900 y 2027"

@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.carlafdez.autolog.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -17,7 +16,7 @@ class ProfileViewModel(
     val state = _state.asStateFlow()
 
     init {
-        loadUserData()
+        observeUserData()
     }
 
     fun onEvent(event: ProfileEvent) {
@@ -42,26 +41,25 @@ class ProfileViewModel(
         }
     }
 
-    private fun loadUserData() {
+    private fun observeUserData() {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
-            try {
-                // Usamos firstOrNull para evitar excepciones si el flow no emite
-                val usuario = authRepository.getUsuario().firstOrNull()
+            // collect se mantiene escuchando cambios en la sesión
+            authRepository.getUsuario().collect { usuario ->
                 if (usuario != null) {
                     _state.update {
                         it.copy(
                             usuario = usuario,
                             nombre = usuario.nombre,
                             email = usuario.email,
-                            isLoading = false
+                            isLoading = false,
+                            error = null
                         )
                     }
                 } else {
-                    _state.update { it.copy(error = "No se pudo cargar la información del usuario", isLoading = false) }
+                    // Si no hay usuario, podríamos estar en estado de logout
+                    _state.update { it.copy(isLoading = false) }
                 }
-            } catch (e: Exception) {
-                _state.update { it.copy(error = "Error al cargar datos: ${e.message}", isLoading = false) }
             }
         }
     }
@@ -96,7 +94,6 @@ class ProfileViewModel(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             try {
-                // Verificar contraseña actual SIN guardar sesión
                 val verificacion = authRepository.verificarContrasena(
                     email = usuario.email,
                     contrasena = s.contrasenaActual,
@@ -128,7 +125,7 @@ class ProfileViewModel(
                             confirmarContrasena = ""
                         )
                     }
-                    loadUserData()
+                    // No hace falta llamar a loadUserData() porque collect ya detectará el cambio si el repo guarda la sesión
                 } else {
                     _state.update {
                         it.copy(

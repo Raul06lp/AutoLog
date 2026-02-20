@@ -40,7 +40,7 @@ fun ClienteSelector(
                 Icon(Icons.Default.ArrowDropDown, contentDescription = null)
             },
             modifier = Modifier.fillMaxWidth(),
-            enabled = false, // Deshabilitamos para que el click lo capture el Box
+            enabled = false,
             colors = OutlinedTextFieldDefaults.colors(
                 disabledTextColor = Color.Black,
                 disabledBorderColor = MaterialTheme.colorScheme.outline,
@@ -51,14 +51,4 @@ fun ClienteSelector(
             )
         )
     }
-}
-
-@Preview
-@Composable
-fun ClienteSelectorPreview(){
-    ClienteSelector(
-        clienteSeleccionado = null,
-        isLoading = false,
-        onClick = {}
-    )
 }
