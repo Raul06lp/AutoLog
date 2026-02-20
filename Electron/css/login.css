@@ -1,3 +1,37 @@
+/* Password field eye button inside input */
+.password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.password-field input[type="password"],
+.password-field input[type="text"] {
+  padding-right: 38px;
+}
+.toggle-pass {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  outline: none;
+}
+.toggle-pass .eye-off { display: none; }
+.toggle-pass.active .eye { display: none; }
+.toggle-pass.active .eye-off { display: inline; }
+.toggle-pass.active {
+  /* Cambia color del icono cuando está activo */
+}
+.toggle-pass.active svg {
+  stroke: #1976d2;
+  filter: drop-shadow(0 0 2px #1976d2aa);
+}
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {

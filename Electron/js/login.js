@@ -13,15 +13,19 @@ document.addEventListener('click', (e) => {
         const btn = e.target.closest('.toggle-pass');
         const wrapper = btn.parentElement;
         const input = wrapper.querySelector('input');
+        const eye = btn.querySelector('.eye');
+        const eyeOff = btn.querySelector('.eye-off');
         if (!input) return;
         if (input.type === 'password') {
             input.type = 'text';
             btn.classList.add('active');
             btn.setAttribute('aria-label', 'Ocultar contraseña');
+            if (eye && eyeOff) { eye.style.display = 'none'; eyeOff.style.display = 'inline'; }
         } else {
             input.type = 'password';
             btn.classList.remove('active');
             btn.setAttribute('aria-label', 'Mostrar contraseña');
+            if (eye && eyeOff) { eye.style.display = 'inline'; eyeOff.style.display = 'none'; }
         }
     }
 });

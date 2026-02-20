@@ -86,8 +86,13 @@ nav ul li:first-child {
   width: 48px;
   height: 48px;
   object-fit: contain;
+<<<<<<< HEAD
+  /* filter: brightness(0) invert(1); */
+  opacity: 0.95;
+=======
   filter: none;
   opacity: 1;
+>>>>>>> 2b634fc5b2332c40ae9756d2cb47b34b967beb27
 }
 
 nav ul li:not(:first-child):not(:last-child) {
