@@ -137,3 +137,7 @@ cd Electron
 npm install
 npm start
 ```
+
+
+### Ejecutables
+En "Enlace ejecutables.txt" se encuentra un enlace a OneDrive con la apk y la build de electron con el exe. Importante abrir con cuenta de Conselleria.
