@@ -115,8 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (color.value) formData.append('color', color.value);
             if (kilometraje.value) formData.append('kilometraje', kilometraje.value);
             if (observaciones.value) formData.append('observaciones', observaciones.value);
-            // Estado siempre será 'Pendiente' al crear
-            formData.append('estado', 'Pendiente');
+            // Estado: usar el valor seleccionado en el formulario; por defecto 'pendiente'
+            const estadoEl = document.getElementById('estado');
+            const estadoVal = estadoEl && estadoEl.value ? estadoEl.value : 'pendiente';
+            formData.append('estado', estadoVal);
             if (foto?.files && foto.files[0]) {
                 formData.append('imagen', foto.files[0]);
             }
