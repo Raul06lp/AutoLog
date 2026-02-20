@@ -1,6 +1,7 @@
 const electron = require('electron');
 const { app, BrowserWindow, Menu } = electron;
 const remoteMain = require('@electron/remote/main');
+const path = require('path');
 
 remoteMain.initialize();
 
@@ -38,7 +39,7 @@ Menu.setApplicationMenu(mainMenu);
 function createWindow() {
     const win = new BrowserWindow({
         show: false,
-        icon: './icons/logo_sin_titulo.png',
+        icon: path.join(__dirname, 'icons/logo.ico'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
