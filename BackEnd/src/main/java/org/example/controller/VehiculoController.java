@@ -103,21 +103,6 @@ public class VehiculoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{id}/imagen")
-    public ResponseEntity<VehiculoDTO> actualizarImagen(
-            @PathVariable Long id,
-            @RequestBody Map<String, String> body) {
-        
-        String imagenBase64 = body.get("imagenBase64");
-        if (imagenBase64 == null || imagenBase64.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        return vehiculoService.actualizarImagen(id, imagenBase64)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @PutMapping(value = "/{id}/imagen-file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<VehiculoDTO> actualizarImagenFile(
             @PathVariable Long id,
@@ -140,14 +125,6 @@ public class VehiculoController {
     }
 
     @Transactional(readOnly = true)
-    @GetMapping("/matricula/{matricula}")
-    public ResponseEntity<VehiculoDTO> obtenerPorMatricula(@PathVariable String matricula) {
-        return vehiculoService.obtenerPorMatricula(matricula)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @Transactional(readOnly = true)
     @GetMapping("/cliente/{idCliente}")
     public ResponseEntity<List<VehiculoDTO>> obtenerPorCliente(@PathVariable Long idCliente) {
         List<VehiculoDTO> vehiculos = vehiculoService.obtenerPorCliente(idCliente);
@@ -161,30 +138,6 @@ public class VehiculoController {
         return ResponseEntity.ok(vehiculos);
     }
 
-    @Transactional(readOnly = true)
-    @GetMapping("/estado/{estado}")
-    public ResponseEntity<List<VehiculoDTO>> obtenerPorEstado(@PathVariable String estado) {
-        List<VehiculoDTO> vehiculos = vehiculoService.obtenerPorEstado(estado);
-        return ResponseEntity.ok(vehiculos);
-    }
-
-    @Transactional(readOnly = true)
-    @GetMapping("/cliente/{idCliente}/estado/{estado}")
-    public ResponseEntity<List<VehiculoDTO>> obtenerPorClienteYEstado(
-            @PathVariable Long idCliente,
-            @PathVariable String estado) {
-        List<VehiculoDTO> vehiculos = vehiculoService.obtenerPorClienteYEstado(idCliente, estado);
-        return ResponseEntity.ok(vehiculos);
-    }
-
-    @Transactional(readOnly = true)
-    @GetMapping("/mecanico/{idMecanico}/estado/{estado}")
-    public ResponseEntity<List<VehiculoDTO>> obtenerPorMecanicoYEstado(
-            @PathVariable Long idMecanico,
-            @PathVariable String estado) {
-        List<VehiculoDTO> vehiculos = vehiculoService.obtenerPorMecanicoYEstado(idMecanico, estado);
-        return ResponseEntity.ok(vehiculos);
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<VehiculoDTO> actualizarVehiculo(
@@ -199,22 +152,6 @@ public class VehiculoController {
         }
     }
 
-    @PatchMapping("/{id}/mecanico")
-    public ResponseEntity<VehiculoDTO> asignarMecanico(
-            @PathVariable Long id,
-            @RequestBody Map<String, Long> body) {
-        try {
-            Long idMecanico = body.get("idMecanico");
-            if (idMecanico == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            return vehiculoService.asignarMecanico(id, idMecanico)
-                    .map(ResponseEntity::ok)
-                    .orElse(ResponseEntity.notFound().build());
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
 
     @PatchMapping("/{id}/estado")
     public ResponseEntity<VehiculoDTO> actualizarEstado(
